@@ -1,0 +1,13 @@
+{
+  "description": "Compact decode GEMV/small-M GEMM smoke shapes for RTX 5050 baseline work. The semantic weight layout is W[K, N]; NK entries store the same matrix physically as [N, K].",
+  "cases": [
+    {"name": "tiny_square_m1", "m": 1, "k": 1024, "n": 1024, "weight_layout": "KN", "bias": false},
+    {"name": "tiny_square_m8", "m": 8, "k": 1024, "n": 1024, "weight_layout": "KN", "bias": true},
+    {"name": "hidden_square_m1", "m": 1, "k": 4096, "n": 4096, "weight_layout": "KN", "bias": false},
+    {"name": "hidden_square_m8", "m": 8, "k": 4096, "n": 4096, "weight_layout": "KN", "bias": true},
+    {"name": "hidden_square_m16", "m": 16, "k": 4096, "n": 4096, "weight_layout": "KN", "bias": true},
+    {"name": "hidden_square_nk_m1", "m": 1, "k": 4096, "n": 4096, "weight_layout": "NK", "bias": false},
+    {"name": "llama_mlp_up_m1", "m": 1, "k": 4096, "n": 11008, "weight_layout": "KN", "bias": false},
+    {"name": "llama_mlp_up_m8", "m": 8, "k": 4096, "n": 11008, "weight_layout": "KN", "bias": false}
+  ]
+}

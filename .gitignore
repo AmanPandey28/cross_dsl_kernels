@@ -1,0 +1,34 @@
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+*.o
+*.ptx
+*.cubin
+
+# CUDA build artifacts
+csrc/build/
+
+# Profiler outputs
+*.nsys-rep
+*.sqlite
+**/traces/
+**/torch_trace*.json
+
+# Results
+results/
+*.qpstrm
+*.qdstrm
+*.qdrep
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
