@@ -1,0 +1,1205 @@
+{
+  "experiment_id": "EXP-20261005-030",
+  "timestamp": "2026-10-05T19:20:26-04:00",
+  "source_sha256": {
+    "src/crossdsl_kernels/__init__.py": "1fefef8c0940a5904f3617c3a61a95b27154c79043f524a9040a35115262d7c4",
+    "src/crossdsl_kernels/api.py": "25c8c101de4b7f51d40cf12ff5269a446283c198b2d3195b65973b17aa4ccc56",
+    "src/crossdsl_kernels/contracts.py": "61f0f899a66d1aaf1bc3d88bf3591857cd7db71ea94a6f6200f32dce7cf9ecd8",
+    "src/crossdsl_kernels/cute/__init__.py": "32a41648ea4258b21139a1d8fb6a57ca3802521ed3d50155a9b6d278ee7dfecd",
+    "src/crossdsl_kernels/cute/gemv.py": "2bee0ba52bd5e20cc4ced5ff0dd1cbee79f1a63291e2d676a49b81cd0afbb575",
+    "src/crossdsl_kernels/cute/gemv_rows.py": "b3087837cdc3eacebde7521a5b82a3ce2b6c551952dae5db8e5317beb23b70be",
+    "src/crossdsl_kernels/cute/launch.py": "743bf843cf52c336e9a0cc2089b692a1bc3438812432c2ad7b823b485db4005b",
+    "src/crossdsl_kernels/cute/rmsnorm.py": "dfc6f3dab4c10fa549055fdcb12ca04238edd4e190b96174f41b421c11a418f9",
+    "src/crossdsl_kernels/cute/rope_kv.py": "dfd04d56fbff44af769cb373d52f83568480e5dfe9d336560a7872ce1803876b",
+    "src/crossdsl_kernels/cute/rope_kv_fused.py": "586320bbddeb3a1bedb4fd1fe7cbbba87cf08355bb3a73f344314242f53a17f6",
+    "src/crossdsl_kernels/cute/w4a16.py": "dbe85bb71711316e4141380e56a25845fc8215fbdd725f6b18f17ad1a1c16f09",
+    "src/crossdsl_kernels/dispatch.py": "b030f65d496e1e48882988843afd2cb16de82dca3196fa5daf635800393f30a6",
+    "src/crossdsl_kernels/generators.py": "ff003a3988e6c034453563780a1f7ca9290a4e10cf096cd14d1142b1b6bd8094",
+    "src/crossdsl_kernels/quantization.py": "8248281ac555cdb7302e2a207c426dd060e82da3d71156bc0d9ad33f7e993b9b",
+    "src/crossdsl_kernels/references/__init__.py": "141f0290b8606904fe1c222fc5e8859be44bd679ec4b203acaff2e1d50c63870",
+    "src/crossdsl_kernels/references/gemv.py": "4b2e2b9c61640bd1edd1af18ff31b1fa081da8ec4d0b83ae16cc10a1aa365169",
+    "src/crossdsl_kernels/references/paged_address.py": "0dc4010be343d11994c8d83d41320fbab7f26ce6f4c25a03a250ecad423837ca",
+    "src/crossdsl_kernels/references/rmsnorm.py": "adea7d5d8efcc58ecf3e1399b20a2a775f82dc11f6ed0b39c51a58819b82bdd3",
+    "src/crossdsl_kernels/references/rope_kv.py": "0fc2ed5d3b31f209e8ffefbb702764d00ae6cc546180a1e6e154b896ac56a53d",
+    "src/crossdsl_kernels/tolerances.py": "fa6e3486972d800f1c142ffd6c6358e08e52f703de5d99a99fefcca4aafd3b18",
+    "src/crossdsl_kernels/triton/__init__.py": "61bf2bbb4aef758f10da465f0d949aa432c834f796f29b04d4eb2ac5f0677262",
+    "src/crossdsl_kernels/triton/gemv.py": "2583ee625c101a0a081653f74ff7072d9bc8759bb55f57cbed9491564fad24df",
+    "src/crossdsl_kernels/triton/gemv_rows.py": "ec6408b86c52b05a2e2df97413a74c1aa5fe1fe8e6e0359e176b8af69ed7a0b8",
+    "src/crossdsl_kernels/triton/rmsnorm.py": "28d14cff85b72705d937f4257260c0afc592ba2b4cb2638fb961828b917b2206",
+    "src/crossdsl_kernels/triton/rope_kv.py": "3b37ef0b716e7d79936938aaac5620374ee73bc57c84afe0668c9e76da538375",
+    "src/crossdsl_kernels/triton/rope_kv_fused.py": "24db6c49bc615e8aebfb7dcc16f964161262f978eef2ff87079289817520b1ed",
+    "src/crossdsl_kernels/triton/w4a16.py": "dab36f62b5f98900871f65ef31d23270f1553c4e6108918ae942e06344ecbcf7",
+    "src/crossdsl_kernels/w4a16.py": "c2391adad185bdc76f30325a90260d26b9c68f81f5b617dd8e559bb0b71ad73d",
+    "csrc/common/cuda_runtime_smoke.cu": "66c70a3a381b0ee5f82814561d596cd13f09a362ffd367d088ff30093c1a191a",
+    "csrc/gemv/gemv_ext.cpp": "ca1c4aa8b7d522b505d70b5a6cf94408dedacab4dd35c7f6ad929454e38085e5",
+    "csrc/gemv/gemv_kernel.cu": "6676a2690c4449da61e7f8129d1d3170560d201f582e6665a6c3defd51e8d137",
+    "csrc/rmsnorm/rmsnorm_ext.cpp": "c119c6bcfc38f93a03ed7c8c22ff4595987a85c41c939c687b72054e82d2d5fc",
+    "csrc/rmsnorm/rmsnorm_kernel.cu": "74b134d8ecdb0b4ad2c7412e6c4d86092cdbceb97d3a5738b76fb08fe7b49eda",
+    "csrc/rope_kv/rope_kv_ext.cpp": "9c8411e9dd9b56d62abcb0482c9513bf1be0da229202200275a21f3d2d2d7833",
+    "csrc/rope_kv/rope_kv_kernel.cu": "3b4bf610936b914befb7f8f595c14ca8f59d24af74faaa25f0259951980339d6",
+    "csrc/w4a16/w4a16_ext.cpp": "b412e1754565e1b4d970391f05fcf79c80a18758550fd57b61e967f48a44d7c8",
+    "csrc/w4a16/w4a16_kernel.cu": "6cf1a1a900ae45196011f809814f3019f624f067f18c26558627a60cf77c4662",
+    "benchmarks/common.py": "6666c33c22bb85988789f4e1466d8f172a2d89d3b5adfc8407f5d0611f5bddfc",
+    "benchmarks/compare.py": "0181cab5a892b5ce64bb1299edf86466267f28b994e5b35eab71697d9b17aefc",
+    "benchmarks/comparison_cases.py": "e1e414807a0e5c59582b51afe6691b71852c7327616daea097ac822f5a687d55",
+    "benchmarks/shapes/comparison.json": "5c103c7c3d324f96a3d332ff5e140e53516c4ac9e995ffb81d6765068a9c71ba",
+    "benchmarks/shapes/w4a16.json": "94cdac8279e9d3c6686e033359fb3dfd025b0baad7f51e906a76c0959d272052",
+    "benchmarks/w4a16_benchmark.py": "900713321f9eec07b6f2cbe1a2ed6aa957c44b661f6caa7ee4d9771aef6b05b3"
+  },
+  "python_version": "3.11.14",
+  "packages": {
+    "torch": "2.10.0+cu130",
+    "triton": "3.6.0",
+    "nvidia-cutlass-dsl": "4.5.2",
+    "cuda-python": "13.0.3",
+    "cuda-bindings": "13.0.3"
+  },
+  "cuda_runtime": "13.0",
+  "cuda_toolkit": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Tue_Dec_16_07:23:41_PM_PST_2025\nCuda compilation tools, release 13.1, V13.1.115\nBuild cuda_13.1.r13.1/compiler.37061995_0",
+  "nsys": "NVIDIA Nsight Systems version 2025.5.2.266-255236693005v0",
+  "ncu": "NVIDIA (R) Nsight Compute Command Line Profiler\nCopyright (c) 2018-2025 NVIDIA Corporation\nVersion 2025.4.1.0 (build 37053803) (public-release)",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "build_flags": {
+    "cxx": [
+      "-O3"
+    ],
+    "cuda": [
+      "-O3"
+    ],
+    "arch": "12.0"
+  },
+  "cuda_available": true,
+  "gpu_before": "name, driver_version, memory.total [MiB], power.limit [W], power.draw [W], temperature.gpu, pstate, clocks.current.graphics [MHz], clocks.current.memory [MHz]\nNVIDIA GeForce RTX 5050 Laptop GPU, 595.91.07, 8151 MiB, [N/A], 4.43 W, 45, P8, 180 MHz, 405 MHz",
+  "power_policy": "Observed only; clocks and power limits are not controlled.",
+  "status": "PASS",
+  "rows": [
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "cuda",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "cuda_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "triton",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "triton_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "cute",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        3,
+        33,
+        7
+      ],
+      "group_size": 32,
+      "backend": "cute_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "cuda",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "cuda_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "triton",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "triton_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "cute",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        7,
+        129,
+        9
+      ],
+      "group_size": 64,
+      "backend": "cute_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "cuda",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "cuda_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "triton",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "triton_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "cute",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        2,
+        257,
+        5
+      ],
+      "group_size": 256,
+      "backend": "cute_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "cuda",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "cuda_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "triton",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "triton_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "cute",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "shape": [
+        16,
+        4096,
+        17
+      ],
+      "group_size": 128,
+      "backend": "cute_rows",
+      "direct": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "inputs_unchanged": true,
+      "changed_input_graph": {
+        "status": "PASS",
+        "finite": true,
+        "max_abs_err": 0.0,
+        "scaled_max_err": 0.0,
+        "rel_l2_err": 0.0,
+        "tolerance": {
+          "atol": 0.002,
+          "rtol": 0.002,
+          "rel_l2": 0.001
+        }
+      },
+      "status": "PASS"
+    }
+  ]
+}

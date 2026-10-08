@@ -1,0 +1,741 @@
+{
+  "ncu": [
+    {
+      "case": "hidden_m16--cuda_fast",
+      "kernel": "void decode_gemv_rows_kernel<0>(const float *, const float *, const float *, float *, long, long, long, bool)",
+      "metrics": {
+        "duration_us": {
+          "value": 4588.2880000000005,
+          "unit": "us",
+          "raw_value": 4.588288,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 64.047704,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 18.51462,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 4.088618,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 22.501854,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 97.321545,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 4.27,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.520986,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 13.685957,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 76.560599,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--cute_fast",
+      "kernel": "kernel_cutlass__rows_kernel_tensorptrf32_gmem_o_655361_tensorptrf32_gmem_o_167772161_tensorptrf32_gmem_o_40961_tensorptrf32_gmem_o_655361______0",
+      "metrics": {
+        "duration_us": {
+          "value": 1650.272,
+          "unit": "us",
+          "raw_value": 1.650272,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 170.917298,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 49.468297,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 3.365868,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 62.536873,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 44.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 79.659307,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 5.12,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.605793,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 41.071819,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 19.813462,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--triton_fast",
+      "kernel": "_split_rows_kernel",
+      "metrics": {
+        "duration_us": {
+          "value": 290.976,
+          "unit": "us",
+          "raw_value": 290.976,
+          "raw_unit": "us"
+        },
+        "dram_gbps": {
+          "value": 276.969097,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 80.068061,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 19.510365,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 82.56003,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 59.808865,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 1.42,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 1.649672,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 53.221988,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 3.013589,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rmsnorm_4096x4096--cuda_fast",
+      "kernel": "void <unnamed>::rmsnorm_register_kernel<4096>(const float4 *, const float4 *, const float4 *, float4 *, float4 *, float)",
+      "metrics": {
+        "duration_us": {
+          "value": 990.336,
+          "unit": "us",
+          "raw_value": 990.336,
+          "raw_unit": "us"
+        },
+        "dram_gbps": {
+          "value": 263.744087,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 91.652833,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 0.202403,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 9.519491,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 35.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 96.152721,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 34.13,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.093301,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 7.515582,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 113.863082,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rmsnorm_4096x4096--cute_fast",
+      "kernel": "kernel_cutlass__register_rmsnorm_kernel_tensorptrf32_gmem_o_167772161_tensorptrf32_gmem_o_167772161_tensorptrf32_gmem_o_40961_tensorptrf32_gmem_o_167772161_tensorptrf32_gmem_o_167772161_4_0",
+      "metrics": {
+        "duration_us": {
+          "value": 1013.28,
+          "unit": "us",
+          "raw_value": 1.01328,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 258.412506,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 89.797461,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 0.171553,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 28.530453,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 97.862735,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 34.13,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.125209,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 9.988577,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 102.756972,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rmsnorm_4096x4096--triton_fast",
+      "kernel": "_fused_residual_rmsnorm_kernel",
+      "metrics": {
+        "duration_us": {
+          "value": 1013.8879999999999,
+          "unit": "us",
+          "raw_value": 1.013888,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 261.017296,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 90.703529,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 0.78916,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 8.307053,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 80.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 48.387208,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 34.13,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.102019,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 6.246599,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 29.377755,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rope_16t_hnd_partial--cuda_fast",
+      "kernel": "<unnamed>::rope_append_f32_kernel(const float *, const float *, const float *, const float *, const float *, const long *, const long *, const long *, float *, float *, float *, long, long, long, long, long, long, long, bool, bool)",
+      "metrics": {
+        "duration_us": {
+          "value": 8.768,
+          "unit": "us",
+          "raw_value": 8.768,
+          "raw_unit": "us"
+        },
+        "dram_gbps": {
+          "value": 24.963504,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 7.295844,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 10.282939,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 19.304259,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 36.605038,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 0.67,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 1.117457,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 34.035933,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 6.106599,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rope_16t_hnd_partial--cute_fast",
+      "kernel": "kernel_cutlass__fused_kernel_tensorptrf32_gmem_o_327681_tensorptrf32_gmem_o_81921_tensorptrf32_gmem_o_81921_tensorptrf32_gmem_o_15361_tensorptrf32_gmem_o_15361_tensorptri64_gmem_o_161_ten_0",
+      "metrics": {
+        "duration_us": {
+          "value": 7.456,
+          "unit": "us",
+          "raw_value": 7.456,
+          "raw_unit": "us"
+        },
+        "dram_gbps": {
+          "value": 28.703863,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 10.048077,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 5.708823,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 18.091043,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 41.250561,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 0.67,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.719397,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 28.655252,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 8.271916,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "rope_16t_hnd_partial--triton_fast",
+      "kernel": "_fused_kernel",
+      "metrics": {
+        "duration_us": {
+          "value": 6.176,
+          "unit": "us",
+          "raw_value": 6.176,
+          "raw_unit": "us"
+        },
+        "dram_gbps": {
+          "value": 38.507772,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 13.502907,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 8.060398,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 5.715671,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 30.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 20.036154,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 0.67,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 0.204486,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 12.058588,
+          "unit": "%"
+        },
+        "long_scoreboard_per_issue": {
+          "value": 16.302072,
+          "unit": "inst"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    }
+  ],
+  "torch_launches": [
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "triton_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "cuda_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "pytorch",
+      "kernels_per_call": 7.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "torch_compile",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "triton",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "cuda",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "cute_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rmsnorm_256x4096",
+      "backend": "cute",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "triton",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "pytorch",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cublaslt",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cublas",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "triton_fast",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cute_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cuda",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cute",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "torch_compile",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cuda_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cublaslt",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cute_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cuda_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "pytorch",
+      "kernels_per_call": 3.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "triton_fast",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cute",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cuda",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "torch_compile",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cublas",
+      "kernels_per_call": 3.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "triton",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "cuda",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "triton_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "cuda_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "cute_fast",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "torch_compile",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "triton",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "pytorch",
+      "kernels_per_call": 25.0,
+      "copies_per_call": 2.0
+    },
+    {
+      "case": "rope_16t_hnd_partial",
+      "backend": "cute",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    }
+  ],
+  "metrics": {
+    "duration_us": "gpu__time_duration.sum",
+    "dram_gbps": "dram__bytes.sum.per_second",
+    "dram_sol_pct": "gpu__dram_throughput.avg.pct_of_peak_sustained_elapsed",
+    "l2_hit_pct": "lts__t_sector_hit_rate.pct",
+    "sm_sol_pct": "sm__throughput.avg.pct_of_peak_sustained_elapsed",
+    "registers": "launch__registers_per_thread",
+    "occupancy_pct": "sm__warps_active.avg.pct_of_peak_sustained_active",
+    "waves": "launch__waves_per_multiprocessor",
+    "eligible_warps": "smsp__warps_eligible.avg.per_cycle_active",
+    "issue_pct": "smsp__issue_active.avg.pct_of_peak_sustained_active",
+    "long_scoreboard_per_issue": "smsp__average_warps_issue_stalled_long_scoreboard_per_issue_active.ratio",
+    "tensor_elapsed_pct": "sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_elapsed"
+  },
+  "note": "NCU is diagnostic; durations may reverse unprofiled rankings."
+}

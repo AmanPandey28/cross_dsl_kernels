@@ -1,0 +1,427 @@
+{
+  "ncu": [
+    {
+      "case": "hidden_m16--cuda-csv",
+      "kernel": "void w4a16_warp_kernel<1>(const __half *, const unsigned char *, const __half *, const __half *, __half *, int, int, int, int, bool)",
+      "metrics": {
+        "duration_us": {
+          "value": 3006.944,
+          "unit": "us",
+          "raw_value": 3.006944,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 2.925878,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 0.854308,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 93.794315,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 81.200799,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 32.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 98.02232,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 68.27,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 4.789366,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 81.376934,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--cuda_rows-csv",
+      "kernel": "void w4a16_warp_kernel<4>(const __half *, const unsigned char *, const __half *, const __half *, __half *, int, int, int, int, bool)",
+      "metrics": {
+        "duration_us": {
+          "value": 1731.424,
+          "unit": "us",
+          "raw_value": 1.731424,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 5.082965,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 1.766293,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 79.487146,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 68.681165,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 37.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 98.074834,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 17.07,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 2.356492,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 52.287461,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--cute-csv",
+      "kernel": "kernel_cutlass__w4a16_kernel_tensorptrf16_gmem_o_655361_tensorptri8_gmem_o_83886081_tensorptrf16_gmem_o_1310721_tensorptrf16_gmem_o_40961_tensorptrf16_gmem_o_655361__4096_4096_128_1_True_0",
+      "metrics": {
+        "duration_us": {
+          "value": 1820.128,
+          "unit": "us",
+          "raw_value": 1.820128,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 4.832152,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 1.679192,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 93.870117,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 93.804553,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 39.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 95.495047,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 68.27,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 4.586745,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 77.765265,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--cute_rows-csv",
+      "kernel": "kernel_cutlass__w4a16_kernel_tensorptrf16_gmem_o_655361_tensorptri8_gmem_o_83886081_tensorptrf16_gmem_o_1310721_tensorptrf16_gmem_o_40961_tensorptrf16_gmem_o_655361__4096_4096_128_4_True_0",
+      "metrics": {
+        "duration_us": {
+          "value": 1111.7440000000001,
+          "unit": "us",
+          "raw_value": 1.111744,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 7.912268,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 2.749619,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 78.272679,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 97.217432,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 42.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 80.526252,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 20.48,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 3.134126,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 71.183389,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--triton-csv",
+      "kernel": "_w4a16_kernel",
+      "metrics": {
+        "duration_us": {
+          "value": 3796.544,
+          "unit": "us",
+          "raw_value": 3.796544,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 2.317695,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 0.805396,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 94.238898,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 68.7755,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 40.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 99.091386,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 68.27,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 1.561321,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 52.681573,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    },
+    {
+      "case": "hidden_m16--triton_rows-csv",
+      "kernel": "_w4a16_kernel",
+      "metrics": {
+        "duration_us": {
+          "value": 1176.768,
+          "unit": "us",
+          "raw_value": 1.176768,
+          "raw_unit": "ms"
+        },
+        "dram_gbps": {
+          "value": 7.479197,
+          "unit": "Gbyte/s"
+        },
+        "dram_sol_pct": {
+          "value": 2.599252,
+          "unit": "%"
+        },
+        "l2_hit_pct": {
+          "value": 85.18837,
+          "unit": "%"
+        },
+        "sm_sol_pct": {
+          "value": 63.129098,
+          "unit": "%"
+        },
+        "registers": {
+          "value": 72.0,
+          "unit": "register/thread"
+        },
+        "occupancy_pct": {
+          "value": 57.356874,
+          "unit": "%"
+        },
+        "waves": {
+          "value": 29.26,
+          "unit": ""
+        },
+        "eligible_warps": {
+          "value": 1.686045,
+          "unit": "warp"
+        },
+        "issue_pct": {
+          "value": 59.210342,
+          "unit": "%"
+        },
+        "tensor_elapsed_pct": {
+          "value": 0.0,
+          "unit": "%"
+        }
+      }
+    }
+  ],
+  "torch_launches": [
+    {
+      "case": "hidden_m1",
+      "backend": "triton_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "torch_dense",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "torch_dequant",
+      "kernels_per_call": 15.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cuda_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cute",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cute_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "triton",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "cuda",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "torch_predequant",
+      "kernels_per_call": 2.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cuda",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "torch_predequant",
+      "kernels_per_call": 3.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cute_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cute",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "triton",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "torch_dequant",
+      "kernels_per_call": 16.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "cuda_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "triton_rows",
+      "kernels_per_call": 1.0,
+      "copies_per_call": 0.0
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "torch_dense",
+      "kernels_per_call": 3.0,
+      "copies_per_call": 0.0
+    }
+  ],
+  "note": "NCU diagnostic; missing metrics are unavailable, not zero; duration units normalized by existing tested parser."
+}

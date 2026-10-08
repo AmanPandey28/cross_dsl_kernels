@@ -1,5 +1,6 @@
 #include <string>
 #include <torch/extension.h>
+#include <ATen/MemoryOverlap.h>
 
 torch::Tensor crossdsl_rope_gqa_paged_kv_append_cuda(
     torch::Tensor q,
@@ -15,7 +16,7 @@ torch::Tensor crossdsl_rope_gqa_paged_kv_append_cuda(
     int64_t page_size,
     int64_t rope_dim,
     bool interleaved,
-    bool cache_layout_hnd);
+    bool cache_layout_hnd, bool fused);
 
 bool validate_common_tensor(torch::Tensor tensor, const char* name, torch::ScalarType dtype) {
   TORCH_CHECK(tensor.is_cuda(), name, " must be a CUDA tensor");
@@ -38,7 +39,7 @@ torch::Tensor rope_gqa_paged_kv_append(
     int64_t page_size,
     int64_t rope_dim,
     bool interleaved,
-    const std::string& kv_layout) {
+    const std::string& kv_layout, bool fused) {
   validate_common_tensor(q, "q", torch::kFloat32);
   validate_common_tensor(k, "k", torch::kFloat32);
   validate_common_tensor(v, "v", torch::kFloat32);
@@ -68,6 +69,7 @@ torch::Tensor rope_gqa_paged_kv_append(
   TORCH_CHECK(tokens > 0, "tokens must be positive");
   TORCH_CHECK(q_heads > 0, "q_heads must be positive");
   TORCH_CHECK(kv_heads > 0, "kv_heads must be positive");
+  TORCH_CHECK(q_heads % kv_heads == 0, "q_heads must be divisible by kv_heads");
   TORCH_CHECK(head_dim > 0, "head_dim must be positive");
   TORCH_CHECK(k.size(0) == tokens && v.size(0) == tokens, "q, k, and v token counts must match");
   TORCH_CHECK(k.size(2) == head_dim && v.size(2) == head_dim, "q, k, and v head_dim must match");
@@ -105,6 +107,12 @@ torch::Tensor rope_gqa_paged_kv_append(
   TORCH_CHECK(k_cache.get_device() == device, "k_cache must be on the same CUDA device as q");
   TORCH_CHECK(v_cache.get_device() == device, "v_cache must be on the same CUDA device as q");
 
+  at::assert_no_overlap(k_cache, v_cache);
+  for (const auto& input : {q, k, v, cos, sin, positions, page_table, sequence_ids}) {
+    at::assert_no_overlap(k_cache, input);
+    at::assert_no_overlap(v_cache, input);
+  }
+
   return crossdsl_rope_gqa_paged_kv_append_cuda(
       q,
       k,
@@ -119,12 +127,18 @@ torch::Tensor rope_gqa_paged_kv_append(
       page_size,
       rope_dim,
       interleaved,
-      cache_layout_hnd);
+      cache_layout_hnd, fused);
 }
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def(
       "rope_gqa_paged_kv_append",
       &rope_gqa_paged_kv_append,
-      "CrossDSL RoPE plus GQA paged-KV append CUDA baseline");
+      "CrossDSL RoPE plus GQA paged-KV append CUDA baseline",
+      pybind11::arg("q"), pybind11::arg("k"), pybind11::arg("v"),
+      pybind11::arg("cos"), pybind11::arg("sin"), pybind11::arg("positions"),
+      pybind11::arg("page_table"), pybind11::arg("sequence_ids"),
+      pybind11::arg("k_cache"), pybind11::arg("v_cache"),
+      pybind11::arg("page_size"), pybind11::arg("rope_dim"),
+      pybind11::arg("interleaved"), pybind11::arg("kv_layout"), pybind11::arg("fused") = false);
 }

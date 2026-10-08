@@ -33,12 +33,16 @@ def _load_kernel() -> Any:
         offsets = tl.arange(0, block_k)
         mask = offsets < k_size
 
-        x = tl.load(x_ptr + out_row * k_size + offsets, mask=mask, other=0.0).to(tl.float32)
+        x = tl.load(x_ptr + out_row * k_size + offsets, mask=mask, other=0.0).to(
+            tl.float32
+        )
         if weight_is_nk:
             weight_offsets = out_col * k_size + offsets
         else:
             weight_offsets = offsets * n_size + out_col
-        weight = tl.load(weight_ptr + weight_offsets, mask=mask, other=0.0).to(tl.float32)
+        weight = tl.load(weight_ptr + weight_offsets, mask=mask, other=0.0).to(
+            tl.float32
+        )
         acc = tl.sum(tl.where(mask, x * weight, 0.0), axis=0)
         if has_bias:
             acc += tl.load(bias_ptr + out_col).to(tl.float32)
@@ -75,13 +79,17 @@ def _load_tiled_kernel() -> Any:
         for k_start in range(0, k_size, block_k):
             k_offsets = k_start + k_offsets_base
             k_mask = k_offsets < k_size
-            x = tl.load(x_ptr + out_row * k_size + k_offsets, mask=k_mask, other=0.0).to(tl.float32)
+            x = tl.load(
+                x_ptr + out_row * k_size + k_offsets, mask=k_mask, other=0.0
+            ).to(tl.float32)
             if weight_is_nk:
                 weight_offsets = n_offsets[None, :] * k_size + k_offsets[:, None]
             else:
                 weight_offsets = k_offsets[:, None] * n_size + n_offsets[None, :]
             weight_mask = k_mask[:, None] & n_mask[None, :]
-            weight = tl.load(weight_ptr + weight_offsets, mask=weight_mask, other=0.0).to(tl.float32)
+            weight = tl.load(
+                weight_ptr + weight_offsets, mask=weight_mask, other=0.0
+            ).to(tl.float32)
             acc += tl.sum(x[:, None] * weight, axis=0)
 
         if has_bias:
@@ -95,7 +103,9 @@ def _select_tiled_block_k(k_size: int) -> int:
     return min(_next_power_of_2(k_size), 256)
 
 
-def _validate_decode_gemv_inputs(x: Any, weight: Any, bias: Any | None, weight_layout: str) -> tuple[int, int, int, bool]:
+def _validate_decode_gemv_inputs(
+    x: Any, weight: Any, bias: Any | None, weight_layout: str
+) -> tuple[int, int, int, bool]:
     import torch
 
     if not x.is_cuda or not weight.is_cuda:
@@ -122,7 +132,11 @@ def _validate_decode_gemv_inputs(x: Any, weight: Any, bias: Any | None, weight_l
         raise ValueError("x K dimension must match weight K dimension")
     if bias is not None and (bias.dim() != 1 or int(bias.size(0)) != n_size):
         raise ValueError("bias must be shaped [N]")
-    if not x.is_contiguous() or not weight.is_contiguous() or (bias is not None and not bias.is_contiguous()):
+    if (
+        not x.is_contiguous()
+        or not weight.is_contiguous()
+        or (bias is not None and not bias.is_contiguous())
+    ):
         raise ValueError("x, weight, and bias must be contiguous")
     if x.device != weight.device or (bias is not None and x.device != bias.device):
         raise ValueError("x, weight, and bias must be on the same CUDA device")
@@ -133,11 +147,15 @@ def _validate_decode_gemv_inputs(x: Any, weight: Any, bias: Any | None, weight_l
     return m_size, k_size, n_size, weight_is_nk
 
 
-def decode_gemv_triton(x: Any, weight: Any, bias: Any | None = None, *, weight_layout: str = "KN") -> Any:
+def decode_gemv_triton(
+    x: Any, weight: Any, bias: Any | None = None, *, weight_layout: str = "KN"
+) -> Any:
     import torch
 
-    m_size, k_size, n_size, weight_is_nk = _validate_decode_gemv_inputs(x, weight, bias, weight_layout)
-    triton, kernel = _load_kernel()
+    m_size, k_size, n_size, weight_is_nk = _validate_decode_gemv_inputs(
+        x, weight, bias, weight_layout
+    )
+    _triton, kernel = _load_kernel()
     block_k = _next_power_of_2(k_size)
     y = torch.empty((m_size, n_size), device=x.device, dtype=torch.float32)
     bias_ptr = bias if bias is not None else y
@@ -176,17 +194,21 @@ def decode_gemv_triton_tiled(
 ) -> Any:
     import torch
 
-    m_size, k_size, n_size, weight_is_nk = _validate_decode_gemv_inputs(x, weight, bias, weight_layout)
+    m_size, k_size, n_size, weight_is_nk = _validate_decode_gemv_inputs(
+        x, weight, bias, weight_layout
+    )
     if block_n <= 0 or block_n & (block_n - 1):
         raise ValueError("block_n must be a positive power of two")
-    selected_block_k = int(block_k) if block_k is not None else _select_tiled_block_k(k_size)
+    selected_block_k = (
+        int(block_k) if block_k is not None else _select_tiled_block_k(k_size)
+    )
     if selected_block_k <= 0 or selected_block_k & (selected_block_k - 1):
         raise ValueError("block_k must be a positive power of two")
     selected_num_warps = int(num_warps) if num_warps is not None else 4
     if num_warps is None and block_n >= 16 and selected_block_k >= 256:
         selected_num_warps = 8
-    if selected_num_warps <= 0:
-        raise ValueError("num_warps must be positive")
+    if selected_num_warps not in {1, 2, 4, 8, 16, 32}:
+        raise ValueError("num_warps must be a supported power of two")
     selected_num_stages = int(num_stages) if num_stages is not None else 3
     if selected_num_stages <= 0:
         raise ValueError("num_stages must be positive")

@@ -2,17 +2,11 @@ from __future__ import annotations
 
 from typing import Any
 
-import cutlass.cute as cute
+from cuda.bindings import driver as cuda
+from cutlass import cute
 from cutlass._mlir.dialects import nvvm
-from cutlass.cutlass_dsl import T
 from cutlass.cute.runtime import from_dlpack
-
-
-def _next_power_of_2(value: int) -> int:
-    if value <= 0:
-        raise ValueError("value must be positive")
-    return 1 << (value - 1).bit_length()
-
+from cutlass.cutlass_dsl import T
 
 _THREADS = 128
 
@@ -79,6 +73,7 @@ def _launch_rotate_q(
     cos_width,
     rope_dim,
     interleaved,
+    stream: cuda.CUstream,
 ):
     _rotate_q_kernel(
         q_cute,
@@ -92,7 +87,7 @@ def _launch_rotate_q(
         cos_width,
         rope_dim,
         interleaved,
-    ).launch(grid=[tokens, q_heads, 1], block=[_THREADS, 1, 1])
+    ).launch(grid=[tokens, q_heads, 1], block=[_THREADS, 1, 1], stream=stream)
 
 
 @cute.kernel
@@ -228,9 +223,6 @@ def _append_kv_hnd_kernel(
         k_cache[b_cache] = a_val * s + b_val * c
         p = p + bdim
 
-        a_dim_init = a_dim
-        b_dim_init = b_dim
-
     d = tidx
     while d < head_dim:
         cache_idx = ((physical_page * kv_heads + head) * page_size + off) * head_dim + d
@@ -259,6 +251,7 @@ def _launch_append_kv_nhd(
     page_size,
     rope_dim,
     interleaved,
+    stream: cuda.CUstream,
 ):
     _append_kv_nhd_kernel(
         k_cute,
@@ -278,7 +271,7 @@ def _launch_append_kv_nhd(
         page_size,
         rope_dim,
         interleaved,
-    ).launch(grid=[tokens, kv_heads, 1], block=[_THREADS, 1, 1])
+    ).launch(grid=[tokens, kv_heads, 1], block=[_THREADS, 1, 1], stream=stream)
 
 
 @cute.jit
@@ -300,6 +293,7 @@ def _launch_append_kv_hnd(
     page_size,
     rope_dim,
     interleaved,
+    stream: cuda.CUstream,
 ):
     _append_kv_hnd_kernel(
         k_cute,
@@ -319,7 +313,7 @@ def _launch_append_kv_hnd(
         page_size,
         rope_dim,
         interleaved,
-    ).launch(grid=[tokens, kv_heads, 1], block=[_THREADS, 1, 1])
+    ).launch(grid=[tokens, kv_heads, 1], block=[_THREADS, 1, 1], stream=stream)
 
 
 def _validate_inputs(
@@ -378,6 +372,8 @@ def _validate_inputs(
     head_dim = int(q.size(2))
     if tokens <= 0 or q_heads <= 0 or kv_heads <= 0 or head_dim <= 0:
         raise ValueError("tokens, q_heads, kv_heads, and head_dim must be positive")
+    if q_heads % kv_heads:
+        raise ValueError("q_heads must be divisible by kv_heads")
     if int(k.size(0)) != tokens or int(v.size(0)) != tokens:
         raise ValueError("q, k, and v token counts must match")
     if int(k.size(2)) != head_dim or int(v.size(2)) != head_dim:
@@ -426,6 +422,12 @@ def _validate_inputs(
     for name, (tensor, _) in tensors.items():
         if tensor.device != device:
             raise ValueError(f"{name} must be on the same CUDA device as q")
+
+    from crossdsl_kernels.contracts import validate_cache_storage
+
+    validate_cache_storage(
+        (q, k, v, cos, sin, positions, page_table, sequence_ids), k_cache, v_cache
+    )
 
     return (
         tokens,
@@ -488,6 +490,7 @@ def rope_gqa_paged_kv_append_cute(
     sequence_ids_flat = sequence_ids.reshape(-1)
     k_cache_flat = k_cache.reshape(-1)
     v_cache_flat = v_cache.reshape(-1)
+    stream = cuda.CUstream(torch.cuda.current_stream(q.device).cuda_stream)
 
     _launch_rotate_q(
         from_dlpack(q_flat),
@@ -501,6 +504,7 @@ def rope_gqa_paged_kv_append_cute(
         cos_width,
         rope_dim,
         int(interleaved),
+        stream,
     )
     if cache_layout_hnd:
         _launch_append_kv_hnd(
@@ -521,6 +525,7 @@ def rope_gqa_paged_kv_append_cute(
             int(page_size),
             int(rope_dim),
             int(interleaved),
+            stream,
         )
     else:
         _launch_append_kv_nhd(
@@ -541,6 +546,7 @@ def rope_gqa_paged_kv_append_cute(
             int(page_size),
             int(rope_dim),
             int(interleaved),
+            stream,
         )
 
     return q_out

@@ -1,34 +1,17 @@
 __pycache__/
 *.py[cod]
-*.so
 *.egg-info/
-dist/
+.venv/
+.pytest_cache/
 build/
-*.o
-*.ptx
-*.cubin
-
-# CUDA build artifacts
-csrc/build/
-
-# Profiler outputs
+dist/
+results/build/
+results/runs/
+results/analysis/
+results/collected/
+*.ncu-rep
 *.nsys-rep
 *.sqlite
-**/traces/
-**/torch_trace*.json
-
-# Results
-results/
-*.qpstrm
-*.qdstrm
-*.qdrep
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
+*.so
+*.cubin
+.env

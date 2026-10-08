@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from functools import lru_cache
 from typing import Any
 
@@ -32,7 +33,9 @@ def _load_kernel() -> Any:
         row_offsets = row * hidden + offsets
 
         x = tl.load(x_ptr + row_offsets, mask=mask, other=0.0).to(tl.float32)
-        residual = tl.load(residual_ptr + row_offsets, mask=mask, other=0.0).to(tl.float32)
+        residual = tl.load(residual_ptr + row_offsets, mask=mask, other=0.0).to(
+            tl.float32
+        )
         r = x + residual
         sum_squares = tl.sum(tl.where(mask, r * r, 0.0), axis=0)
         inv_rms = tl.rsqrt(sum_squares / hidden + eps)
@@ -45,12 +48,18 @@ def _load_kernel() -> Any:
     return triton, _fused_residual_rmsnorm_kernel
 
 
-def fused_residual_rmsnorm_triton(x: Any, residual: Any, weight: Any, eps: float) -> tuple[Any, Any]:
+def fused_residual_rmsnorm_triton(
+    x: Any, residual: Any, weight: Any, eps: float, *, num_warps: int | None = None
+) -> tuple[Any, Any]:
     import torch
 
     if not x.is_cuda or not residual.is_cuda or not weight.is_cuda:
         raise ValueError("x, residual, and weight must be CUDA tensors")
-    if x.dtype != torch.float32 or residual.dtype != torch.float32 or weight.dtype != torch.float32:
+    if (
+        x.dtype != torch.float32
+        or residual.dtype != torch.float32
+        or weight.dtype != torch.float32
+    ):
         raise ValueError("Triton RMSNorm v0 supports float32 tensors only")
     if x.dim() != 2:
         raise ValueError("x must be shaped [rows, hidden]")
@@ -58,7 +67,11 @@ def fused_residual_rmsnorm_triton(x: Any, residual: Any, weight: Any, eps: float
         raise ValueError("residual must match x shape")
     if weight.dim() != 1 or weight.numel() != x.size(1):
         raise ValueError("weight must be shaped [hidden]")
-    if not x.is_contiguous() or not residual.is_contiguous() or not weight.is_contiguous():
+    if (
+        not x.is_contiguous()
+        or not residual.is_contiguous()
+        or not weight.is_contiguous()
+    ):
         raise ValueError("x, residual, and weight must be contiguous")
     if x.device != residual.device or x.device != weight.device:
         raise ValueError("x, residual, and weight must be on the same CUDA device")
@@ -67,16 +80,17 @@ def fused_residual_rmsnorm_triton(x: Any, residual: Any, weight: Any, eps: float
     hidden = int(x.size(1))
     if rows <= 0 or hidden <= 0:
         raise ValueError("rows and hidden must be positive")
+    if not math.isfinite(eps) or eps <= 0:
+        raise ValueError("eps must be finite and positive")
 
-    triton, kernel = _load_kernel()
+    _triton, kernel = _load_kernel()
     block_size = _next_power_of_2(hidden)
     y = torch.empty_like(x)
     residual_out = torch.empty_like(residual)
-    num_warps = 4
-    if block_size >= 2048:
-        num_warps = 8
-    if block_size >= 8192:
-        num_warps = 16
+    if num_warps is None:
+        num_warps = 16 if block_size >= 8192 else 8 if block_size >= 2048 else 4
+    if num_warps not in {1, 2, 4, 8, 16, 32}:
+        raise ValueError("num_warps must be a supported power of two")
 
     kernel[(rows,)](
         x,

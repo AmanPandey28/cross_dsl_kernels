@@ -1,16 +1,17 @@
 #include <torch/extension.h>
+#include <cmath>
 
 std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
     torch::Tensor x,
     torch::Tensor residual,
     torch::Tensor weight,
-    double eps);
+    double eps, bool fast);
 
 std::vector<torch::Tensor> fused_residual_rmsnorm(
     torch::Tensor x,
     torch::Tensor residual,
     torch::Tensor weight,
-    double eps) {
+    double eps, bool fast) {
   TORCH_CHECK(x.is_cuda(), "x must be a CUDA tensor");
   TORCH_CHECK(residual.is_cuda(), "residual must be a CUDA tensor");
   TORCH_CHECK(weight.is_cuda(), "weight must be a CUDA tensor");
@@ -28,13 +29,15 @@ std::vector<torch::Tensor> fused_residual_rmsnorm(
   TORCH_CHECK(x.get_device() == weight.get_device(), "x and weight must be on the same CUDA device");
   TORCH_CHECK(x.size(0) > 0, "rows must be positive");
   TORCH_CHECK(x.size(1) > 0, "hidden size must be positive");
-  TORCH_CHECK(eps > 0.0, "eps must be positive");
-  return crossdsl_fused_residual_rmsnorm_cuda(x, residual, weight, eps);
+  TORCH_CHECK(std::isfinite(eps) && eps > 0.0, "eps must be finite and positive");
+  return crossdsl_fused_residual_rmsnorm_cuda(x, residual, weight, eps, fast);
 }
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
   m.def(
       "fused_residual_rmsnorm",
       &fused_residual_rmsnorm,
-      "CrossDSL fused residual RMSNorm CUDA kernel");
+      "CrossDSL fused residual RMSNorm CUDA kernel",
+      pybind11::arg("x"), pybind11::arg("residual"), pybind11::arg("weight"),
+      pybind11::arg("eps"), pybind11::arg("fast") = false);
 }

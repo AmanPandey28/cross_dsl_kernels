@@ -4,20 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "crossdsl-kernels"
-version = "0.1.0"
-description = "Cross-DSL GPU kernel implementations of transformer-inference primitives (RMSNorm, GEMV, RoPE paged-KV)"
-requires-python = ">=3.10"
+version = "0.0.0"
+description = "Measured transformer memory and decode kernels in CUDA, Triton and CuTe DSL"
 readme = "README.md"
-license = {text = "MIT"}
-dependencies = []
+requires-python = ">=3.10"
+dependencies = ["torch>=2.10"]
 
 [project.optional-dependencies]
-dev = [
-    "pytest>=8",
-    "torch>=2.5",
-    "triton>=3.0",
-    "nvidia-cutlass-dsl>=4.5",
-]
+gpu = ["triton==3.6.0", "nvidia-cutlass-dsl==4.5.2", "cuda-bindings==13.0.3", "ninja"]
+plots = ["matplotlib>=3.8"]
+
+[project.urls]
+Repository = "https://github.com/AmanPandey28/cross_dsl_kernels"
 
 [tool.setuptools.packages.find]
 where = ["src"]

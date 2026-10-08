@@ -1,0 +1,21 @@
+{
+  "format": "NK uint8, low nibble first, signed q = nibble - 8",
+  "cases": [
+    {"name": "one_element", "m": 1, "k": 1, "n": 1, "group_size": 32, "bias": false, "smoke": true},
+    {"name": "odd_tail", "m": 3, "k": 33, "n": 7, "group_size": 32, "bias": true, "smoke": true},
+    {"name": "group_tail", "m": 7, "k": 129, "n": 9, "group_size": 64, "bias": true, "smoke": true},
+    {"name": "zero_weights", "m": 2, "k": 257, "n": 5, "group_size": 256, "bias": true, "zero": true},
+    {"name": "tiny_m1", "m": 1, "k": 1024, "n": 1024, "group_size": 128, "bias": false, "smoke": true},
+    {"name": "tiny_m8", "m": 8, "k": 1024, "n": 1024, "group_size": 128, "bias": true},
+    {"name": "hidden_m1", "m": 1, "k": 4096, "n": 4096, "group_size": 128, "bias": false},
+    {"name": "hidden_m2", "m": 2, "k": 4096, "n": 4096, "group_size": 128, "bias": true},
+    {"name": "hidden_m4", "m": 4, "k": 4096, "n": 4096, "group_size": 128, "bias": true},
+    {"name": "hidden_m8", "m": 8, "k": 4096, "n": 4096, "group_size": 128, "bias": true},
+    {"name": "hidden_m16", "m": 16, "k": 4096, "n": 4096, "group_size": 128, "bias": true},
+    {"name": "mlp_up_m1", "m": 1, "k": 4096, "n": 11008, "group_size": 128, "bias": false},
+    {"name": "mlp_up_m2", "m": 2, "k": 4096, "n": 11008, "group_size": 128, "bias": false},
+    {"name": "mlp_up_m4", "m": 4, "k": 4096, "n": 11008, "group_size": 128, "bias": false},
+    {"name": "mlp_up_m8", "m": 8, "k": 4096, "n": 11008, "group_size": 128, "bias": false},
+    {"name": "mlp_up_m16", "m": 16, "k": 4096, "n": 11008, "group_size": 128, "bias": false}
+  ]
+}

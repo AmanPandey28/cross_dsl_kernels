@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "scope": "RTX 5050 Laptop GPU / SM120; forward-only local kernel experiments",
+  "export_policy": "Numerical rows and samples unchanged; private metadata omitted or made portable. Original artifact SHA256 retained.",
+  "production_source_sha256": {
+    "src/crossdsl_kernels/__init__.py": "1fefef8c0940a5904f3617c3a61a95b27154c79043f524a9040a35115262d7c4",
+    "src/crossdsl_kernels/api.py": "25c8c101de4b7f51d40cf12ff5269a446283c198b2d3195b65973b17aa4ccc56",
+    "src/crossdsl_kernels/contracts.py": "61f0f899a66d1aaf1bc3d88bf3591857cd7db71ea94a6f6200f32dce7cf9ecd8",
+    "src/crossdsl_kernels/cute/__init__.py": "32a41648ea4258b21139a1d8fb6a57ca3802521ed3d50155a9b6d278ee7dfecd",
+    "src/crossdsl_kernels/cute/gemv.py": "2bee0ba52bd5e20cc4ced5ff0dd1cbee79f1a63291e2d676a49b81cd0afbb575",
+    "src/crossdsl_kernels/cute/gemv_rows.py": "b3087837cdc3eacebde7521a5b82a3ce2b6c551952dae5db8e5317beb23b70be",
+    "src/crossdsl_kernels/cute/launch.py": "743bf843cf52c336e9a0cc2089b692a1bc3438812432c2ad7b823b485db4005b",
+    "src/crossdsl_kernels/cute/rmsnorm.py": "dfc6f3dab4c10fa549055fdcb12ca04238edd4e190b96174f41b421c11a418f9",
+    "src/crossdsl_kernels/cute/rope_kv.py": "dfd04d56fbff44af769cb373d52f83568480e5dfe9d336560a7872ce1803876b",
+    "src/crossdsl_kernels/cute/rope_kv_fused.py": "586320bbddeb3a1bedb4fd1fe7cbbba87cf08355bb3a73f344314242f53a17f6",
+    "src/crossdsl_kernels/cute/w4a16.py": "dbe85bb71711316e4141380e56a25845fc8215fbdd725f6b18f17ad1a1c16f09",
+    "src/crossdsl_kernels/dispatch.py": "b030f65d496e1e48882988843afd2cb16de82dca3196fa5daf635800393f30a6",
+    "src/crossdsl_kernels/generators.py": "ff003a3988e6c034453563780a1f7ca9290a4e10cf096cd14d1142b1b6bd8094",
+    "src/crossdsl_kernels/quantization.py": "8248281ac555cdb7302e2a207c426dd060e82da3d71156bc0d9ad33f7e993b9b",
+    "src/crossdsl_kernels/references/__init__.py": "141f0290b8606904fe1c222fc5e8859be44bd679ec4b203acaff2e1d50c63870",
+    "src/crossdsl_kernels/references/gemv.py": "4b2e2b9c61640bd1edd1af18ff31b1fa081da8ec4d0b83ae16cc10a1aa365169",
+    "src/crossdsl_kernels/references/paged_address.py": "0dc4010be343d11994c8d83d41320fbab7f26ce6f4c25a03a250ecad423837ca",
+    "src/crossdsl_kernels/references/rmsnorm.py": "adea7d5d8efcc58ecf3e1399b20a2a775f82dc11f6ed0b39c51a58819b82bdd3",
+    "src/crossdsl_kernels/references/rope_kv.py": "0fc2ed5d3b31f209e8ffefbb702764d00ae6cc546180a1e6e154b896ac56a53d",
+    "src/crossdsl_kernels/tolerances.py": "fa6e3486972d800f1c142ffd6c6358e08e52f703de5d99a99fefcca4aafd3b18",
+    "src/crossdsl_kernels/triton/__init__.py": "61bf2bbb4aef758f10da465f0d949aa432c834f796f29b04d4eb2ac5f0677262",
+    "src/crossdsl_kernels/triton/gemv.py": "2583ee625c101a0a081653f74ff7072d9bc8759bb55f57cbed9491564fad24df",
+    "src/crossdsl_kernels/triton/gemv_rows.py": "ec6408b86c52b05a2e2df97413a74c1aa5fe1fe8e6e0359e176b8af69ed7a0b8",
+    "src/crossdsl_kernels/triton/rmsnorm.py": "28d14cff85b72705d937f4257260c0afc592ba2b4cb2638fb961828b917b2206",
+    "src/crossdsl_kernels/triton/rope_kv.py": "3b37ef0b716e7d79936938aaac5620374ee73bc57c84afe0668c9e76da538375",
+    "src/crossdsl_kernels/triton/rope_kv_fused.py": "24db6c49bc615e8aebfb7dcc16f964161262f978eef2ff87079289817520b1ed",
+    "src/crossdsl_kernels/triton/w4a16.py": "dab36f62b5f98900871f65ef31d23270f1553c4e6108918ae942e06344ecbcf7",
+    "src/crossdsl_kernels/w4a16.py": "c2391adad185bdc76f30325a90260d26b9c68f81f5b617dd8e559bb0b71ad73d",
+    "csrc/common/cuda_runtime_smoke.cu": "66c70a3a381b0ee5f82814561d596cd13f09a362ffd367d088ff30093c1a191a",
+    "csrc/gemv/gemv_ext.cpp": "ca1c4aa8b7d522b505d70b5a6cf94408dedacab4dd35c7f6ad929454e38085e5",
+    "csrc/gemv/gemv_kernel.cu": "6676a2690c4449da61e7f8129d1d3170560d201f582e6665a6c3defd51e8d137",
+    "csrc/rmsnorm/rmsnorm_ext.cpp": "c119c6bcfc38f93a03ed7c8c22ff4595987a85c41c939c687b72054e82d2d5fc",
+    "csrc/rmsnorm/rmsnorm_kernel.cu": "74b134d8ecdb0b4ad2c7412e6c4d86092cdbceb97d3a5738b76fb08fe7b49eda",
+    "csrc/rope_kv/rope_kv_ext.cpp": "9c8411e9dd9b56d62abcb0482c9513bf1be0da229202200275a21f3d2d2d7833",
+    "csrc/rope_kv/rope_kv_kernel.cu": "3b4bf610936b914befb7f8f595c14ca8f59d24af74faaa25f0259951980339d6",
+    "csrc/w4a16/w4a16_ext.cpp": "b412e1754565e1b4d970391f05fcf79c80a18758550fd57b61e967f48a44d7c8",
+    "csrc/w4a16/w4a16_kernel.cu": "6cf1a1a900ae45196011f809814f3019f624f067f18c26558627a60cf77c4662"
+  },
+  "artifacts": {
+    "results/fp32/full.json": {
+      "original_sha256": "af061ba5e90cc709a9557e433d71b00c96495a43315dfe3d6c8849877cb40a05",
+      "export_sha256": "b66bbc0baa0abcebe113662f7a22bb90bf4c38b2f922fa323401bb4df8796698",
+      "experiment_id": "EXP-20261005-012"
+    },
+    "results/fp32/repeat.json": {
+      "original_sha256": "3a611561e365feef181d633b466c7aa118c48deed2bac186ba84f798e382eaae",
+      "export_sha256": "1969f77ede58ece92a2d8ab9fc0e751e0e4ace6c161d1587f9724b90ce284027",
+      "experiment_id": "EXP-20261005-013"
+    },
+    "results/w4a16/full.json": {
+      "original_sha256": "2fb21ad4bba1eeb65cf021ad4173642d996a58dc97b245df29271a4564a8e557",
+      "export_sha256": "5db4bc81e08fea933993346b6b490fb15d3615eb4a903fb86818f66abc50d9c9",
+      "experiment_id": "EXP-20261005-027"
+    },
+    "results/w4a16/repeat.json": {
+      "original_sha256": "5d6d8d4c18a5009b812d6b5ca480714abc70f676b4a15d7a2afed31b10ebc66f",
+      "export_sha256": "5576b31632558e1928ef4f61e6f10c7bbaed171e55c0aee6ca9740bdcd09db9b",
+      "experiment_id": "EXP-20261005-029"
+    },
+    "results/profiles/fp32.json": {
+      "original_sha256": "917e04e97d10d832ed6eaae61c743638f0edb6949fa167e334c7151ded3ba09c",
+      "export_sha256": "abbeb3a3e9e61a10d10c64b22b29c425b2b69cd1cb42f5ed068a7766a66291c3",
+      "experiment_id": null
+    },
+    "results/profiles/w4a16.json": {
+      "original_sha256": "4a9926b5a0f11fff0da69165e98b3b41c68a45fccb473e87b5a9fc9279d5a330",
+      "export_sha256": "4fc73e5385bc750c7e938a642caf9dd27759312e41928a929878e930322f462d",
+      "experiment_id": null
+    },
+    "results/checks/fp32.json": {
+      "original_sha256": "54cbd386eac92c7896104b3f2312da112f87a22a2f3760aea6a11fd164c385f2",
+      "export_sha256": "9f47eb88810e3a98dbbd82dad2dbd1496a3ab28e1a8c27e8a5de1cfb21175611",
+      "experiment_id": "EXP-20261005-015"
+    },
+    "results/checks/w4a16.json": {
+      "original_sha256": "a5890f2e04dbbc27b097740328406c114c20812743501cee6e5641ae57e78a05",
+      "export_sha256": "84136672d9d18ffeceaac3cb702db315788e881366e8a4b4c7458b86e76f7e4f",
+      "experiment_id": "EXP-20261005-030"
+    },
+    "results/checks/release-fp32.json": {
+      "original_sha256": "5278f310455b62cb7c29a634cdee9cf689d3d33f345cb9a2ca9210b3fbbb88e9",
+      "export_sha256": "fe244577c932a5c2abb4eee73b4ebf2abafbc5fca89aca1dbcf7d0e2484e0e1a",
+      "experiment_id": "EXP-20261008-002",
+      "scope": "release smoke; not an accepted performance benchmark"
+    },
+    "results/checks/release-w4a16.json": {
+      "original_sha256": "ee1cd0c995c9383c75317bb8eb3b8bb2e8c2d6bda2195bfa7a7445245a718b06",
+      "export_sha256": "a4b776c3b96f41587eb39bda1997fc32a91d653fc172ae86108c9b2b9ac60cb7",
+      "experiment_id": "EXP-20261008-002",
+      "scope": "release smoke; not an accepted performance benchmark"
+    }
+  }
+}

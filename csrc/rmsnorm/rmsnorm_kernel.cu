@@ -1,9 +1,42 @@
 #include <ATen/cuda/CUDAContext.h>
 #include <c10/cuda/CUDAException.h>
+#include <c10/cuda/CUDAGuard.h>
 #include <cstdint>
 #include <cuda_runtime.h>
 #include <torch/extension.h>
 
+template <bool Fast>
+__device__ float block_sum(float value, float* partial_sums) {
+  if constexpr (Fast) {
+    const int lane = threadIdx.x & 31;
+    const int warp = threadIdx.x >> 5;
+    for (int delta = 16; delta > 0; delta >>= 1) {
+      value += __shfl_down_sync(0xffffffff, value, delta);
+    }
+    if (lane == 0) partial_sums[warp] = value;
+    __syncthreads();
+    if (warp == 0) {
+      value = lane < blockDim.x / 32 ? partial_sums[lane] : 0.0f;
+      for (int delta = 16; delta > 0; delta >>= 1) {
+        value += __shfl_down_sync(0xffffffff, value, delta);
+      }
+      if (lane == 0) partial_sums[0] = value;
+    }
+    __syncthreads();
+  } else {
+    partial_sums[threadIdx.x] = value;
+    __syncthreads();
+    for (int stride = blockDim.x >> 1; stride > 0; stride >>= 1) {
+      if (threadIdx.x < stride) {
+        partial_sums[threadIdx.x] += partial_sums[threadIdx.x + stride];
+      }
+      __syncthreads();
+    }
+  }
+  return partial_sums[0];
+}
+
+template <bool Fast>
 __global__ void fused_residual_rmsnorm_f32_staged_kernel(
     const float* __restrict__ x,
     const float* __restrict__ residual,
@@ -24,18 +57,8 @@ __global__ void fused_residual_rmsnorm_f32_staged_kernel(
     thread_sum += r * r;
   }
 
-  partial_sums[threadIdx.x] = thread_sum;
-  __syncthreads();
-
-  for (int stride = blockDim.x >> 1; stride > 0; stride >>= 1) {
-    if (threadIdx.x < stride) {
-      partial_sums[threadIdx.x] += partial_sums[threadIdx.x + stride];
-    }
-    __syncthreads();
-  }
-
   const float inv_hidden = 1.0f / static_cast<float>(hidden);
-  const float inv_rms = rsqrtf(partial_sums[0] * inv_hidden + eps);
+  const float inv_rms = rsqrtf(block_sum<Fast>(thread_sum, partial_sums) * inv_hidden + eps);
 
   for (int64_t col = threadIdx.x; col < hidden; col += blockDim.x) {
     const int64_t idx = row_offset + col;
@@ -44,6 +67,7 @@ __global__ void fused_residual_rmsnorm_f32_staged_kernel(
   }
 }
 
+template <bool Fast>
 __global__ void fused_residual_rmsnorm_f32x4_staged_kernel(
     const float* __restrict__ x,
     const float* __restrict__ residual,
@@ -76,18 +100,8 @@ __global__ void fused_residual_rmsnorm_f32x4_staged_kernel(
     thread_sum += r0 * r0 + r1 * r1 + r2 * r2 + r3 * r3;
   }
 
-  partial_sums[threadIdx.x] = thread_sum;
-  __syncthreads();
-
-  for (int stride = blockDim.x >> 1; stride > 0; stride >>= 1) {
-    if (threadIdx.x < stride) {
-      partial_sums[threadIdx.x] += partial_sums[threadIdx.x + stride];
-    }
-    __syncthreads();
-  }
-
   const float inv_hidden = 1.0f / static_cast<float>(hidden);
-  const float inv_rms = rsqrtf(partial_sums[0] * inv_hidden + eps);
+  const float inv_rms = rsqrtf(block_sum<Fast>(thread_sum, partial_sums) * inv_hidden + eps);
 
   for (int64_t vec_col = threadIdx.x; vec_col < vec_hidden; vec_col += blockDim.x) {
     const int64_t idx = vec_row_offset + vec_col;
@@ -103,17 +117,56 @@ __global__ void fused_residual_rmsnorm_f32x4_staged_kernel(
 
 namespace {
 
+template <int Hidden>
+__global__ void rmsnorm_register_kernel(
+    const float4* x, const float4* residual, const float4* weight,
+    float4* y, float4* residual_out, float eps) {
+  constexpr int Vectors = Hidden / (256 * 4);
+  __shared__ float sums[8];
+  float4 values[Vectors];
+  float total = 0.0f;
+  const int64_t base = static_cast<int64_t>(blockIdx.x) * (Hidden / 4);
+  #pragma unroll
+  for (int i = 0; i < Vectors; ++i) {
+    const int col = threadIdx.x + i * 256;
+    const float4 a = x[base + col], b = residual[base + col];
+    values[i] = make_float4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+    const float4 r = values[i];
+    total += r.x * r.x + r.y * r.y + r.z * r.z + r.w * r.w;
+    residual_out[base + col] = r;
+  }
+  const float inv = rsqrtf(block_sum<true>(total, sums) / Hidden + eps);
+  #pragma unroll
+  for (int i = 0; i < Vectors; ++i) {
+    const int col = threadIdx.x + i * 256;
+    const float4 r = values[i], w = weight[col];
+    y[base + col] = make_float4(r.x * inv * w.x, r.y * inv * w.y,
+                               r.z * inv * w.z, r.w * inv * w.w);
+  }
+}
+
+template <int Hidden>
+void launch_register_rmsnorm(const float* x, const float* residual, const float* weight,
+                            float* y, float* residual_out, int64_t rows, float eps) {
+  rmsnorm_register_kernel<Hidden><<<rows, 256, 0, at::cuda::getCurrentCUDAStream()>>>(
+      reinterpret_cast<const float4*>(x), reinterpret_cast<const float4*>(residual),
+      reinterpret_cast<const float4*>(weight), reinterpret_cast<float4*>(y),
+      reinterpret_cast<float4*>(residual_out), eps);
+}
+
 bool is_aligned_16(const void* ptr) {
   return (reinterpret_cast<std::uintptr_t>(ptr) & 0xF) == 0;
 }
 
 }  // namespace
 
-std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
+template <bool Fast>
+std::vector<torch::Tensor> launch_rmsnorm(
     torch::Tensor x,
     torch::Tensor residual,
     torch::Tensor weight,
     double eps) {
+  const c10::cuda::CUDAGuard guard(x.device());
   auto y = torch::empty_like(x);
   auto residual_out = torch::empty_like(residual);
 
@@ -132,8 +185,21 @@ std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
       hidden % 4 == 0 && is_aligned_16(x_ptr) && is_aligned_16(residual_ptr) &&
       is_aligned_16(weight_ptr) && is_aligned_16(y_ptr) && is_aligned_16(residual_out_ptr);
 
+  if constexpr (Fast) {
+    if (use_vec4 && (hidden == 1024 || hidden == 2048 || hidden == 4096 || hidden == 8192)) {
+      switch (hidden) {
+        case 1024: launch_register_rmsnorm<1024>(x_ptr, residual_ptr, weight_ptr, y_ptr, residual_out_ptr, rows, eps); break;
+        case 2048: launch_register_rmsnorm<2048>(x_ptr, residual_ptr, weight_ptr, y_ptr, residual_out_ptr, rows, eps); break;
+        case 4096: launch_register_rmsnorm<4096>(x_ptr, residual_ptr, weight_ptr, y_ptr, residual_out_ptr, rows, eps); break;
+        case 8192: launch_register_rmsnorm<8192>(x_ptr, residual_ptr, weight_ptr, y_ptr, residual_out_ptr, rows, eps); break;
+      }
+      C10_CUDA_KERNEL_LAUNCH_CHECK();
+      return {y, residual_out};
+    }
+  }
+
   if (use_vec4) {
-    fused_residual_rmsnorm_f32x4_staged_kernel<<<
+    fused_residual_rmsnorm_f32x4_staged_kernel<Fast><<<
         blocks,
         threads,
         shared_bytes,
@@ -146,7 +212,7 @@ std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
         hidden,
         static_cast<float>(eps));
   } else {
-    fused_residual_rmsnorm_f32_staged_kernel<<<
+    fused_residual_rmsnorm_f32_staged_kernel<Fast><<<
         blocks,
         threads,
         shared_bytes,
@@ -161,4 +227,10 @@ std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
   }
   C10_CUDA_KERNEL_LAUNCH_CHECK();
   return {y, residual_out};
+}
+
+std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
+    torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
+  return fast ? launch_rmsnorm<true>(x, residual, weight, eps)
+              : launch_rmsnorm<false>(x, residual, weight, eps);
 }

@@ -42,18 +42,30 @@ def _load_kernels() -> Any:
         if interleaved:
             pair_offsets = offsets // 2
             paired_offsets = tl.where((offsets % 2) == 0, offsets + 1, offsets - 1)
-            pair_value = tl.load(q_ptr + base + paired_offsets, mask=rope_mask, other=0.0).to(tl.float32)
-            c = tl.load(cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0).to(tl.float32)
-            s = tl.load(sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0).to(tl.float32)
+            pair_value = tl.load(
+                q_ptr + base + paired_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
+            c = tl.load(
+                cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0
+            ).to(tl.float32)
+            s = tl.load(
+                sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
             first = (offsets % 2) == 0
             rotated = tl.where(first, x * c - pair_value * s, pair_value * s + x * c)
         else:
             first = offsets < pairs
             pair_offsets = tl.where(first, offsets, offsets - pairs)
             paired_offsets = tl.where(first, offsets + pairs, offsets - pairs)
-            pair_value = tl.load(q_ptr + base + paired_offsets, mask=rope_mask, other=0.0).to(tl.float32)
-            c = tl.load(cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0).to(tl.float32)
-            s = tl.load(sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0).to(tl.float32)
+            pair_value = tl.load(
+                q_ptr + base + paired_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
+            c = tl.load(
+                cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0
+            ).to(tl.float32)
+            s = tl.load(
+                sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
             rotated = tl.where(first, x * c - pair_value * s, pair_value * s + x * c)
 
         out = tl.where(rope_mask, rotated, x)
@@ -91,34 +103,60 @@ def _load_kernels() -> Any:
         logical_page = position // page_size
         offset_in_page = position - logical_page * page_size
         sequence = tl.load(sequence_ids_ptr + token)
-        physical_page = tl.load(page_table_ptr + sequence * max_pages_per_sequence + logical_page)
+        physical_page = tl.load(
+            page_table_ptr + sequence * max_pages_per_sequence + logical_page
+        )
         src_base = (token * kv_heads + head) * head_dim
 
-        k_value = tl.load(k_ptr + src_base + offsets, mask=head_mask, other=0.0).to(tl.float32)
+        k_value = tl.load(k_ptr + src_base + offsets, mask=head_mask, other=0.0).to(
+            tl.float32
+        )
         if interleaved:
             pair_offsets = offsets // 2
             paired_offsets = tl.where((offsets % 2) == 0, offsets + 1, offsets - 1)
-            pair_value = tl.load(k_ptr + src_base + paired_offsets, mask=rope_mask, other=0.0).to(tl.float32)
-            c = tl.load(cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0).to(tl.float32)
-            s = tl.load(sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0).to(tl.float32)
+            pair_value = tl.load(
+                k_ptr + src_base + paired_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
+            c = tl.load(
+                cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0
+            ).to(tl.float32)
+            s = tl.load(
+                sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
             first = (offsets % 2) == 0
-            rotated_k = tl.where(first, k_value * c - pair_value * s, pair_value * s + k_value * c)
+            rotated_k = tl.where(
+                first, k_value * c - pair_value * s, pair_value * s + k_value * c
+            )
         else:
             first = offsets < pairs
             pair_offsets = tl.where(first, offsets, offsets - pairs)
             paired_offsets = tl.where(first, offsets + pairs, offsets - pairs)
-            pair_value = tl.load(k_ptr + src_base + paired_offsets, mask=rope_mask, other=0.0).to(tl.float32)
-            c = tl.load(cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0).to(tl.float32)
-            s = tl.load(sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0).to(tl.float32)
-            rotated_k = tl.where(first, k_value * c - pair_value * s, pair_value * s + k_value * c)
+            pair_value = tl.load(
+                k_ptr + src_base + paired_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
+            c = tl.load(
+                cos_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=1.0
+            ).to(tl.float32)
+            s = tl.load(
+                sin_ptr + position * cos_width + pair_offsets, mask=rope_mask, other=0.0
+            ).to(tl.float32)
+            rotated_k = tl.where(
+                first, k_value * c - pair_value * s, pair_value * s + k_value * c
+            )
 
         if cache_layout_hnd:
-            cache_offsets = ((physical_page * kv_heads + head) * page_size + offset_in_page) * head_dim + offsets
+            cache_offsets = (
+                (physical_page * kv_heads + head) * page_size + offset_in_page
+            ) * head_dim + offsets
         else:
-            cache_offsets = ((physical_page * page_size + offset_in_page) * kv_heads + head) * head_dim + offsets
+            cache_offsets = (
+                (physical_page * page_size + offset_in_page) * kv_heads + head
+            ) * head_dim + offsets
 
         k_out = tl.where(rope_mask, rotated_k, k_value)
-        v_value = tl.load(v_ptr + src_base + offsets, mask=head_mask, other=0.0).to(tl.float32)
+        v_value = tl.load(v_ptr + src_base + offsets, mask=head_mask, other=0.0).to(
+            tl.float32
+        )
         tl.store(k_cache_ptr + cache_offsets, k_out, mask=head_mask)
         tl.store(v_cache_ptr + cache_offsets, v_value, mask=head_mask)
 
@@ -181,6 +219,8 @@ def _validate_inputs(
     head_dim = int(q.size(2))
     if tokens <= 0 or q_heads <= 0 or kv_heads <= 0 or head_dim <= 0:
         raise ValueError("tokens, q_heads, kv_heads, and head_dim must be positive")
+    if q_heads % kv_heads:
+        raise ValueError("q_heads must be divisible by kv_heads")
     if int(k.size(0)) != tokens or int(v.size(0)) != tokens:
         raise ValueError("q, k, and v token counts must match")
     if int(k.size(2)) != head_dim or int(v.size(2)) != head_dim:
@@ -208,17 +248,42 @@ def _validate_inputs(
     if kv_layout.upper() not in {"NHD", "HND"}:
         raise ValueError("kv_layout must be NHD or HND")
     if cache_layout_hnd:
-        if int(k_cache.size(1)) != kv_heads or int(k_cache.size(2)) != page_size or int(k_cache.size(3)) != head_dim:
-            raise ValueError("HND cache shape must be [pages, kv_heads, page_size, head_dim]")
-    elif int(k_cache.size(1)) != page_size or int(k_cache.size(2)) != kv_heads or int(k_cache.size(3)) != head_dim:
-        raise ValueError("NHD cache shape must be [pages, page_size, kv_heads, head_dim]")
+        if (
+            int(k_cache.size(1)) != kv_heads
+            or int(k_cache.size(2)) != page_size
+            or int(k_cache.size(3)) != head_dim
+        ):
+            raise ValueError(
+                "HND cache shape must be [pages, kv_heads, page_size, head_dim]"
+            )
+    elif (
+        int(k_cache.size(1)) != page_size
+        or int(k_cache.size(2)) != kv_heads
+        or int(k_cache.size(3)) != head_dim
+    ):
+        raise ValueError(
+            "NHD cache shape must be [pages, page_size, kv_heads, head_dim]"
+        )
 
     device = q.device
     for name, (tensor, _) in tensors.items():
         if tensor.device != device:
             raise ValueError(f"{name} must be on the same CUDA device as q")
 
-    return tokens, q_heads, kv_heads, head_dim, int(cos.size(1)), int(page_table.size(1)), cache_layout_hnd
+    from crossdsl_kernels.contracts import validate_cache_storage
+
+    validate_cache_storage(
+        (q, k, v, cos, sin, positions, page_table, sequence_ids), k_cache, v_cache
+    )
+    return (
+        tokens,
+        q_heads,
+        kv_heads,
+        head_dim,
+        int(cos.size(1)),
+        int(page_table.size(1)),
+        cache_layout_hnd,
+    )
 
 
 def rope_gqa_paged_kv_append_triton(
@@ -241,22 +306,24 @@ def rope_gqa_paged_kv_append_triton(
 ) -> Any:
     import torch
 
-    tokens, q_heads, kv_heads, head_dim, cos_width, max_pages, cache_layout_hnd = _validate_inputs(
-        q,
-        k,
-        v,
-        cos,
-        sin,
-        positions,
-        page_table,
-        sequence_ids,
-        k_cache,
-        v_cache,
-        page_size,
-        rope_dim,
-        kv_layout,
+    tokens, q_heads, kv_heads, head_dim, cos_width, max_pages, cache_layout_hnd = (
+        _validate_inputs(
+            q,
+            k,
+            v,
+            cos,
+            sin,
+            positions,
+            page_table,
+            sequence_ids,
+            k_cache,
+            v_cache,
+            page_size,
+            rope_dim,
+            kv_layout,
+        )
     )
-    triton, rotate_q_kernel, append_kv_kernel = _load_kernels()
+    _triton, rotate_q_kernel, append_kv_kernel = _load_kernels()
     block_d = _next_power_of_2(head_dim)
     selected_num_warps = int(num_warps) if num_warps is not None else 4
     if selected_num_warps <= 0:

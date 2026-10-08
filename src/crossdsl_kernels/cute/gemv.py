@@ -3,14 +3,15 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Any
 
+from cuda.bindings import driver as cuda
+
 
 @lru_cache(maxsize=1)
 def _load_kernels() -> Any:
-    import torch
-    import cutlass.cute as cute
+    from cutlass import cute
     from cutlass._mlir.dialects import nvvm
-    from cutlass.cutlass_dsl import T
     from cutlass.cute.runtime import from_dlpack
+    from cutlass.cutlass_dsl import T
 
     @cute.kernel
     def _decode_gemv_kernel(
@@ -31,21 +32,46 @@ def _load_kernels() -> Any:
         if idx < total_outputs:
             row = idx // n_size
             col = idx - row * n_size
-            acc = 0.0
-            for kk in range(k_size):
-                x_val = x[row, kk]
-                w_val = 0.0
+            # Four shorter sums reduce FP32 error and dependency-chain length.
+            acc0 = 0.0
+            acc1 = 0.0
+            acc2 = 0.0
+            acc3 = 0.0
+            for kk in range(0, k_size, 4):
                 if weight_is_nk != 0:
-                    w_val = weight[col, kk]
+                    acc0 = acc0 + x[row, kk] * weight[col, kk]
+                    if kk + 1 < k_size:
+                        acc1 = acc1 + x[row, kk + 1] * weight[col, kk + 1]
+                    if kk + 2 < k_size:
+                        acc2 = acc2 + x[row, kk + 2] * weight[col, kk + 2]
+                    if kk + 3 < k_size:
+                        acc3 = acc3 + x[row, kk + 3] * weight[col, kk + 3]
                 else:
-                    w_val = weight[kk, col]
-                acc = acc + x_val * w_val
+                    acc0 = acc0 + x[row, kk] * weight[kk, col]
+                    if kk + 1 < k_size:
+                        acc1 = acc1 + x[row, kk + 1] * weight[kk + 1, col]
+                    if kk + 2 < k_size:
+                        acc2 = acc2 + x[row, kk + 2] * weight[kk + 2, col]
+                    if kk + 3 < k_size:
+                        acc3 = acc3 + x[row, kk + 3] * weight[kk + 3, col]
+            acc = (acc0 + acc1) + (acc2 + acc3)
             if has_bias != 0:
                 acc = acc + bias[col]
             y[row, col] = acc
 
     @cute.jit
-    def _launch(xc, wc, bc, yc, total_outputs, k_size, n_size, weight_is_nk, has_bias):
+    def _launch(
+        xc,
+        wc,
+        bc,
+        yc,
+        total_outputs,
+        k_size,
+        n_size,
+        weight_is_nk,
+        has_bias,
+        stream: cuda.CUstream,
+    ):
         threads = 256
         blocks = (total_outputs + threads - 1) // threads
         _decode_gemv_kernel(
@@ -58,7 +84,7 @@ def _load_kernels() -> Any:
             n_size,
             weight_is_nk,
             has_bias,
-        ).launch(grid=[blocks, 1, 1], block=[threads, 1, 1])
+        ).launch(grid=[blocks, 1, 1], block=[threads, 1, 1], stream=stream)
 
     return cute, from_dlpack, _launch
 
@@ -126,20 +152,19 @@ def decode_gemv_cute(
         bias,
         weight_layout,
     )
-    cute_mod, from_dlpack, _launch = _load_kernels()
+    _, from_dlpack, _launch = _load_kernels()
 
     y = torch.empty((m_size, n_size), device=x.device, dtype=torch.float32)
     bias_tensor = bias if bias is not None else y
     has_bias = 1 if bias is not None else 0
 
     xc = from_dlpack(x)
-    if weight_is_nk:
-        wc = from_dlpack(weight)
-    else:
-        wc = from_dlpack(weight.contiguous())
+    wc = from_dlpack(weight)
     bc = from_dlpack(bias_tensor)
     yc = from_dlpack(y)
 
-    _launch(xc, wc, bc, yc, total_outputs, k_size, n_size, weight_is_nk, has_bias)
-    torch.cuda.synchronize()
+    stream = cuda.CUstream(torch.cuda.current_stream(x.device).cuda_stream)
+    _launch(
+        xc, wc, bc, yc, total_outputs, k_size, n_size, weight_is_nk, has_bias, stream
+    )
     return y

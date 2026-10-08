@@ -1,0 +1,30 @@
+{
+  "description": "FP32 SM120 comparison. GEMV shapes model hidden and Llama-style MLP projections; tail cases test advertised masking.",
+  "cases": [
+    {"name": "rmsnorm_1x1024", "op": "rmsnorm", "rows": 1, "hidden": 1024, "smoke": true},
+    {"name": "rmsnorm_16x2048", "op": "rmsnorm", "rows": 16, "hidden": 2048},
+    {"name": "rmsnorm_16x4096", "op": "rmsnorm", "rows": 16, "hidden": 4096, "smoke": true},
+    {"name": "rmsnorm_16x8192", "op": "rmsnorm", "rows": 16, "hidden": 8192},
+    {"name": "rmsnorm_3x513_tail", "op": "rmsnorm", "rows": 3, "hidden": 513, "smoke": true},
+    {"name": "rmsnorm_256x4096", "op": "rmsnorm", "rows": 256, "hidden": 4096},
+    {"name": "rmsnorm_4096x4096", "op": "rmsnorm", "rows": 4096, "hidden": 4096},
+    {"name": "hidden_m1", "op": "gemv", "m": 1, "k": 4096, "n": 4096, "layout": "KN", "bias": false},
+    {"name": "hidden_m2", "op": "gemv", "m": 2, "k": 4096, "n": 4096, "layout": "KN", "bias": true},
+    {"name": "hidden_m4", "op": "gemv", "m": 4, "k": 4096, "n": 4096, "layout": "KN", "bias": true},
+    {"name": "hidden_m8", "op": "gemv", "m": 8, "k": 4096, "n": 4096, "layout": "KN", "bias": true},
+    {"name": "hidden_m16", "op": "gemv", "m": 16, "k": 4096, "n": 4096, "layout": "KN", "bias": true},
+    {"name": "mlp_up_m1", "op": "gemv", "m": 1, "k": 4096, "n": 11008, "layout": "KN", "bias": false},
+    {"name": "mlp_up_m2", "op": "gemv", "m": 2, "k": 4096, "n": 11008, "layout": "KN", "bias": false},
+    {"name": "mlp_up_m4", "op": "gemv", "m": 4, "k": 4096, "n": 11008, "layout": "KN", "bias": false},
+    {"name": "mlp_up_m8", "op": "gemv", "m": 8, "k": 4096, "n": 11008, "layout": "KN", "bias": false},
+    {"name": "mlp_up_m16", "op": "gemv", "m": 16, "k": 4096, "n": 11008, "layout": "KN", "bias": false},
+    {"name": "hidden_nk_m1", "op": "gemv", "m": 1, "k": 4096, "n": 4096, "layout": "NK", "bias": false},
+    {"name": "gemv_2x33x17_tail", "op": "gemv", "m": 2, "k": 33, "n": 17, "layout": "KN", "bias": true, "smoke": true},
+    {"name": "gemv_3x129x65_nk_tail", "op": "gemv", "m": 3, "k": 129, "n": 65, "layout": "NK", "bias": false, "smoke": true},
+    {"name": "rope_1t_nhd", "op": "rope_kv", "tokens": 1, "q_heads": 8, "kv_heads": 2, "head_dim": 64, "page_size": 16, "rope_dim": 64, "interleaved": false, "layout": "NHD"},
+    {"name": "rope_4t_nhd", "op": "rope_kv", "tokens": 4, "q_heads": 8, "kv_heads": 2, "head_dim": 64, "page_size": 16, "rope_dim": 64, "interleaved": false, "layout": "NHD", "smoke": true},
+    {"name": "rope_16t_hnd_partial", "op": "rope_kv", "tokens": 16, "q_heads": 16, "kv_heads": 4, "head_dim": 128, "page_size": 16, "rope_dim": 64, "interleaved": false, "layout": "HND", "smoke": true},
+    {"name": "rope_32t_interleaved", "op": "rope_kv", "tokens": 32, "q_heads": 16, "kv_heads": 4, "head_dim": 128, "page_size": 32, "rope_dim": 128, "interleaved": true, "layout": "NHD"},
+    {"name": "rope_7t_tail", "op": "rope_kv", "tokens": 7, "q_heads": 6, "kv_heads": 2, "head_dim": 66, "page_size": 7, "rope_dim": 64, "interleaved": true, "layout": "HND", "smoke": true}
+  ]
+}

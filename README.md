@@ -1,123 +1,92 @@
-# Cross-DSL GPU Kernel Engineering: Transformer Inference Primitives
+# Cross-DSL Transformer Kernels
 
-High-performance GPU implementations of three transformer-inference operators
-across four DSLs: PyTorch (reference), CUDA C++, Triton, and CuTe DSL, plus
-cuBLAS/cuBLASLt vendor baselines. Target: NVIDIA RTX 5050 Laptop GPU (Blackwell
-SM120, 8GB).
+Four transformer workloads, implemented in **CUDA C++, Triton, and CuTe DSL**,
+with PyTorch baselines and reproducible correctness, timing, and profiling.
+The study asks which execution and memory-ownership choices improve each workload
+on an **RTX 5050 Laptop GPU (SM120, 8 GB, observed 35 W power limit)**.
 
-## Operators
+This is a forward-only kernel engineering study, not an inference server or a
+claim that one language is universally faster. Baseline and improved custom
+implementations are retained so the optimization steps can be inspected.
 
-| Operator | Description | Shape Regime |
+## Workloads
+
+| Workload | What is computed | Main engineering question |
 |---|---|---|
-| Fused Residual RMSNorm | `r = x + residual; y = r * rsqrt(mean(r²)+eps) * weight` | Dense rows × 8–4096 |
-| Decode GEMV / Small-M GEMM | `y = x @ W.T + b` with M ∈ [1,16], K,N ∈ [1024,11008] | Autoregressive decode |
-| RoPE + GQA Paged-KV Append | Rotate Q/K, write K/V into paged cache with page-table translation | Attention prefill/decode |
+| Fused residual RMSNorm | Residual addition, row normalization and scale; returns normalized output and residual | Can row residency reduce reloads without excessive registers? |
+| Decode GEMV / small-M GEMM | FP32 projection with optional bias, KN or NK weights, M=1..16 | How do layout, row reuse and split-K change the bottleneck? |
+| RoPE + paged KV append | Rotary Q/K transform and K/V cache writes, GQA, NHD/HND layouts | Can fusion reduce launches while keeping page translation and mutation correct? |
+| W4A16 projection | Packed group-scaled INT4 weights, FP16 activations/output, FP32 accumulation | When does compressed weight traffic outweigh unpacking and SIMT arithmetic? |
 
-## Backends
+Every workload has all three custom implementations. PyTorch supplies numerical
+references and execution baselines; FP32 projection also has bounded cuBLAS and
+cuBLASLt baselines. W4A16 uses an explicit research packing format, not a drop-in
+AWQ/GPTQ checkpoint format or an NVFP4 Tensor Core kernel.
 
-| Operator | PyTorch Ref | CUDA C++ | Triton | CuTe DSL | cuBLAS | cuBLASLt |
-|---|---|---|---|---|---|---|
-| RMSNorm | ✓ | ✓ | ✓ | ✓ | — | — |
-| GEMV/GEMM | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| RoPE+KV | ✓ | ✓ | ✓ | ✓ | — | — |
+## Results At A Glance
 
-✓ = implemented, GPU-tested, benchmarked. All backends pass correctness checks at
-FP32 precision with documented tolerance policies.
+Saved full sweeps pass **226/226 FP32 backend-case rows** and **144/144 W4A16
+rows**. Fresh-process repeats pass **72/72** and **36/36**, respectively.
+Each benchmark row checks direct execution and poisoned-output graph replay.
 
-## Performance Highlights (RTX 5050 SM120)
+| Optimization | Fresh-process observation | What it means |
+|---|---|---|
+| Triton row reuse + split-K FP32 projection | 15.31x hidden M16; 16.27x MLP-up M16 | Versus the earlier **custom Triton** kernels, not the best library |
+| CuTe register-resident RMSNorm | 1.56x on 4096x4096 | Versus the earlier custom CuTe path; large mobile-clock variability remains |
+| Fused RoPE/KV append | 1.67x CUDA, 1.45x Triton, 2.13x CuTe | Versus each language's two-stage custom path on the HND partial-rotation case |
+| W4A16 M1 projection | CuTe hidden M1: 56.79 us; dense FP16: 123.20 us | Approximate weights; not an equal-model-quality or optimized-W4A16-library comparison |
 
-### RMSNorm
-- CUDA C++ staged f32x4 kernel: 92.86% DRAM throughput at 256×4096 (NCU verified)
-- Triton one-program-per-row: 1.72–1.86× vs eager PyTorch
+Times above are **CUDA Graph per-call medians**, not end-to-end model latency.
+Ordinary event timings, synchronized wall time, raw samples, numerical errors,
+and losing variants are included in [results/](results/README.md).
+At M16, every measured custom W4A16 variant loses to dense FP16. Lowering RMSNorm
+warp count and tiling NK M1 projection also regress in important cases.
+Read the [full results and limitations](docs/results.md) before quoting a number.
 
-### Decode GEMV
-- CUDA warp-per-output (v1): competitive with cuBLAS for M=1 at large K
-- cuBLASLt heuristics: bounded workspace (≤4 MiB), automatic layout selection
-- Triton column-tile tuned: best overall for mixed M/K/N
+## Quick Start
 
-### RoPE + GQA Paged-KV Append
-- CUDA two-kernel pipeline: 33–247× vs PyTorch eager (Nsight Systems verified)
-- HND and NHD cache layouts supported; interleaved and split-half RoPE conventions
-
-### CuTe DSL
-- RMSNorm GPU-tested and benchmarked (shared-memory tree reduction)
-- GEMV one-thread-per-output (serial accumulation; passes at rel_l2 < 1.3e-6)
-- RoPE+KV GPU-tested with separate NHD/HND kernel variants
-- CUDA Graphs stream capture: **1,800× launch-overhead reduction** for RMSNorm
-
-## Project Structure
-
-```
-├── src/crossdsl_kernels/          # Python package
-│   ├── api.py                     # Public API
-│   ├── contracts.py               # Type contracts and validation
-│   ├── tolerances.py              # FP32 tolerance policies
-│   ├── references/                # PyTorch eager reference implementations
-│   ├── triton/                    # Triton kernels
-│   └── cute/                      # CuTe DSL kernels
-├── csrc/                          # CUDA C++ kernel sources
-│   ├── rmsnorm/                   # staged f32x4 RMSNorm
-│   ├── gemv/                      # decode GEMV v0 (block) + v1 (warp)
-│   └── rope_kv/                   # RoPE + paged-KV append
-├── tests/unit/                    # pytest suite
-├── benchmarks/                    # CUDA-event-timed benchmarks
-├── scripts/                       # Profiler harnesses (Nsight, Torch Profiler)
-└── docker/                        # Reproducibility container
-```
-
-## Getting Started
-
-### Prerequisites
-- NVIDIA GPU with compute capability ≥ 7.0 (tested on SM120)
-- CUDA Toolkit 13.0+
-- Python 3.11+, PyTorch 2.10+, Triton 3.4+, nvidia-cutlass-dsl 4.5.2
-- Conda environment recommended
-
-### Build CUDA Extensions
+Use Python 3.11 and a CUDA-capable PyTorch environment. The recorded environment
+was Torch 2.10.0+cu130, Triton 3.6.0, CuTe DSL 4.5.2, cuda-bindings 13.0.3,
+nvcc 13.1, and driver 595.91.07. CUDA C++ kernels are JIT-built from this checkout
+using `nvcc`, a C++ compiler, and Ninja. No driver or system CUDA installation is
+changed by this project.
 
 ```bash
-cd csrc
-mkdir -p build && cd build
-cmake .. -DCMAKE_BUILD_TYPE=Release
-make -j$(nproc)
+# In an existing environment with the recorded dependencies:
+python -m pip install -e . --no-deps
+python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+make test PYTHON=python
+make evidence-check PYTHON=python
+make list PYTHON=python
+make smoke w4a16-smoke PYTHON=python EXP=EXP-20261008-101
 ```
 
-### Run Tests
+For a new isolated environment, see [setup and measurement](docs/benchmarking.md).
+Use a fresh experiment ID/output path for each collection. Runs refuse to
+overwrite results and cooperate through a single-GPU lock. First-call compilation
+can take minutes; compilation time is separate from steady-state measurements.
 
-```bash
-PYTHONPATH=src python -m pytest tests/unit/ -v
+## Repository Map
+
+```text
+csrc/                       CUDA kernels and PyTorch C++ bindings, by workload
+src/crossdsl_kernels/
+  references/               PyTorch reference math and paged address helpers
+  triton/                   Baseline and candidate Triton kernels
+  cute/                     Baseline and candidate CuTe DSL kernels
+  quantization.py           INT4 format, pack/unpack, numerical contract
+  w4a16.py                  W4A16 backend selection
+benchmarks/                 Shared inputs, oracles, timing, fixed shape catalogs
+scripts/                    Profiling, regression checks and evidence validation
+tests/unit/                 CPU checks for contracts, math and measurement tools
+docs/                       Design, measurement, profiler interpretation and results
+results/                    Portable numerical evidence with SHA256 provenance
 ```
 
-### Benchmark
+Start with [kernel design](docs/kernels.md), then follow
+[benchmarking](docs/benchmarking.md) and [profiling](docs/profiling.md).
+The [lessons and next steps](docs/results.md#lessons-and-next-steps) explain
+what succeeded, what failed, and what remains unproven.
 
-```bash
-PYTHONPATH=src python benchmarks/rmsnorm_benchmark.py --warmup 10 --repeat 100 --json results.json
-```
-
-### Profile
-
-```bash
-# Nsight Systems
-nsys profile --trace=cuda,nvtx -o nsys_report \
-  python scripts/profile_kernels.py --profiler none --workload all --iterations 10
-
-# Torch Profiler
-python scripts/profile_kernels.py --profiler torch --workload all --trace-dir traces/
-```
-
-## Key Design Decisions
-
-1. **FP32 throughout**: All computations in float32 for maximum numerical accuracy and
-   debugability. FP16/BF16 support deferred.
-2. **Always-bias-safe**: GEMV contracts handle bias=None by passing a zero-filled buffer
-   rather than branching in compute.
-3. **Paged attention**: KV cache uses page-table translation with configurable page size,
-   matching production inference engines.
-4. **Back of the envelope first**: Every optimization was modeled analytically before
-   writing a line of GPU code.
-5. **Honest negative results**: cuBLASLt regression, CuTe GEMV serial accumulation error,
-   and overhead-dominated latencies are all documented, not hidden.
-
-## License
-
-MIT
+Only local SM120 execution is validated. B200/SM100 and B300 are not tested here;
+Blackwell-family branding does not make these launch configurations portable.

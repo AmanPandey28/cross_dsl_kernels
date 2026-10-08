@@ -1,5 +1,6 @@
 #include <ATen/cuda/CUDAContext.h>
 #include <c10/cuda/CUDAException.h>
+#include <c10/cuda/CUDAGuard.h>
 #include <algorithm>
 #include <cublasLt.h>
 #include <cublas_v2.h>
@@ -168,6 +169,7 @@ torch::Tensor crossdsl_decode_gemv_cuda(
     torch::Tensor weight,
     torch::Tensor bias,
     bool weight_is_nk) {
+  const c10::cuda::CUDAGuard guard(x.device());
   const int64_t m = x.size(0);
   const int64_t k = x.size(1);
   const int64_t n = weight_is_nk ? weight.size(0) : weight.size(1);
@@ -201,6 +203,7 @@ torch::Tensor crossdsl_decode_gemv_cublas_cuda(
     torch::Tensor weight,
     torch::Tensor bias,
     bool weight_is_nk) {
+  const c10::cuda::CUDAGuard guard(x.device());
   const int64_t m64 = x.size(0);
   const int64_t k64 = x.size(1);
   const int64_t n64 = weight_is_nk ? weight.size(0) : weight.size(1);
@@ -269,6 +272,7 @@ torch::Tensor crossdsl_decode_gemv_cublaslt_cuda(
     torch::Tensor weight,
     torch::Tensor bias,
     bool weight_is_nk) {
+  const c10::cuda::CUDAGuard guard(x.device());
   const int64_t m64 = x.size(0);
   const int64_t k64 = x.size(1);
   const int64_t n64 = weight_is_nk ? weight.size(0) : weight.size(1);
@@ -389,6 +393,7 @@ torch::Tensor crossdsl_decode_gemv_warp_cuda(
     torch::Tensor weight,
     torch::Tensor bias,
     bool weight_is_nk) {
+  const c10::cuda::CUDAGuard guard(x.device());
   const int64_t m = x.size(0);
   const int64_t k = x.size(1);
   const int64_t n = weight_is_nk ? weight.size(0) : weight.size(1);
@@ -416,6 +421,75 @@ torch::Tensor crossdsl_decode_gemv_warp_cuda(
       n,
       weight_is_nk,
       has_bias);
+  C10_CUDA_KERNEL_LAUNCH_CHECK();
+  return y;
+}
+
+// KN lanes span adjacent columns; NK lanes span adjacent reduction elements.
+template <bool NK>
+__global__ void decode_gemv_rows_kernel(
+    const float* __restrict__ x, const float* __restrict__ weight,
+    const float* __restrict__ bias, float* __restrict__ y,
+    int64_t m, int64_t k, int64_t n, bool has_bias) {
+  constexpr int Rows = 4;
+  constexpr int Warps = 8;
+  const int lane = threadIdx.x & 31;
+  const int warp = threadIdx.x >> 5;
+  const int64_t col = blockIdx.x * (NK ? Warps : 32) + (NK ? warp : lane);
+  const int64_t row = blockIdx.y * Rows;
+  float acc[Rows] = {};
+  for (int64_t kk = NK ? lane : warp; kk < k; kk += NK ? 32 : Warps) {
+    const float w = col < n ? weight[NK ? col * k + kk : kk * n + col] : 0.0f;
+    #pragma unroll
+    for (int r = 0; r < Rows; ++r) {
+      if (row + r < m) acc[r] += x[(row + r) * k + kk] * w;
+    }
+  }
+  if constexpr (NK) {
+    #pragma unroll
+    for (int r = 0; r < Rows; ++r) {
+      for (int delta = 16; delta > 0; delta >>= 1) {
+        acc[r] += __shfl_down_sync(0xffffffff, acc[r], delta);
+      }
+      if (lane == 0 && col < n && row + r < m) {
+        y[(row + r) * n + col] = acc[r] + (has_bias ? bias[col] : 0.0f);
+      }
+    }
+  } else {
+    __shared__ float partial[Rows][Warps][32];
+    #pragma unroll
+    for (int r = 0; r < Rows; ++r) partial[r][warp][lane] = acc[r];
+    __syncthreads();
+    if (warp == 0 && col < n) {
+      #pragma unroll
+      for (int r = 0; r < Rows; ++r) {
+        float sum = 0.0f;
+        #pragma unroll
+        for (int w = 0; w < Warps; ++w) sum += partial[r][w][lane];
+        if (row + r < m) y[(row + r) * n + col] = sum + (has_bias ? bias[col] : 0.0f);
+      }
+    }
+  }
+}
+
+torch::Tensor crossdsl_decode_gemv_rows_cuda(
+    torch::Tensor x, torch::Tensor weight, torch::Tensor bias, bool weight_is_nk) {
+  const c10::cuda::CUDAGuard guard(x.device());
+  const int64_t m = x.size(0), k = x.size(1);
+  const int64_t n = weight_is_nk ? weight.size(0) : weight.size(1);
+  auto y = torch::empty({m, n}, x.options());
+  const dim3 grid((n + (weight_is_nk ? 7 : 31)) / (weight_is_nk ? 8 : 32), (m + 3) / 4);
+  auto stream = at::cuda::getCurrentCUDAStream();
+  const float* bias_ptr = bias.numel() != 0 ? bias.data_ptr<float>() : nullptr;
+  if (weight_is_nk) {
+    decode_gemv_rows_kernel<true><<<grid, 256, 0, stream>>>(
+        x.data_ptr<float>(), weight.data_ptr<float>(), bias_ptr,
+        y.data_ptr<float>(), m, k, n, bias.numel() != 0);
+  } else {
+    decode_gemv_rows_kernel<false><<<grid, 256, 0, stream>>>(
+        x.data_ptr<float>(), weight.data_ptr<float>(), bias_ptr,
+        y.data_ptr<float>(), m, k, n, bias.numel() != 0);
+  }
   C10_CUDA_KERNEL_LAUNCH_CHECK();
   return y;
 }

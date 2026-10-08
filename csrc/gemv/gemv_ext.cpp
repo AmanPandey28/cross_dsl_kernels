@@ -1,6 +1,9 @@
 #include <string>
 #include <torch/extension.h>
 
+torch::Tensor crossdsl_decode_gemv_rows_cuda(
+    torch::Tensor x, torch::Tensor weight, torch::Tensor bias, bool weight_is_nk);
+
 torch::Tensor crossdsl_decode_gemv_cuda(
     torch::Tensor x,
     torch::Tensor weight,
@@ -72,6 +75,9 @@ torch::Tensor decode_gemv_cublaslt(torch::Tensor x, torch::Tensor weight, torch:
 }
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+  m.def("decode_gemv_rows", [](torch::Tensor x, torch::Tensor w, torch::Tensor b, const std::string& layout) {
+    return crossdsl_decode_gemv_rows_cuda(x, w, b, validate_decode_gemv_inputs(x, w, b, layout));
+  }, "CrossDSL coalesced four-row GEMV");
   m.def("decode_gemv", &decode_gemv, "CrossDSL decode GEMV CUDA v0 kernel");
   m.def("decode_gemv_warp", &decode_gemv_warp, "CrossDSL decode GEMV CUDA v1 warp-per-output kernel");
   m.def("decode_gemv_cublas", &decode_gemv_cublas, "CrossDSL decode GEMV explicit cuBLAS baseline");
