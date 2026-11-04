@@ -56,11 +56,11 @@ def fused_residual_rmsnorm_triton(
     if not x.is_cuda or not residual.is_cuda or not weight.is_cuda:
         raise ValueError("x, residual, and weight must be CUDA tensors")
     if (
-        x.dtype != torch.float32
-        or residual.dtype != torch.float32
-        or weight.dtype != torch.float32
+        x.dtype not in {torch.float32, torch.bfloat16}
+        or residual.dtype != x.dtype
+        or weight.dtype != x.dtype
     ):
-        raise ValueError("Triton RMSNorm v0 supports float32 tensors only")
+        raise ValueError("x, residual, and weight must share float32 or bfloat16 dtype")
     if x.dim() != 2:
         raise ValueError("x must be shaped [rows, hidden]")
     if residual.shape != x.shape:
@@ -82,6 +82,8 @@ def fused_residual_rmsnorm_triton(
         raise ValueError("rows and hidden must be positive")
     if not math.isfinite(eps) or eps <= 0:
         raise ValueError("eps must be finite and positive")
+    if x.dtype == torch.bfloat16 and hidden > 65536:
+        raise ValueError("bfloat16 Triton RMSNorm supports at most 65536 columns")
 
     _triton, kernel = _load_kernel()
     block_size = _next_power_of_2(hidden)

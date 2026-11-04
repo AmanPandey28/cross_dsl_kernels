@@ -15,9 +15,10 @@ std::vector<torch::Tensor> fused_residual_rmsnorm(
   TORCH_CHECK(x.is_cuda(), "x must be a CUDA tensor");
   TORCH_CHECK(residual.is_cuda(), "residual must be a CUDA tensor");
   TORCH_CHECK(weight.is_cuda(), "weight must be a CUDA tensor");
-  TORCH_CHECK(x.scalar_type() == torch::kFloat32, "x must be float32");
-  TORCH_CHECK(residual.scalar_type() == torch::kFloat32, "residual must be float32");
-  TORCH_CHECK(weight.scalar_type() == torch::kFloat32, "weight must be float32");
+  TORCH_CHECK(x.scalar_type() == torch::kFloat32 || x.scalar_type() == torch::kBFloat16,
+              "x must be float32 or bfloat16");
+  TORCH_CHECK(residual.scalar_type() == x.scalar_type(), "residual dtype must match x");
+  TORCH_CHECK(weight.scalar_type() == x.scalar_type(), "weight dtype must match x");
   TORCH_CHECK(x.dim() == 2, "x must be a 2D tensor shaped [rows, hidden]");
   TORCH_CHECK(residual.sizes() == x.sizes(), "residual must match x shape");
   TORCH_CHECK(weight.dim() == 1, "weight must be a 1D tensor shaped [hidden]");

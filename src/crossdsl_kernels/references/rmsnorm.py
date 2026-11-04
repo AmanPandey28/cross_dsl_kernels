@@ -11,6 +11,11 @@ def fused_residual_rmsnorm_reference(
     *,
     return_residual: bool = True,
 ) -> tuple[Any, Any | None]:
+    """Out-of-place residual RMSNorm; normalize the unrounded FP32 sum.
+
+    BF16 inputs are promoted before addition. Only the two returned tensors
+    are rounded to the input dtype; neither input is modified.
+    """
     import torch
 
     r_fp32 = x.to(torch.float32) + residual.to(torch.float32)

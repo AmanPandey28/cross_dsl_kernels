@@ -3,7 +3,7 @@ EXP ?= EXP-20261008-101
 OUT ?= results/runs/$(EXP)
 BACKENDS = pytorch,torch_compile,cuda,triton,cute,cublas,cublaslt,cuda_fast,triton_fast,cute_fast
 
-.PHONY: test evidence-check list smoke benchmark w4a16-smoke w4a16-benchmark profile-preview
+.PHONY: test evidence-check list smoke benchmark w4a16-smoke w4a16-benchmark profile-preview bf16-check bf16-smoke bf16-benchmark bf16-profile-preview
 test:
 	PYTHONPATH=src:scripts:benchmarks $(PYTHON) -m unittest discover -s tests/unit -v
 
@@ -24,6 +24,18 @@ w4a16-smoke:
 
 w4a16-benchmark:
 	$(PYTHON) benchmarks/w4a16_benchmark.py --experiment $(EXP) --output $(OUT)/w4a16 --mode benchmark --warmup 5 --repeat 20 --graph-calls 10
+
+bf16-check:
+	$(PYTHON) scripts/verify_rmsnorm_bf16.py --experiment $(EXP) --output $(OUT)/bf16-checks.json
+
+bf16-smoke:
+	$(PYTHON) benchmarks/rmsnorm_bf16.py --experiment $(EXP) --output $(OUT)/bf16 --cases bf16_3x513,bf16_256x4096 --rounds 2 --warmup 2 --graph-calls 2
+
+bf16-benchmark:
+	$(PYTHON) benchmarks/rmsnorm_bf16.py --experiment $(EXP) --output $(OUT)/bf16 --rounds 20 --warmup 10 --graph-calls 20
+
+bf16-profile-preview:
+	$(PYTHON) scripts/profile_rmsnorm_bf16.py --experiment $(EXP) --output results/collected/$(EXP)/bf16
 
 profile-preview:
 	$(PYTHON) scripts/profile_comparison.py --experiment $(EXP) --output results/collected/$(EXP)/fp32 --optimized

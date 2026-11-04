@@ -2,6 +2,7 @@
 #include <c10/cuda/CUDAException.h>
 #include <c10/cuda/CUDAGuard.h>
 #include <cstdint>
+#include <cuda_bf16.h>
 #include <cuda_runtime.h>
 #include <torch/extension.h>
 
@@ -158,6 +159,91 @@ bool is_aligned_16(const void* ptr) {
   return (reinterpret_cast<std::uintptr_t>(ptr) & 0xF) == 0;
 }
 
+// Capacity is a bounded row bucket; invalid columns still join every reduction.
+template <int Capacity>
+__global__ void rmsnorm_bf16_register_kernel(
+    const __nv_bfloat16* x, const __nv_bfloat16* residual,
+    const __nv_bfloat16* weight, __nv_bfloat16* y,
+    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
+  constexpr int Values = Capacity / 256;
+  __shared__ float sums[8];
+  float values[Values];
+  float total = 0.0f;
+  const int64_t base = static_cast<int64_t>(blockIdx.x) * hidden;
+  #pragma unroll
+  for (int i = 0; i < Values; ++i) {
+    const int64_t col = threadIdx.x + i * 256;
+    float r = 0.0f;
+    if (col < hidden) {
+      r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
+      residual_out[base + col] = __float2bfloat16_rn(r);
+    }
+    values[i] = r;
+    total += r * r;
+  }
+  const float inv = rsqrtf(block_sum<true>(total, sums) / hidden + eps);
+  #pragma unroll
+  for (int i = 0; i < Values; ++i) {
+    const int64_t col = threadIdx.x + i * 256;
+    if (col < hidden) {
+      const float w = __bfloat162float(weight[col]);
+      y[base + col] = __float2bfloat16_rn(values[i] * inv * w);
+    }
+  }
+}
+
+__global__ void rmsnorm_bf16_recompute_kernel(
+    const __nv_bfloat16* x, const __nv_bfloat16* residual,
+    const __nv_bfloat16* weight, __nv_bfloat16* y,
+    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
+  __shared__ float sums[8];
+  const int64_t base = static_cast<int64_t>(blockIdx.x) * hidden;
+  float total = 0.0f;
+  for (int64_t col = threadIdx.x; col < hidden; col += blockDim.x) {
+    const float r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
+    residual_out[base + col] = __float2bfloat16_rn(r);
+    total += r * r;
+  }
+  const float inv = rsqrtf(block_sum<true>(total, sums) / hidden + eps);
+  for (int64_t col = threadIdx.x; col < hidden; col += blockDim.x) {
+    // Do not read rounded residual_out: that would change the normalization contract.
+    const float r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
+    y[base + col] = __float2bfloat16_rn(r * inv * __bfloat162float(weight[col]));
+  }
+}
+
+std::vector<torch::Tensor> launch_bf16_rmsnorm(
+    torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
+  const c10::cuda::CUDAGuard guard(x.device());
+  auto y = torch::empty_like(x);
+  auto residual_out = torch::empty_like(residual);
+  const int64_t rows = x.size(0), hidden = x.size(1);
+  const auto* xp = reinterpret_cast<const __nv_bfloat16*>(x.data_ptr<at::BFloat16>());
+  const auto* rp = reinterpret_cast<const __nv_bfloat16*>(residual.data_ptr<at::BFloat16>());
+  const auto* wp = reinterpret_cast<const __nv_bfloat16*>(weight.data_ptr<at::BFloat16>());
+  auto* yp = reinterpret_cast<__nv_bfloat16*>(y.data_ptr<at::BFloat16>());
+  auto* op = reinterpret_cast<__nv_bfloat16*>(residual_out.data_ptr<at::BFloat16>());
+  const auto stream = at::cuda::getCurrentCUDAStream();
+  const float epsilon = static_cast<float>(eps);
+  if (!fast || hidden > 8192) {
+    rmsnorm_bf16_recompute_kernel<<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 256) {
+    rmsnorm_bf16_register_kernel<256><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 512) {
+    rmsnorm_bf16_register_kernel<512><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 1024) {
+    rmsnorm_bf16_register_kernel<1024><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 2048) {
+    rmsnorm_bf16_register_kernel<2048><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 4096) {
+    rmsnorm_bf16_register_kernel<4096><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  } else {
+    rmsnorm_bf16_register_kernel<8192><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
+  }
+  C10_CUDA_KERNEL_LAUNCH_CHECK();
+  return {y, residual_out};
+}
+
 }  // namespace
 
 template <bool Fast>
@@ -231,6 +317,9 @@ std::vector<torch::Tensor> launch_rmsnorm(
 
 std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
     torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
+  if (x.scalar_type() == torch::kBFloat16) {
+    return launch_bf16_rmsnorm(x, residual, weight, eps, fast);
+  }
   return fast ? launch_rmsnorm<true>(x, residual, weight, eps)
               : launch_rmsnorm<false>(x, residual, weight, eps);
 }

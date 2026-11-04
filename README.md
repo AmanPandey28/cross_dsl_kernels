@@ -23,6 +23,11 @@ references and execution baselines; FP32 projection also has bounded cuBLAS and
 cuBLASLt baselines. W4A16 uses an explicit research packing format, not a drop-in
 AWQ/GPTQ checkpoint format or an NVFP4 Tensor Core kernel.
 
+RMSNorm additionally supports **BF16 input/output with FP32 accumulation in CUDA
+and Triton**. Normalization uses the unrounded FP32 residual sum; both outputs
+are out-of-place. CuTe RMSNorm and dense GEMV/GEMM remain FP32.
+See the [BF16 contract, results and reproduction](docs/bf16_rmsnorm.md).
+
 ## Results At A Glance
 
 Saved full sweeps pass **226/226 FP32 backend-case rows** and **144/144 W4A16
@@ -42,6 +47,12 @@ and losing variants are included in [results/](results/README.md).
 At M16, every measured custom W4A16 variant loses to dense FP16. Lowering RMSNorm
 warp count and tiling NK M1 projection also regress in important cases.
 Read the [full results and limitations](docs/results.md) before quoting a number.
+
+The BF16 RMSNorm extension adds two **28/28-row** sweeps, **86 correctness checks**
+and a **47-check memcheck subset with zero reported errors**. At 256x4096,
+CUDA graph medians are 14.94/14.70 us versus eager PyTorch's 78.69/78.61 us;
+compiled PyTorch is faster at 8.75/8.53 us. Triton records 8.26/7.67 us.
+These are two local runs, not a universal speedup or a model-level result.
 
 ## Quick Start
 

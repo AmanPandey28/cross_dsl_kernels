@@ -16,6 +16,23 @@ class ReleaseToolTests(unittest.TestCase):
     def test_saved_sources_and_numerical_evidence(self):
         self.assertEqual(check_evidence.validate()["sources"], 37)
 
+    def test_collection_hashes_use_historical_snapshot(self):
+        old = {"production_source_sha256": {"csrc/example.cu": "old"}}
+        check_evidence.check_snapshot({"source_sha256": {"csrc/example.cu": "old"}}, old, "run")
+        with self.assertRaisesRegex(ValueError, "disagrees with snapshot"):
+            check_evidence.check_snapshot({"source_sha256": {"csrc/example.cu": "new"}}, old, "run")
+
+    def test_bf16_profile_preview_uses_standalone_runner(self):
+        import profile_rmsnorm_bf16
+
+        self.assertIs(profile_rmsnorm_bf16.run_commands, profile_runner.run_commands)
+        jobs = profile_rmsnorm_bf16.commands("python", "EXP-20261103-101", Path("profiles"))
+        self.assertEqual(len(jobs), 7)
+        self.assertIn("--profile-iterations", jobs[0][1])
+        for _, command in jobs[3::2]:
+            self.assertIn("--launch-count", command)
+            self.assertEqual(command[command.index("--clock-control") + 1], "none")
+
     def test_sample_validation_rejects_wrong_median_and_nonfinite(self):
         for value in (
             {"samples_ms": [1, 3], "median_ms": 1},
