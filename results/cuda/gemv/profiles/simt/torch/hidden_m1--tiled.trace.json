@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026742027.09,
+      "dur": 519.674
+    },
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026742547.02,
+      "dur": 507.514
+    },
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026743054.758,
+      "dur": 504.954
+    }
+  ]
+}

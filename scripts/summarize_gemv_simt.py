@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Recompute projection comparisons and selected counter evidence without a GPU."""
+"""Recompute SIMT projection comparisons and counter evidence without a GPU."""
 from __future__ import annotations
 
 import argparse
@@ -9,6 +9,9 @@ import statistics
 from pathlib import Path
 
 from summarize_comparison import METRICS, metric_value
+
+# Collection-time identifiers remain untouched in the archived input rows.
+BACKEND_ALIASES = {"clean_warp": "simt_warp", "clean_rows": "simt_rows"}
 
 EXTRA_METRICS = {
     "dram_bytes": "dram__bytes.sum",
@@ -42,12 +45,16 @@ def analyze(path):
                 raise ValueError("saved median does not match samples")
             if len(summary["samples_ms"]) != data["repeat"]:
                 raise ValueError("sample count does not match repeats")
-        rows.setdefault(row["case"], {})[row["backend"]] = row
+        backend = BACKEND_ALIASES.get(row["backend"], row["backend"])
+        case_rows = rows.setdefault(row["case"], {})
+        if backend in case_rows:
+            raise ValueError(f"duplicate backend after alias resolution: {row['case']} {backend}")
+        case_rows[backend] = row
     comparisons = []
     for case, backends in rows.items():
-        for baseline, candidate in (("cuda", "clean_warp"), ("cuda_fast", "clean_rows"),
-                                    ("cuda_fast", "tiled"), ("clean_rows", "tiled"),
-                                    ("cublas", "clean_rows"), ("cublas", "tiled")):
+        for baseline, candidate in (("cuda", "simt_warp"), ("cuda_fast", "simt_rows"),
+                                    ("cuda_fast", "tiled"), ("simt_rows", "tiled"),
+                                    ("cublas", "simt_rows"), ("cublas", "tiled")):
             if baseline not in backends or candidate not in backends:
                 continue
             for mode in ("event", "graph_event"):
@@ -59,7 +66,7 @@ def analyze(path):
                                     "mode": mode, "baseline_over_candidate": old / new,
                                     "candidate_latency_change_pct": (new / old - 1) * 100,
                                     "refactor_regression_warning": baseline in {"cuda", "cuda_fast"}
-                                    and candidate in {"clean_warp", "clean_rows"} and new > old * 1.1})
+                                    and candidate in {"simt_warp", "simt_rows"} and new > old * 1.1})
     return {"experiment_id": data["experiment_id"], "source": str(path), "status": data["status"],
             "rows": data["rows"], "comparisons": comparisons,
             "method": {key: data[key] for key in ("seed", "warmup", "repeat", "graph_calls", "timing_policy")}}
@@ -102,7 +109,8 @@ def main():
         for row in sorted(experiment["rows"], key=lambda r: (r["case"], r["backend"])):
             value = row["timing"]["graph_event"]
             times = " | ".join(f"{value[key] * 1000:.3f}" for key in ("p10_ms", "median_ms", "p90_ms"))
-            lines.append(f"| {experiment['experiment_id']} | {row['case']} | {row['backend']} | {times} |")
+            backend = BACKEND_ALIASES.get(row["backend"], row["backend"])
+            lines.append(f"| {experiment['experiment_id']} | {row['case']} | {backend} | {times} |")
     lines += ["", "Refactor warnings (>10% median regression) remain in JSON; do not discard losing cases.",
               "NCU values, when present, are diagnostics, not graph replay samples."]
     (args.output / "summary.md").write_text("\n".join(lines) + "\n")

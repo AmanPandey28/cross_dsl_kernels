@@ -4,7 +4,7 @@
       "case": "hidden_m1",
       "backend": "clean_warp",
       "torch_profile": {
-        "trace": "hidden_m1--clean_warp.trace.json",
+        "trace": "hidden_m1--simt_warp.trace.json",
         "iterations": 3
       }
     },
@@ -12,7 +12,7 @@
       "case": "hidden_m1",
       "backend": "clean_rows",
       "torch_profile": {
-        "trace": "hidden_m1--clean_rows.trace.json",
+        "trace": "hidden_m1--simt_rows.trace.json",
         "iterations": 3
       }
     },
@@ -60,7 +60,7 @@
       "case": "hidden_m16",
       "backend": "clean_warp",
       "torch_profile": {
-        "trace": "hidden_m16--clean_warp.trace.json",
+        "trace": "hidden_m16--simt_warp.trace.json",
         "iterations": 3
       }
     },
@@ -68,7 +68,7 @@
       "case": "hidden_m16",
       "backend": "clean_rows",
       "torch_profile": {
-        "trace": "hidden_m16--clean_rows.trace.json",
+        "trace": "hidden_m16--simt_rows.trace.json",
         "iterations": 3
       }
     },
@@ -108,7 +108,7 @@
       "case": "mlp_up_m16",
       "backend": "clean_warp",
       "torch_profile": {
-        "trace": "mlp_up_m16--clean_warp.trace.json",
+        "trace": "mlp_up_m16--simt_warp.trace.json",
         "iterations": 3
       }
     },
@@ -132,7 +132,7 @@
       "case": "mlp_up_m16",
       "backend": "clean_rows",
       "torch_profile": {
-        "trace": "mlp_up_m16--clean_rows.trace.json",
+        "trace": "mlp_up_m16--simt_rows.trace.json",
         "iterations": 3
       }
     },

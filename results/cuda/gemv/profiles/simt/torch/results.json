@@ -1,0 +1,76 @@
+{
+  "rows": [
+    {
+      "case": "hidden_m1",
+      "backend": "simt_rows",
+      "torch_profile": {
+        "trace": "hidden_m1--simt_rows.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "tiled",
+      "torch_profile": {
+        "trace": "hidden_m1--tiled.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "hidden_m1",
+      "backend": "simt_warp",
+      "torch_profile": {
+        "trace": "hidden_m1--simt_warp.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "simt_rows",
+      "torch_profile": {
+        "trace": "hidden_m16--simt_rows.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "simt_warp",
+      "torch_profile": {
+        "trace": "hidden_m16--simt_warp.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "hidden_m16",
+      "backend": "tiled",
+      "torch_profile": {
+        "trace": "hidden_m16--tiled.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "mlp_up_m16",
+      "backend": "simt_warp",
+      "torch_profile": {
+        "trace": "mlp_up_m16--simt_warp.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "mlp_up_m16",
+      "backend": "simt_rows",
+      "torch_profile": {
+        "trace": "mlp_up_m16--simt_rows.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "mlp_up_m16",
+      "backend": "tiled",
+      "torch_profile": {
+        "trace": "mlp_up_m16--tiled.trace.json",
+        "iterations": 3
+      }
+    }
+  ]
+}

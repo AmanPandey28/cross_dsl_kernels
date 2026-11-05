@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preview or collect a bounded profile bundle for the parallel CUDA kernels."""
+"""Preview or collect a bounded profile bundle for CUDA SIMT projections."""
 from __future__ import annotations
 
 import argparse
@@ -28,21 +28,21 @@ def commands(python, experiment, output, counters_only=False):
     jobs = [
         ("torch", base + selected + ["--profile-iterations", "3", "--output", str(output / "torch")]),
         ("nsys", ["nsys", "profile", "--trace=cuda,nvtx,cublas", "--sample=none", "--cpuctxsw=none",
-                  "--cuda-graph-trace=node", "--output", str(output / "gemv-clean")]
+                  "--cuda-graph-trace=node", "--output", str(output / "gemv-simt")]
                  + systems_base + selected + ["--output", str(output / "nsys-results")]),
         ("nsys-stats", ["nsys", "stats", "--report", "cuda_gpu_kern_sum,cuda_api_sum,nvtx_sum",
-                        "--format", "csv", "--output", str(output / "gemv-clean-stats"),
-                        str(output / "gemv-clean.nsys-rep")]),
+                        "--format", "csv", "--output", str(output / "gemv-simt-stats"),
+                        str(output / "gemv-simt.nsys-rep")]),
     ]
     if counters_only:
         jobs = []
     for case, backend, kernel in (
         ("hidden_m16", "cuda", ".*decode_gemv_f32_warp_kernel.*"),
         ("hidden_m16", "cuda_fast", ".*decode_gemv_rows_kernel.*"),
-        ("hidden_m16", "clean_warp", ".*gemv_warp_clean_kernel.*"),
-        ("hidden_m16", "clean_rows", ".*gemv_rows_kn_clean_kernel.*"),
+        ("hidden_m16", "simt_warp", ".*gemv_warp_kernel.*"),
+        ("hidden_m16", "simt_rows", ".*gemv_rows_kn_kernel.*"),
         ("hidden_m16", "tiled", ".*gemm_tiled_kernel.*"),
-        ("hidden_nk_m16", "clean_rows", ".*gemv_rows_nk_clean_kernel.*"),
+        ("hidden_nk_m16", "simt_rows", ".*gemv_rows_nk_kernel.*"),
         ("hidden_nk_m16", "tiled", ".*gemm_tiled_kernel.*"),
     ):
         name = f"{case}--{backend}"

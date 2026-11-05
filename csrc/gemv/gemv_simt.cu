@@ -16,7 +16,7 @@ __device__ float warp_sum(float value) {
 }
 
 template <bool WeightIsNK>
-__global__ void gemv_warp_clean_kernel(
+__global__ void gemv_warp_kernel(
     const float* __restrict__ x, const float* __restrict__ weight,
     const float* __restrict__ bias, float* __restrict__ output,
     int64_t total_outputs, int64_t k, int64_t n) {
@@ -43,7 +43,7 @@ __global__ void gemv_warp_clean_kernel(
   }
 }
 
-__global__ void gemv_rows_kn_clean_kernel(
+__global__ void gemv_rows_kn_kernel(
     const float* __restrict__ x, const float* __restrict__ weight,
     const float* __restrict__ bias, float* __restrict__ output,
     int64_t m, int64_t k, int64_t n) {
@@ -84,7 +84,7 @@ __global__ void gemv_rows_kn_clean_kernel(
   }
 }
 
-__global__ void gemv_rows_nk_clean_kernel(
+__global__ void gemv_rows_nk_kernel(
     const float* __restrict__ x, const float* __restrict__ weight,
     const float* __restrict__ bias, float* __restrict__ output,
     int64_t m, int64_t k, int64_t n) {
@@ -113,28 +113,28 @@ __global__ void gemv_rows_nk_clean_kernel(
 }
 }  // namespace
 
-void launch_gemv_warp_clean(const float* x, const float* weight, const float* bias,
+void launch_gemv_warp(const float* x, const float* weight, const float* bias,
                             float* output, int64_t m, int64_t k, int64_t n,
                             bool weight_is_nk, cudaStream_t stream) {
   const unsigned int blocks = static_cast<unsigned int>((m * n - 1) / Warps + 1);
   if (weight_is_nk) {
-    gemv_warp_clean_kernel<true><<<blocks, Threads, 0, stream>>>(x, weight, bias, output, m * n, k, n);
+    gemv_warp_kernel<true><<<blocks, Threads, 0, stream>>>(x, weight, bias, output, m * n, k, n);
   } else {
-    gemv_warp_clean_kernel<false><<<blocks, Threads, 0, stream>>>(x, weight, bias, output, m * n, k, n);
+    gemv_warp_kernel<false><<<blocks, Threads, 0, stream>>>(x, weight, bias, output, m * n, k, n);
   }
   C10_CUDA_KERNEL_LAUNCH_CHECK();
 }
 
-void launch_gemv_rows_clean(const float* x, const float* weight, const float* bias,
+void launch_gemv_rows(const float* x, const float* weight, const float* bias,
                             float* output, int64_t m, int64_t k, int64_t n,
                             bool weight_is_nk, cudaStream_t stream) {
   const int columns = weight_is_nk ? Warps : WarpSize;
   const dim3 grid(static_cast<unsigned int>((n - 1) / columns + 1),
                   static_cast<unsigned int>((m - 1) / Rows + 1));
   if (weight_is_nk) {
-    gemv_rows_nk_clean_kernel<<<grid, Threads, 0, stream>>>(x, weight, bias, output, m, k, n);
+    gemv_rows_nk_kernel<<<grid, Threads, 0, stream>>>(x, weight, bias, output, m, k, n);
   } else {
-    gemv_rows_kn_clean_kernel<<<grid, Threads, 0, stream>>>(x, weight, bias, output, m, k, n);
+    gemv_rows_kn_kernel<<<grid, Threads, 0, stream>>>(x, weight, bias, output, m, k, n);
   }
   C10_CUDA_KERNEL_LAUNCH_CHECK();
 }

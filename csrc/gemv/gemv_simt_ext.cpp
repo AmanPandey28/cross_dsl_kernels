@@ -7,9 +7,9 @@
 
 using Launcher = void (*)(const float*, const float*, const float*, float*,
                          int64_t, int64_t, int64_t, bool, cudaStream_t);
-void launch_gemv_warp_clean(const float*, const float*, const float*, float*,
+void launch_gemv_warp(const float*, const float*, const float*, float*,
                             int64_t, int64_t, int64_t, bool, cudaStream_t);
-void launch_gemv_rows_clean(const float*, const float*, const float*, float*,
+void launch_gemv_rows(const float*, const float*, const float*, float*,
                             int64_t, int64_t, int64_t, bool, cudaStream_t);
 void launch_gemm_tiled(const float*, const float*, const float*, float*,
                        int64_t, int64_t, int64_t, bool, cudaStream_t);
@@ -67,14 +67,14 @@ torch::Tensor project(torch::Tensor x, torch::Tensor weight,
   return output;
 }
 
-torch::Tensor decode_gemv_warp_clean(torch::Tensor x, torch::Tensor weight,
+torch::Tensor decode_gemv_simt_warp(torch::Tensor x, torch::Tensor weight,
                                     std::optional<torch::Tensor> bias, const std::string& layout) {
-  return project(x, weight, bias, layout, launch_gemv_warp_clean, 0, 8);
+  return project(x, weight, bias, layout, launch_gemv_warp, 0, 8);
 }
 
-torch::Tensor decode_gemv_rows_clean(torch::Tensor x, torch::Tensor weight,
+torch::Tensor decode_gemv_simt_rows(torch::Tensor x, torch::Tensor weight,
                                     std::optional<torch::Tensor> bias, const std::string& layout) {
-  return project(x, weight, bias, layout, launch_gemv_rows_clean, 4, layout == "NK" ? 8 : 32);
+  return project(x, weight, bias, layout, launch_gemv_rows, 4, layout == "NK" ? 8 : 32);
 }
 
 torch::Tensor decode_gemm_tiled(torch::Tensor x, torch::Tensor weight,
@@ -85,10 +85,10 @@ torch::Tensor decode_gemm_tiled(torch::Tensor x, torch::Tensor weight,
 }  // namespace
 
 PYBIND11_MODULE(TORCH_EXTENSION_NAME, module) {
-  module.def("decode_gemv_warp_clean", &decode_gemv_warp_clean,
+  module.def("decode_gemv_simt_warp", &decode_gemv_simt_warp,
              pybind11::arg("x"), pybind11::arg("weight"), pybind11::arg("bias") = pybind11::none(),
              pybind11::arg("layout") = "KN");
-  module.def("decode_gemv_rows_clean", &decode_gemv_rows_clean,
+  module.def("decode_gemv_simt_rows", &decode_gemv_simt_rows,
              pybind11::arg("x"), pybind11::arg("weight"), pybind11::arg("bias") = pybind11::none(),
              pybind11::arg("layout") = "KN");
   module.def("decode_gemm_tiled", &decode_gemm_tiled,

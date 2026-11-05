@@ -40,8 +40,8 @@
     "csrc/rope_kv/rope_kv_kernel.cu": "3b4bf610936b914befb7f8f595c14ca8f59d24af74faaa25f0259951980339d6",
     "csrc/w4a16/w4a16_ext.cpp": "b412e1754565e1b4d970391f05fcf79c80a18758550fd57b61e967f48a44d7c8",
     "csrc/w4a16/w4a16_kernel.cu": "6cf1a1a900ae45196011f809814f3019f624f067f18c26558627a60cf77c4662",
-    "csrc/gemv/gemv_clean_ext.cpp": "3c4cbe652ad6e232835456a542d9ed0a4bf1ebe4750ed1f4b84f23ea4ebec126",
-    "csrc/gemv/gemv_clean.cu": "a9e45d3ea1674a2899b7e205390d7588896a2eeee815326dcc7638ed09147f1a",
+    "csrc/gemv/gemv_simt_ext.cpp": "9fd1e59f9f5f2cb6b9cd77d07aa1e1fa963021178e4c70debec5609072eada85",
+    "csrc/gemv/gemv_simt.cu": "ed4e2cb72009437f862bacfd5ca99144f70c838104e00919d013b26aa8ba9677",
     "csrc/gemv/gemm_tiled.cu": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769"
   },
   "artifacts": {
@@ -436,14 +436,6 @@
       "format": "log",
       "projection": "All NCU metrics/units; process identity columns omitted"
     },
-    "results/cuda/gemv/profiles/full/hidden_m16--clean_rows-csv.log": {
-      "original_sha256": "1b4f500719ebba881ad29425a8422f1f1879691623ad79ce088c9b723cdc7ab7",
-      "export_sha256": "075ef0eb19badd87177a808cc16d1cb14e15f5769e7987b2708e86fd38db7208",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
     "results/cuda/gemv/profiles/full/hidden_m16--cuda-csv.log": {
       "original_sha256": "615ee1f1ab6a76eb1d4c8c7130a20f9a0ec90807df5654ae1815cd836c0cb0e7",
       "export_sha256": "4328135e994734b012dfcfa227b1c61d78d8995ea9e0752949f024f0da53f5e5",
@@ -459,59 +451,6 @@
       "experiment_id": "EXP-20261105-008",
       "format": "log",
       "projection": "All NCU metrics/units; process identity columns omitted"
-    },
-    "results/cuda/gemv/profiles/full/hidden_m16--clean_warp-csv.log": {
-      "original_sha256": "82b7f1a07c0556d249870b18bce248bfe3fade939e0252aa7a410b4fe26b5b89",
-      "export_sha256": "00160a88996b5472750ac94d5341046d164d23fff9215d673829160413771667",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
-    "results/cuda/gemv/profiles/full/hidden_nk_m16--clean_rows-csv.log": {
-      "original_sha256": "ee0d9a38ca91db4ed5794782611a4efe5a7a371c251dfd5c429e6df09b12c34f",
-      "export_sha256": "a733c158069c4ed4e8c7d475ddb2847e029423e00715236f379428b219dc09f0",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
-    "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_api_sum.csv": {
-      "original_sha256": "ae38332484509bc5921e9bc6506ccb110f2e0c6b8b14898a442e352708f0243c",
-      "export_sha256": "ae38332484509bc5921e9bc6506ccb110f2e0c6b8b14898a442e352708f0243c",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "csv"
-    },
-    "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_gpu_kern_sum.csv": {
-      "original_sha256": "90db4f8ffb6af40e1c6ae83af8574d249da1a7789084e97a6e69ba5bb67c2440",
-      "export_sha256": "90db4f8ffb6af40e1c6ae83af8574d249da1a7789084e97a6e69ba5bb67c2440",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "csv"
-    },
-    "results/cuda/gemv/profiles/full/gemv-clean-stats_nvtx_sum.csv": {
-      "original_sha256": "0166b9a5b652a9ad0c11d2a8db88337e15825bf5079b97cbcace69e0a111bbe6",
-      "export_sha256": "0166b9a5b652a9ad0c11d2a8db88337e15825bf5079b97cbcace69e0a111bbe6",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "csv"
-    },
-    "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_warp.trace.json": {
-      "original_sha256": "7610a41b74ac69a7cb458265a4019902f513cbdaa46ac3a6513dab95f83ea4c3",
-      "export_sha256": "18b2cd5fd264b712fc5fe48416c85c06dc5d87b4c7f2d669c6d617428882aa80",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
-    },
-    "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_rows.trace.json": {
-      "original_sha256": "211b54da15daf52ad0fe7f4e0eea910d7e9e7ed437354b00e7a97a483a674755",
-      "export_sha256": "978d02b2de9b2d984b5bf72a2335be9936db16bb2c2705452352606b584675cd",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
     },
     "results/cuda/gemv/profiles/full/torch/hidden_m1--tiled.trace.json": {
       "original_sha256": "4470bb9352777f4459449c9a7ddb12a352740a93d224fefa4d006762fc21a3f1",
@@ -553,22 +492,6 @@
       "format": "json",
       "projection": "Kernel-category events only"
     },
-    "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_warp.trace.json": {
-      "original_sha256": "8cf7190c82a37037bba88b7cad793079c1c0fa9575f741d95b5dfa2b5a2b64d0",
-      "export_sha256": "b554ce48d3c7af6971330176d37a98cbe531a1ee9b4706874e00bc6b3054d2d8",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
-    },
-    "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_rows.trace.json": {
-      "original_sha256": "f609a69b3bafff1c9e04c1f2e2f9b3e0071c6f0c08d4634d85cb417248bcee0c",
-      "export_sha256": "f69254b9cc53ff10500b135475fb4646c746fff869dc9727fdf64c43062fbcf0",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
-    },
     "results/cuda/gemv/profiles/full/torch/hidden_m16--tiled.trace.json": {
       "original_sha256": "fbea0218c041fbf6b6613262a3390f9fc24bc42bfe0c37384dc33a90fe0bbbf7",
       "export_sha256": "3d2efb684af86b06221e3802b3628d4262548f0f084d969728de3aeeec35d214",
@@ -601,14 +524,6 @@
       "format": "json",
       "projection": "Kernel-category events only"
     },
-    "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_warp.trace.json": {
-      "original_sha256": "328b37f1a607adf4849b17f69cca81c1e7008f4c047db62b33eb519d1b5e05d4",
-      "export_sha256": "2647df8903fa762154486c58b9c501885ef3f8ed035dd2cb0ca964c8f5e8736e",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
-    },
     "results/cuda/gemv/profiles/full/torch/mlp_up_m16--cuda.trace.json": {
       "original_sha256": "df10102d358ef954ef93d5ab2ccbc457a1062aad83fc1cb954405fdafc941885",
       "export_sha256": "3f822bf965170a5243d2b62cdbca4cd8660e3f66443440c329ffead3f24759f8",
@@ -625,14 +540,6 @@
       "format": "json",
       "projection": "Kernel-category events only"
     },
-    "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_rows.trace.json": {
-      "original_sha256": "eca2086971afb766e1fab56f7359487301220abdb9ef11cdd10cba37c52c04ff",
-      "export_sha256": "ae3eab0b7433d1e71ab7dbae69c695587959671a4b35f72508544db7b6a95dcb",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-008",
-      "format": "json",
-      "projection": "Kernel-category events only"
-    },
     "results/cuda/gemv/profiles/full/torch/mlp_up_m16--tiled.trace.json": {
       "original_sha256": "34c2217cd6de158bafa28d3db90e0cf87848bb81e753715ae6465dfe4c6020c5",
       "export_sha256": "b80019c8a95a62f26eda2abf58af07990789e2506911a40d0268c8dfc0c63ae0",
@@ -643,11 +550,12 @@
     },
     "results/cuda/gemv/profiles/full/torch/results.json": {
       "original_sha256": "ee4b38c7989352fbb535dd27fb45366f4c383c9e435d46d4486eab0170e2a77d",
-      "export_sha256": "f1f68c76201623447586aa9a92c581d9e9d2a6525035c62e8101c5c75b4293d8",
+      "export_sha256": "7cae350300f2efa747cfdf3eaee54fa70c8da884dedf6c960944754f56925615",
       "source_snapshot": "cuda_projection_20261105",
       "experiment_id": "EXP-20261105-008",
       "format": "json",
-      "projection": "Cases, backend names, trace basenames and iteration counts"
+      "projection": "Historical backend labels/iterations retained; trace basenames follow artifact path aliases",
+      "previous_export_sha256": "f1f68c76201623447586aa9a92c581d9e9d2a6525035c62e8101c5c75b4293d8"
     },
     "results/cuda/gemv/profiles/counters/hidden_nk_m16--tiled-csv.log": {
       "original_sha256": "5ee860528ae1f384865fdeba8397875e40bf048f21754f3e700dd971b61d0dfc",
@@ -665,14 +573,6 @@
       "format": "log",
       "projection": "All NCU metrics/units; process identity columns omitted"
     },
-    "results/cuda/gemv/profiles/counters/hidden_m16--clean_rows-csv.log": {
-      "original_sha256": "0b536131a830ac383a84f9f4f104ee3f34630a453369a754ed622bb4f609839c",
-      "export_sha256": "64723bc026f40428716e8041b519edc7a13e7a447693bc00ae89cca7c296007e",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-009",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
     "results/cuda/gemv/profiles/counters/hidden_m16--cuda-csv.log": {
       "original_sha256": "f39974b31a94525fdc50f2b2721585265568ce4be46ac3042800be521406ee88",
       "export_sha256": "cb7e31cf0278fc3796b8e4827b1b9a35bd7343152a0093654ab904fdd80d55d3",
@@ -684,22 +584,6 @@
     "results/cuda/gemv/profiles/counters/hidden_m16--tiled-csv.log": {
       "original_sha256": "da0885ef4d4dada98476dc7b9d81e53860f0c17d64deca43d2536e02462fa154",
       "export_sha256": "61e0093f9a468a85035f564ac2692487217181ea0d88cbd9762279edb957453b",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-009",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
-    "results/cuda/gemv/profiles/counters/hidden_m16--clean_warp-csv.log": {
-      "original_sha256": "cbee7808cd48a4fa725d529d2df71254fb698f166b28334a83aa73fa0b8d6350",
-      "export_sha256": "df212a10bcf18f37ddd6ccaa05bd741bcc71f360a57537fbb64faadc44636ef4",
-      "source_snapshot": "cuda_projection_20261105",
-      "experiment_id": "EXP-20261105-009",
-      "format": "log",
-      "projection": "All NCU metrics/units; process identity columns omitted"
-    },
-    "results/cuda/gemv/profiles/counters/hidden_nk_m16--clean_rows-csv.log": {
-      "original_sha256": "84e632f88791b7746d77cea939dcddac973ea3c4bc32af1e85b7a7a407557ae3",
-      "export_sha256": "4a76a0f3f8c1b53efe627ad63205877def0691ad7c5c6b41634e91daf07fea54",
       "source_snapshot": "cuda_projection_20261105",
       "experiment_id": "EXP-20261105-009",
       "format": "log",
@@ -816,11 +700,12 @@
     },
     "results/cuda/profiles.json": {
       "original_sha256": null,
-      "export_sha256": "d33d5b28a7a7559af8d7e0a2ede36f4aa02b609eb74a2673effcb469b30a3467",
+      "export_sha256": "e11127645a3ac3ad708ac50900c4ff2f45ff18bd896b49582f210a74c4da00ce",
       "experiment_id": null,
       "source_snapshot": null,
       "format": "json",
-      "projection": "Recomputed from the indexed CUDA NCU CSVs and kernel-only Torch event projections"
+      "projection": "Recomputed from included captured counters/events; current artifact paths and additive SIMT captures",
+      "previous_export_sha256": "d33d5b28a7a7559af8d7e0a2ede36f4aa02b609eb74a2673effcb469b30a3467"
     },
     "results/checks/cuda-release-gemv.json": {
       "original_sha256": "ccfaf1ddcb81dc28fbe97ec89b87ea8d241333cd79e2c46e9c7a057cf9375bdf",
@@ -837,6 +722,301 @@
       "experiment_id": "EXP-20261105-017",
       "format": "json",
       "projection": "Numerical data unchanged; private metadata and nonpublic source paths omitted"
+    },
+    "results/cuda/gemv/profiles/full/hidden_m16--simt_rows-csv.log": {
+      "original_sha256": "1b4f500719ebba881ad29425a8422f1f1879691623ad79ce088c9b723cdc7ab7",
+      "export_sha256": "075ef0eb19badd87177a808cc16d1cb14e15f5769e7987b2708e86fd38db7208",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/full/hidden_m16--clean_rows-csv.log",
+      "previous_export_sha256": "075ef0eb19badd87177a808cc16d1cb14e15f5769e7987b2708e86fd38db7208"
+    },
+    "results/cuda/gemv/profiles/full/hidden_m16--simt_warp-csv.log": {
+      "original_sha256": "82b7f1a07c0556d249870b18bce248bfe3fade939e0252aa7a410b4fe26b5b89",
+      "export_sha256": "00160a88996b5472750ac94d5341046d164d23fff9215d673829160413771667",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/full/hidden_m16--clean_warp-csv.log",
+      "previous_export_sha256": "00160a88996b5472750ac94d5341046d164d23fff9215d673829160413771667"
+    },
+    "results/cuda/gemv/profiles/full/hidden_nk_m16--simt_rows-csv.log": {
+      "original_sha256": "ee0d9a38ca91db4ed5794782611a4efe5a7a371c251dfd5c429e6df09b12c34f",
+      "export_sha256": "a733c158069c4ed4e8c7d475ddb2847e029423e00715236f379428b219dc09f0",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/full/hidden_nk_m16--clean_rows-csv.log",
+      "previous_export_sha256": "a733c158069c4ed4e8c7d475ddb2847e029423e00715236f379428b219dc09f0"
+    },
+    "results/cuda/gemv/profiles/full/gemv-simt-stats_cuda_api_sum.csv": {
+      "original_sha256": "ae38332484509bc5921e9bc6506ccb110f2e0c6b8b14898a442e352708f0243c",
+      "export_sha256": "ae38332484509bc5921e9bc6506ccb110f2e0c6b8b14898a442e352708f0243c",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "csv",
+      "previous_export_path": "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_api_sum.csv",
+      "previous_export_sha256": "ae38332484509bc5921e9bc6506ccb110f2e0c6b8b14898a442e352708f0243c"
+    },
+    "results/cuda/gemv/profiles/full/gemv-simt-stats_cuda_gpu_kern_sum.csv": {
+      "original_sha256": "90db4f8ffb6af40e1c6ae83af8574d249da1a7789084e97a6e69ba5bb67c2440",
+      "export_sha256": "90db4f8ffb6af40e1c6ae83af8574d249da1a7789084e97a6e69ba5bb67c2440",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "csv",
+      "previous_export_path": "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_gpu_kern_sum.csv",
+      "previous_export_sha256": "90db4f8ffb6af40e1c6ae83af8574d249da1a7789084e97a6e69ba5bb67c2440"
+    },
+    "results/cuda/gemv/profiles/full/gemv-simt-stats_nvtx_sum.csv": {
+      "original_sha256": "0166b9a5b652a9ad0c11d2a8db88337e15825bf5079b97cbcace69e0a111bbe6",
+      "export_sha256": "0166b9a5b652a9ad0c11d2a8db88337e15825bf5079b97cbcace69e0a111bbe6",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "csv",
+      "previous_export_path": "results/cuda/gemv/profiles/full/gemv-clean-stats_nvtx_sum.csv",
+      "previous_export_sha256": "0166b9a5b652a9ad0c11d2a8db88337e15825bf5079b97cbcace69e0a111bbe6"
+    },
+    "results/cuda/gemv/profiles/full/torch/hidden_m1--simt_warp.trace.json": {
+      "original_sha256": "7610a41b74ac69a7cb458265a4019902f513cbdaa46ac3a6513dab95f83ea4c3",
+      "export_sha256": "18b2cd5fd264b712fc5fe48416c85c06dc5d87b4c7f2d669c6d617428882aa80",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_warp.trace.json",
+      "previous_export_sha256": "18b2cd5fd264b712fc5fe48416c85c06dc5d87b4c7f2d669c6d617428882aa80"
+    },
+    "results/cuda/gemv/profiles/full/torch/hidden_m1--simt_rows.trace.json": {
+      "original_sha256": "211b54da15daf52ad0fe7f4e0eea910d7e9e7ed437354b00e7a97a483a674755",
+      "export_sha256": "978d02b2de9b2d984b5bf72a2335be9936db16bb2c2705452352606b584675cd",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_rows.trace.json",
+      "previous_export_sha256": "978d02b2de9b2d984b5bf72a2335be9936db16bb2c2705452352606b584675cd"
+    },
+    "results/cuda/gemv/profiles/full/torch/hidden_m16--simt_warp.trace.json": {
+      "original_sha256": "8cf7190c82a37037bba88b7cad793079c1c0fa9575f741d95b5dfa2b5a2b64d0",
+      "export_sha256": "b554ce48d3c7af6971330176d37a98cbe531a1ee9b4706874e00bc6b3054d2d8",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_warp.trace.json",
+      "previous_export_sha256": "b554ce48d3c7af6971330176d37a98cbe531a1ee9b4706874e00bc6b3054d2d8"
+    },
+    "results/cuda/gemv/profiles/full/torch/hidden_m16--simt_rows.trace.json": {
+      "original_sha256": "f609a69b3bafff1c9e04c1f2e2f9b3e0071c6f0c08d4634d85cb417248bcee0c",
+      "export_sha256": "f69254b9cc53ff10500b135475fb4646c746fff869dc9727fdf64c43062fbcf0",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_rows.trace.json",
+      "previous_export_sha256": "f69254b9cc53ff10500b135475fb4646c746fff869dc9727fdf64c43062fbcf0"
+    },
+    "results/cuda/gemv/profiles/full/torch/mlp_up_m16--simt_warp.trace.json": {
+      "original_sha256": "328b37f1a607adf4849b17f69cca81c1e7008f4c047db62b33eb519d1b5e05d4",
+      "export_sha256": "2647df8903fa762154486c58b9c501885ef3f8ed035dd2cb0ca964c8f5e8736e",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_warp.trace.json",
+      "previous_export_sha256": "2647df8903fa762154486c58b9c501885ef3f8ed035dd2cb0ca964c8f5e8736e"
+    },
+    "results/cuda/gemv/profiles/full/torch/mlp_up_m16--simt_rows.trace.json": {
+      "original_sha256": "eca2086971afb766e1fab56f7359487301220abdb9ef11cdd10cba37c52c04ff",
+      "export_sha256": "ae3eab0b7433d1e71ab7dbae69c695587959671a4b35f72508544db7b6a95dcb",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-008",
+      "format": "json",
+      "projection": "Kernel-category events only",
+      "previous_export_path": "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_rows.trace.json",
+      "previous_export_sha256": "ae3eab0b7433d1e71ab7dbae69c695587959671a4b35f72508544db7b6a95dcb"
+    },
+    "results/cuda/gemv/profiles/counters/hidden_m16--simt_rows-csv.log": {
+      "original_sha256": "0b536131a830ac383a84f9f4f104ee3f34630a453369a754ed622bb4f609839c",
+      "export_sha256": "64723bc026f40428716e8041b519edc7a13e7a447693bc00ae89cca7c296007e",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-009",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/counters/hidden_m16--clean_rows-csv.log",
+      "previous_export_sha256": "64723bc026f40428716e8041b519edc7a13e7a447693bc00ae89cca7c296007e"
+    },
+    "results/cuda/gemv/profiles/counters/hidden_m16--simt_warp-csv.log": {
+      "original_sha256": "cbee7808cd48a4fa725d529d2df71254fb698f166b28334a83aa73fa0b8d6350",
+      "export_sha256": "df212a10bcf18f37ddd6ccaa05bd741bcc71f360a57537fbb64faadc44636ef4",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-009",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/counters/hidden_m16--clean_warp-csv.log",
+      "previous_export_sha256": "df212a10bcf18f37ddd6ccaa05bd741bcc71f360a57537fbb64faadc44636ef4"
+    },
+    "results/cuda/gemv/profiles/counters/hidden_nk_m16--simt_rows-csv.log": {
+      "original_sha256": "84e632f88791b7746d77cea939dcddac973ea3c4bc32af1e85b7a7a407557ae3",
+      "export_sha256": "4a76a0f3f8c1b53efe627ad63205877def0691ad7c5c6b41634e91daf07fea54",
+      "source_snapshot": "cuda_projection_20261105",
+      "experiment_id": "EXP-20261105-009",
+      "format": "log",
+      "projection": "All NCU metrics/units; process identity columns omitted",
+      "previous_export_path": "results/cuda/gemv/profiles/counters/hidden_nk_m16--clean_rows-csv.log",
+      "previous_export_sha256": "4a76a0f3f8c1b53efe627ad63205877def0691ad7c5c6b41634e91daf07fea54"
+    },
+    "results/checks/cuda-simt.json": {
+      "original_sha256": "0accc7c17478e6ad1d26c73068c335f7b43dc9616a4bc5455ed8787f9ae8a7da",
+      "export_sha256": "3f153ae1c975f1b408acd4d3aa23ba2a354c7f1ed0c7060c0348757a7403284a",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-018",
+      "format": "json",
+      "projection": "Numerical evidence unchanged; private metadata omitted"
+    },
+    "results/cuda/gemv/interfaces.json": {
+      "original_sha256": "8f6702b9b5b81529c75751b15594c140aea206380aa73b46618b4070a708dc2b",
+      "export_sha256": "8f6702b9b5b81529c75751b15594c140aea206380aa73b46618b4070a708dc2b",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-018",
+      "format": "json"
+    },
+    "results/cuda/gemv/profiles/simt/hidden_nk_m16--simt_rows-csv.log": {
+      "original_sha256": "f83879029282879e6add03a3865fe8b5237cf777babb6279e1729fe4cafd624d",
+      "export_sha256": "de806bb3c507eacb3c1d7355089ee07cbe9cd0369ee6a32991f6eae08a329a70",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "log",
+      "projection": "All metric values/units; process identity omitted"
+    },
+    "results/cuda/gemv/profiles/simt/hidden_m16--simt_warp-csv.log": {
+      "original_sha256": "c2cfd0d8a7c9a709dcfd0a3f05e43edda06257a00acce9455120c0be0473e8c6",
+      "export_sha256": "aa556b5400c9cda5c9716d0b50fbeaa09de356c6e29a86c353fda13553bfca6c",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "log",
+      "projection": "All metric values/units; process identity omitted"
+    },
+    "results/cuda/gemv/profiles/simt/hidden_m16--simt_rows-csv.log": {
+      "original_sha256": "23dd709e536c401c5dba1706420b0a86088bd4766d13da5ea5cf500fc1353fb3",
+      "export_sha256": "e5655626195a9b17435c8df4fa206cf02e24cc8a68661591637f425af1342a84",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "log",
+      "projection": "All metric values/units; process identity omitted"
+    },
+    "results/cuda/gemv/profiles/simt/gemv-simt-stats_cuda_gpu_kern_sum.csv": {
+      "original_sha256": "86400b77c7c097833d252e009b850f00a515a8bfbd6da4d92b3078143d67f263",
+      "export_sha256": "86400b77c7c097833d252e009b850f00a515a8bfbd6da4d92b3078143d67f263",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "csv"
+    },
+    "results/cuda/gemv/profiles/simt/gemv-simt-stats_nvtx_sum.csv": {
+      "original_sha256": "bd6b66b7351556c101bb9ba07702bc928bafd530d9461b47408763b50b7b4fb7",
+      "export_sha256": "bd6b66b7351556c101bb9ba07702bc928bafd530d9461b47408763b50b7b4fb7",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "csv"
+    },
+    "results/cuda/gemv/profiles/simt/gemv-simt-stats_cuda_api_sum.csv": {
+      "original_sha256": "4509f71b2bc0b0d601fa9c4cd73b01e3e98ee81242bab481ac7063a5fbfc7cf5",
+      "export_sha256": "4509f71b2bc0b0d601fa9c4cd73b01e3e98ee81242bab481ac7063a5fbfc7cf5",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "csv"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m1--simt_rows.trace.json": {
+      "original_sha256": "723836975abf181746bd1c85c6c7809706292986bb36891b99c61b6ba5bd10ef",
+      "export_sha256": "a455b36f352504d9bded8556fdc279e517bc7c67ba54a3f41bc4902ba421f71e",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m1--tiled.trace.json": {
+      "original_sha256": "1e16f2f88b3cfd0db1cd34390b3d303b7a712afda4cc49d98b8df2ef2cdd5959",
+      "export_sha256": "79a398de3b5a3794a8f0896d15380f45aa2e42b0538c0f5400f13c9bb6049317",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m1--simt_warp.trace.json": {
+      "original_sha256": "fc674ae0ce766ea7657da04bcb576ad8e01d5d9233c0845e142ff1f27b95d6bf",
+      "export_sha256": "74bc4631b51c5bb829689c60543f78764cd9d8403900e6189ddd26e090a0554a",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m16--simt_rows.trace.json": {
+      "original_sha256": "8f377536bc84851a44ca45a3615d9a4e0021a0f2704d7afcf45d6fcf8eec6e8a",
+      "export_sha256": "92ba5c1f557b3cb44aa595a688858b374574059ad44bf4c82770693daa67cab0",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m16--simt_warp.trace.json": {
+      "original_sha256": "a8970a18a8035d99063a0dd906774476f19adcf018773378609fe999ae595e7c",
+      "export_sha256": "9de474499ba3538d97a4120390f49333d4ebca5d9ec4ac604ccb3b20c65e0bce",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/hidden_m16--tiled.trace.json": {
+      "original_sha256": "a3e6fe9a321209995d4719ef82a7bae15c5c28d93da9506eed6589fd4bc68281",
+      "export_sha256": "9d60080fd43d3c585633db84c94abbd7baf0133ad8a875189c0bd533fcb34c76",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/mlp_up_m16--simt_warp.trace.json": {
+      "original_sha256": "d4c3072fa88dc9fe2a96e13f51e4f96ce1cddc52ce6f55ec3cbfdbd6f969fdf3",
+      "export_sha256": "fa5e068c2e29a556643331698f4705744a22cd97b29ae6ba1c64fd27796999a4",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/mlp_up_m16--simt_rows.trace.json": {
+      "original_sha256": "aa047bddaf8065394d15eeff6d02f1d7b26cc2b048f5a8881606d820bfe68809",
+      "export_sha256": "5455b6e4f0e5d3d5de369b416d7493d13769a3f82cd5cacd4ebe3a8a858dd5ee",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/mlp_up_m16--tiled.trace.json": {
+      "original_sha256": "79706107d16f2b788d2108ac0ef3951989a15218cf6fcc04893976ee24ea030b",
+      "export_sha256": "6d3b94d87bbcdff76a534afa5d664ebae25c3da9389431ae38fe0b11fae5d1de",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Kernel-category events only"
+    },
+    "results/cuda/gemv/profiles/simt/torch/results.json": {
+      "original_sha256": "2ae54be07a1fd34395377f088a0d73e380578edabf10199aedd1c0838dbbb34d",
+      "export_sha256": "c42d1b53459435f36974220c88b57bc5f2c24d2d2ada4cb52dcf73b210d6b19b",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-019",
+      "format": "json",
+      "projection": "Trace navigation and iteration counts only"
+    },
+    "results/checks/cuda-simt-release.json": {
+      "original_sha256": "3fe360606c686862793e57ed14fe8a48484d1f59d3eede7152e8694ac7fd640c",
+      "export_sha256": "e34bf43e0d69e752349954ce96a5b2ac878dc3349b27e4c06245d6b3652a23ad",
+      "source_snapshot": "cuda_simt_20261105",
+      "experiment_id": "EXP-20261105-020",
+      "format": "json",
+      "projection": "Numerical evidence unchanged; private metadata omitted"
     }
   },
   "source_snapshots": {
@@ -1045,9 +1225,94 @@
         "csrc/gemv/gemv_clean.cu": "a9e45d3ea1674a2899b7e205390d7588896a2eeee815326dcc7638ed09147f1a",
         "csrc/gemv/gemm_tiled.cu": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769"
       }
+    },
+    "cuda_simt_20261105": {
+      "production_source_sha256": {
+        "src/crossdsl_kernels/__init__.py": "1fefef8c0940a5904f3617c3a61a95b27154c79043f524a9040a35115262d7c4",
+        "src/crossdsl_kernels/api.py": "25c8c101de4b7f51d40cf12ff5269a446283c198b2d3195b65973b17aa4ccc56",
+        "src/crossdsl_kernels/contracts.py": "61f0f899a66d1aaf1bc3d88bf3591857cd7db71ea94a6f6200f32dce7cf9ecd8",
+        "src/crossdsl_kernels/cute/__init__.py": "32a41648ea4258b21139a1d8fb6a57ca3802521ed3d50155a9b6d278ee7dfecd",
+        "src/crossdsl_kernels/cute/gemv.py": "2bee0ba52bd5e20cc4ced5ff0dd1cbee79f1a63291e2d676a49b81cd0afbb575",
+        "src/crossdsl_kernels/cute/gemv_rows.py": "b3087837cdc3eacebde7521a5b82a3ce2b6c551952dae5db8e5317beb23b70be",
+        "src/crossdsl_kernels/cute/launch.py": "743bf843cf52c336e9a0cc2089b692a1bc3438812432c2ad7b823b485db4005b",
+        "src/crossdsl_kernels/cute/rmsnorm.py": "dfc6f3dab4c10fa549055fdcb12ca04238edd4e190b96174f41b421c11a418f9",
+        "src/crossdsl_kernels/cute/rope_kv.py": "dfd04d56fbff44af769cb373d52f83568480e5dfe9d336560a7872ce1803876b",
+        "src/crossdsl_kernels/cute/rope_kv_fused.py": "586320bbddeb3a1bedb4fd1fe7cbbba87cf08355bb3a73f344314242f53a17f6",
+        "src/crossdsl_kernels/cute/w4a16.py": "dbe85bb71711316e4141380e56a25845fc8215fbdd725f6b18f17ad1a1c16f09",
+        "src/crossdsl_kernels/dispatch.py": "b030f65d496e1e48882988843afd2cb16de82dca3196fa5daf635800393f30a6",
+        "src/crossdsl_kernels/generators.py": "ff003a3988e6c034453563780a1f7ca9290a4e10cf096cd14d1142b1b6bd8094",
+        "src/crossdsl_kernels/quantization.py": "8248281ac555cdb7302e2a207c426dd060e82da3d71156bc0d9ad33f7e993b9b",
+        "src/crossdsl_kernels/references/__init__.py": "141f0290b8606904fe1c222fc5e8859be44bd679ec4b203acaff2e1d50c63870",
+        "src/crossdsl_kernels/references/gemv.py": "4b2e2b9c61640bd1edd1af18ff31b1fa081da8ec4d0b83ae16cc10a1aa365169",
+        "src/crossdsl_kernels/references/paged_address.py": "0dc4010be343d11994c8d83d41320fbab7f26ce6f4c25a03a250ecad423837ca",
+        "src/crossdsl_kernels/references/rmsnorm.py": "25ab76874db6a985e8dd7a8298feddb54d5ff9fa6ff7ee6df424430572685522",
+        "src/crossdsl_kernels/references/rope_kv.py": "0fc2ed5d3b31f209e8ffefbb702764d00ae6cc546180a1e6e154b896ac56a53d",
+        "src/crossdsl_kernels/tolerances.py": "fa6e3486972d800f1c142ffd6c6358e08e52f703de5d99a99fefcca4aafd3b18",
+        "src/crossdsl_kernels/triton/__init__.py": "61bf2bbb4aef758f10da465f0d949aa432c834f796f29b04d4eb2ac5f0677262",
+        "src/crossdsl_kernels/triton/gemv.py": "2583ee625c101a0a081653f74ff7072d9bc8759bb55f57cbed9491564fad24df",
+        "src/crossdsl_kernels/triton/gemv_rows.py": "ec6408b86c52b05a2e2df97413a74c1aa5fe1fe8e6e0359e176b8af69ed7a0b8",
+        "src/crossdsl_kernels/triton/rmsnorm.py": "f589cd64b08227a22da7a6eb390c70d80823b67a1b5c542172f8b5ad96d035f3",
+        "src/crossdsl_kernels/triton/rope_kv.py": "3b37ef0b716e7d79936938aaac5620374ee73bc57c84afe0668c9e76da538375",
+        "src/crossdsl_kernels/triton/rope_kv_fused.py": "24db6c49bc615e8aebfb7dcc16f964161262f978eef2ff87079289817520b1ed",
+        "src/crossdsl_kernels/triton/w4a16.py": "dab36f62b5f98900871f65ef31d23270f1553c4e6108918ae942e06344ecbcf7",
+        "src/crossdsl_kernels/w4a16.py": "c2391adad185bdc76f30325a90260d26b9c68f81f5b617dd8e559bb0b71ad73d",
+        "csrc/common/cuda_runtime_smoke.cu": "66c70a3a381b0ee5f82814561d596cd13f09a362ffd367d088ff30093c1a191a",
+        "csrc/gemv/gemv_ext.cpp": "ca1c4aa8b7d522b505d70b5a6cf94408dedacab4dd35c7f6ad929454e38085e5",
+        "csrc/gemv/gemv_kernel.cu": "6676a2690c4449da61e7f8129d1d3170560d201f582e6665a6c3defd51e8d137",
+        "csrc/rmsnorm/rmsnorm_ext.cpp": "23ecf6e9b13f5b18e589c880c187aaef53b05a0f548499873e01cc113ee5bab4",
+        "csrc/rmsnorm/rmsnorm_kernel.cu": "b4c71515546531f0674f4db3a65dd7339dd881131159d750bcf5109f8347163a",
+        "csrc/rope_kv/rope_kv_ext.cpp": "9c8411e9dd9b56d62abcb0482c9513bf1be0da229202200275a21f3d2d2d7833",
+        "csrc/rope_kv/rope_kv_kernel.cu": "3b4bf610936b914befb7f8f595c14ca8f59d24af74faaa25f0259951980339d6",
+        "csrc/w4a16/w4a16_ext.cpp": "b412e1754565e1b4d970391f05fcf79c80a18758550fd57b61e967f48a44d7c8",
+        "csrc/w4a16/w4a16_kernel.cu": "6cf1a1a900ae45196011f809814f3019f624f067f18c26558627a60cf77c4662",
+        "csrc/gemv/gemv_simt_ext.cpp": "9fd1e59f9f5f2cb6b9cd77d07aa1e1fa963021178e4c70debec5609072eada85",
+        "csrc/gemv/gemv_simt.cu": "ed4e2cb72009437f862bacfd5ca99144f70c838104e00919d013b26aa8ba9677",
+        "csrc/gemv/gemm_tiled.cu": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769"
+      }
     }
   },
-  "support_source_aliases": {
+  "interface_aliases": {
+    "paths": {
+      "csrc/gemv/gemv_clean.cu": "csrc/gemv/gemv_simt.cu",
+      "csrc/gemv/gemv_clean_ext.cpp": "csrc/gemv/gemv_simt_ext.cpp",
+      "scripts/verify_gemv_clean.py": "scripts/verify_gemv_simt.py",
+      "scripts/profile_gemv_clean.py": "scripts/profile_gemv_simt.py",
+      "scripts/summarize_gemv_clean.py": "scripts/summarize_gemv_simt.py"
+    },
+    "backends": {
+      "clean_warp": "simt_warp",
+      "clean_rows": "simt_rows"
+    },
+    "artifact_paths": {
+      "results/cuda/gemv/profiles/full/hidden_m16--clean_rows-csv.log": "results/cuda/gemv/profiles/full/hidden_m16--simt_rows-csv.log",
+      "results/cuda/gemv/profiles/full/hidden_m16--clean_warp-csv.log": "results/cuda/gemv/profiles/full/hidden_m16--simt_warp-csv.log",
+      "results/cuda/gemv/profiles/full/hidden_nk_m16--clean_rows-csv.log": "results/cuda/gemv/profiles/full/hidden_nk_m16--simt_rows-csv.log",
+      "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_api_sum.csv": "results/cuda/gemv/profiles/full/gemv-simt-stats_cuda_api_sum.csv",
+      "results/cuda/gemv/profiles/full/gemv-clean-stats_cuda_gpu_kern_sum.csv": "results/cuda/gemv/profiles/full/gemv-simt-stats_cuda_gpu_kern_sum.csv",
+      "results/cuda/gemv/profiles/full/gemv-clean-stats_nvtx_sum.csv": "results/cuda/gemv/profiles/full/gemv-simt-stats_nvtx_sum.csv",
+      "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_warp.trace.json": "results/cuda/gemv/profiles/full/torch/hidden_m1--simt_warp.trace.json",
+      "results/cuda/gemv/profiles/full/torch/hidden_m1--clean_rows.trace.json": "results/cuda/gemv/profiles/full/torch/hidden_m1--simt_rows.trace.json",
+      "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_warp.trace.json": "results/cuda/gemv/profiles/full/torch/hidden_m16--simt_warp.trace.json",
+      "results/cuda/gemv/profiles/full/torch/hidden_m16--clean_rows.trace.json": "results/cuda/gemv/profiles/full/torch/hidden_m16--simt_rows.trace.json",
+      "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_warp.trace.json": "results/cuda/gemv/profiles/full/torch/mlp_up_m16--simt_warp.trace.json",
+      "results/cuda/gemv/profiles/full/torch/mlp_up_m16--clean_rows.trace.json": "results/cuda/gemv/profiles/full/torch/mlp_up_m16--simt_rows.trace.json",
+      "results/cuda/gemv/profiles/counters/hidden_m16--clean_rows-csv.log": "results/cuda/gemv/profiles/counters/hidden_m16--simt_rows-csv.log",
+      "results/cuda/gemv/profiles/counters/hidden_m16--clean_warp-csv.log": "results/cuda/gemv/profiles/counters/hidden_m16--simt_warp-csv.log",
+      "results/cuda/gemv/profiles/counters/hidden_nk_m16--clean_rows-csv.log": "results/cuda/gemv/profiles/counters/hidden_nk_m16--simt_rows-csv.log"
+    },
+    "symbols": {
+      "decode_gemv_warp_clean": "decode_gemv_simt_warp",
+      "decode_gemv_rows_clean": "decode_gemv_simt_rows",
+      "launch_gemv_warp_clean": "launch_gemv_warp",
+      "launch_gemv_rows_clean": "launch_gemv_rows",
+      "gemv_warp_clean_kernel": "gemv_warp_kernel",
+      "gemv_rows_kn_clean_kernel": "gemv_rows_kn_kernel",
+      "gemv_rows_nk_clean_kernel": "gemv_rows_nk_kernel"
+    },
+    "historical_commit": "2aefc6368f641aebcdadf56539fadd6e2c39d07c",
+    "policy": "Aliases describe current interfaces; collection-time source hashes, raw rows and captured symbols remain historical."
+  },
+  "historical_support_source_aliases": {
     "benchmarks/gemv_cuda_benchmark.py": {
       "sha256": "51979858e210aacde9c74fb8844b8250aa240887421ab83a024b140a5f62e1cb",
       "relationship": "Byte-identical path rename after collection; original private path omitted",

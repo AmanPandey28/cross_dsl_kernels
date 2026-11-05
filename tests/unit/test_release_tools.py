@@ -26,9 +26,28 @@ class ReleaseToolTests(unittest.TestCase):
         self.assertEqual(data["source_sha256"][source], historical)
 
     def test_projection_profiler_uses_public_runner(self):
-        import profile_gemv_clean
+        import profile_gemv_simt
 
-        self.assertIs(profile_gemv_clean.run_commands, profile_runner.run_commands)
+        self.assertIs(profile_gemv_simt.run_commands, profile_runner.run_commands)
+
+    def test_projection_interfaces_and_historical_aliases(self):
+        root = Path(__file__).resolve().parents[2]
+        manifest = json.loads((root / "results/manifest.json").read_text())
+        aliases = manifest["interface_aliases"]
+        for old, new in aliases["paths"].items():
+            self.assertFalse((root / old).exists())
+            self.assertTrue((root / new).is_file())
+        for old, new in aliases["artifact_paths"].items():
+            artifact = manifest["artifacts"][new]
+            self.assertEqual(artifact["previous_export_path"], old)
+            self.assertEqual(artifact["previous_export_sha256"], artifact["export_sha256"])
+        historical = manifest["source_snapshots"]["cuda_projection_20261105"]["production_source_sha256"]
+        current = manifest["production_source_sha256"]
+        for old, new in aliases["paths"].items():
+            if old.startswith("csrc/"):
+                self.assertIn(old, historical)
+                self.assertNotIn(old, current)
+                self.assertIn(new, current)
 
     def test_cuda_rows_reject_missing_samples_or_failed_graphs(self):
         from check_cuda_evidence import check_rows

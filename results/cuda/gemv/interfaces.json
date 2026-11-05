@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "before": "gemv_clean.cu",
+      "after": "gemv_simt.cu",
+      "identifier_only": true,
+      "before_sha256": "a9e45d3ea1674a2899b7e205390d7588896a2eeee815326dcc7638ed09147f1a",
+      "after_sha256": "ed4e2cb72009437f862bacfd5ca99144f70c838104e00919d013b26aa8ba9677"
+    },
+    {
+      "before": "gemv_clean_ext.cpp",
+      "after": "gemv_simt_ext.cpp",
+      "identifier_only": true,
+      "before_sha256": "3c4cbe652ad6e232835456a542d9ed0a4bf1ebe4750ed1f4b84f23ea4ebec126",
+      "after_sha256": "9fd1e59f9f5f2cb6b9cd77d07aa1e1fa963021178e4c70debec5609072eada85"
+    },
+    {
+      "before": "gemm_tiled.cu",
+      "after": "gemm_tiled.cu",
+      "identifier_only": true,
+      "before_sha256": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769",
+      "after_sha256": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769"
+    }
+  ],
+  "symbol_aliases": {
+    "decode_gemv_warp_clean": "decode_gemv_simt_warp",
+    "decode_gemv_rows_clean": "decode_gemv_simt_rows",
+    "launch_gemv_warp_clean": "launch_gemv_warp",
+    "launch_gemv_rows_clean": "launch_gemv_rows",
+    "gemv_warp_clean_kernel": "gemv_warp_kernel",
+    "gemv_rows_kn_clean_kernel": "gemv_rows_kn_kernel",
+    "gemv_rows_nk_clean_kernel": "gemv_rows_nk_kernel"
+  },
+  "scope": "Source equivalence after explicit identifier substitution; not a binary comparison"
+}

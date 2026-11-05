@@ -22,31 +22,31 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from common import capture, gpu_state, provenance, summarize
 
-CLEAN_ENTRY_POINTS = {
-    "clean_warp": "decode_gemv_warp_clean",
-    "clean_rows": "decode_gemv_rows_clean",
+SIMT_ENTRY_POINTS = {
+    "simt_warp": "decode_gemv_simt_warp",
+    "simt_rows": "decode_gemv_simt_rows",
     "tiled": "decode_gemm_tiled",
 }
-BACKENDS = ("cuda", "cuda_fast", *CLEAN_ENTRY_POINTS, "cublas")
+BACKENDS = ("cuda", "cuda_fast", *SIMT_ENTRY_POINTS, "cublas")
 OPTIONAL_BACKENDS = ("cublaslt", "pytorch")
-CLEAN_SOURCES = ("gemv_clean_ext.cpp", "gemv_clean.cu", "gemm_tiled.cu")
+SIMT_SOURCES = ("gemv_simt_ext.cpp", "gemv_simt.cu", "gemm_tiled.cu")
 
 
 @functools.lru_cache(maxsize=1)
-def clean_module():
+def simt_module():
     import torch
     from torch.utils.cpp_extension import load
 
     if not torch.cuda.is_available():
-        raise RuntimeError("building the clean CUDA extension requires a GPU-visible process")
+        raise RuntimeError("building the CUDA SIMT extension requires a GPU-visible process")
     capability = torch.cuda.get_device_capability()
     arch = f"{capability[0]}.{capability[1]}"
     os.environ.setdefault("TORCH_CUDA_ARCH_LIST", arch)
     os.environ.setdefault("MAX_JOBS", "4")
-    sources = [ROOT / "csrc/gemv" / name for name in CLEAN_SOURCES]
+    sources = [ROOT / "csrc/gemv" / name for name in SIMT_SOURCES]
     digest = hashlib.sha256(b"".join(path.read_bytes() for path in sources)).hexdigest()[:12]
-    name = re.sub(r"[^A-Za-z0-9_]", "_", f"crossdsl_gemv_clean_{torch.__version__}_{arch}_{digest}")
-    directory = ROOT / "results/build/torch_extensions/gemv_clean" / f"sm{capability[0]}{capability[1]}" / name
+    name = re.sub(r"[^A-Za-z0-9_]", "_", f"crossdsl_gemv_simt_{torch.__version__}_{arch}_{digest}")
+    directory = ROOT / "results/build/torch_extensions/gemv_simt" / f"sm{capability[0]}{capability[1]}" / name
     directory.mkdir(parents=True, exist_ok=True)
     return load(name=name, sources=[str(path) for path in sources], build_directory=str(directory),
                 extra_cflags=["-O3"], extra_cuda_cflags=["-O3"], verbose=False)
@@ -77,8 +77,8 @@ def select_cases(names):
 def prepare(backend, case):
     from comparison_cases import prepare_backend
 
-    if backend in CLEAN_ENTRY_POINTS:
-        return functools.partial(getattr(clean_module(), CLEAN_ENTRY_POINTS[backend]),
+    if backend in SIMT_ENTRY_POINTS:
+        return functools.partial(getattr(simt_module(), SIMT_ENTRY_POINTS[backend]),
                                  *case["args"], case["kwargs"]["weight_layout"])
     if backend not in BACKENDS + OPTIONAL_BACKENDS:
         raise ValueError(f"unknown backend: {backend}")
@@ -181,7 +181,7 @@ def run_suite(args, specs, backends):
                   timing_policy="Primed reused events; paired shuffled/reversed rounds; graph time normalized per call",
                   allocation_policy="Allocating public APIs; graph allocations captured in private pools; setup and vendor heuristics excluded from replay",
                   backend_mapping={"cuda": "historical decode_gemv_warp (not v0)",
-                                   "cuda_fast": "historical decode_gemv_rows", **CLEAN_ENTRY_POINTS},
+                                   "cuda_fast": "historical decode_gemv_rows", **SIMT_ENTRY_POINTS},
                   diagnostic=bool(args.diagnostic or args.profile_iterations))
     if not torch.cuda.is_available():
         result.update(status="SKIP", reason="CUDA unavailable to this process")

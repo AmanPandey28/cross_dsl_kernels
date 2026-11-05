@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded correctness checks for the parallel CUDA projection extension."""
+"""Bounded correctness checks for the CUDA SIMT projection extension."""
 from __future__ import annotations
 
 import argparse
@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "benchmarks"))
 
 from common import capture, provenance
-from gemv_cuda_benchmark import CLEAN_ENTRY_POINTS, clean_module, prepare, projection_cases, verify_changed_replay
+from gemv_cuda_benchmark import SIMT_ENTRY_POINTS, simt_module, prepare, projection_cases, verify_changed_replay
 
 
 def tiny_cases():
@@ -51,7 +51,7 @@ def validate(args):
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.set_float32_matmul_precision("highest")
     write()
-    module = clean_module()
+    module = simt_module()
     result["extension"] = module.__file__
     specs = projection_cases() + tiny_cases()
     if args.small_only:
@@ -59,7 +59,7 @@ def validate(args):
     stream = torch.cuda.Stream()
     for index, spec in enumerate(specs):
         case = make_case(spec, 61000 + index)
-        for backend in CLEAN_ENTRY_POINTS:
+        for backend in SIMT_ENTRY_POINTS:
 
             def check(case=case, backend=backend):
                 inputs = [t.clone() for t in case["args"] if t is not None]
@@ -81,7 +81,7 @@ def validate(args):
         for bias in (False, True):
             case = make_case({"op": "gemv", "m": 5, "k": 257, "n": 67,
                               "layout": layout, "bias": bias}, 71000)
-            for backend in CLEAN_ENTRY_POINTS:
+            for backend in SIMT_ENTRY_POINTS:
 
                 def replay(case=case, backend=backend):
                     graph, output = capture(torch, prepare(backend, case), 2)
@@ -112,7 +112,7 @@ def validate(args):
         "weight_cpu": (x, weight.cpu(), bias, "KN"),
         "bias_cpu": (x, weight, bias.cpu(), "KN"),
     }
-    for backend, entry in CLEAN_ENTRY_POINTS.items():
+    for backend, entry in SIMT_ENTRY_POINTS.items():
         for label, inputs in invalid.items():
 
             def reject(entry=entry, inputs=inputs):
@@ -125,7 +125,7 @@ def validate(args):
             record(f"reject::{label}::{backend}", reject)
     result["multi_gpu"] = "NOT RUN: only one local GPU; CUDA/CPU device mismatch rejected, two-CUDA-device mismatch not exercised"
     if torch.cuda.device_count() > 1:
-        for entry in CLEAN_ENTRY_POINTS.values():
+        for entry in SIMT_ENTRY_POINTS.values():
             def reject_device(entry=entry):
                 try:
                     getattr(module, entry)(x, weight.to("cuda:1"), None, "KN")

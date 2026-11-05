@@ -2,8 +2,8 @@
 
 Additional CUDA paths make ownership and reuse explicit without replacing the
 original implementations or vendor baselines. This is FP32 SIMT computation,
-not a Tensor Core GEMM. Read the [binding](../csrc/gemv/gemv_clean_ext.cpp),
-[warp/four-row kernels](../csrc/gemv/gemv_clean.cu) and
+not a Tensor Core GEMM. Read the [binding](../csrc/gemv/gemv_simt_ext.cpp),
+[warp/four-row kernels](../csrc/gemv/gemv_simt.cu) and
 [tiled kernel](../csrc/gemv/gemm_tiled.cu) alongside the benchmark.
 
 ## Contract And Mapping
@@ -17,8 +17,8 @@ inputs are unchanged. New entry points use `None`, not an empty bias sentinel.
 |---|---|---|
 | `cuda` | Original `decode_gemv_warp` | Original warp baseline, not older v0 |
 | `cuda_fast` | Original `decode_gemv_rows` | Original four-row path |
-| `clean_warp` | `decode_gemv_warp_clean` | Eight warp-owned outputs/CTA |
-| `clean_rows` | `decode_gemv_rows_clean` | Separate KN/NK mappings, four-row reuse |
+| `simt_warp` | `decode_gemv_simt_warp` | Eight warp-owned outputs/CTA |
+| `simt_rows` | `decode_gemv_simt_rows` | Separate KN/NK mappings, four-row reuse |
 | `tiled` | `decode_gemm_tiled` | 8x32 output tile; shared X/W; K tiles of 32 |
 | `cublas` | Existing vendor wrapper | SGEMV at M1, SGEMM otherwise; bias if present |
 
@@ -27,6 +27,11 @@ uses a source-hashed module name; original module names and default dispatch
 remain intact. The binding validates dtype/ranks/layout/devices/bias, bounds
 byte-offset products and grid dimensions, guards the device and launches on
 PyTorch's current stream. No transpose/prepack is hidden inside timed calls.
+
+SIMT means single-instruction, multiple-thread execution. The source family is
+`gemv_simt`; `warp` and `rows` describe output ownership. Use
+`scripts/verify_gemv_simt.py`, `scripts/profile_gemv_simt.py` and
+`scripts/summarize_gemv_simt.py` for validation, collection and analysis.
 
 The warp baseline maps a flattened output to `(row,column)`. Lanes visit
 `k=lane+32*i`; five shuffle stages reduce the sum, then lane zero applies bias
@@ -53,13 +58,20 @@ and relative L2 <= `1e-5`. Relative error near zero is diagnostic, not the sole 
 Two collections pass 72 rows each: 12 cases, six backends, five warmups,
 30 shuffled/reversed paired samples/mode and 30 calls/graph. Graph medians, us:
 
-| Case | Clean four-row, full/repeat | Tiled, full/repeat | cuBLAS, full/repeat |
+The table uses current SIMT labels for the corresponding historical algorithms.
+The original collection labels were `clean_warp` and `clean_rows`. Raw rows,
+captured kernel symbols, samples and collection-time source hashes are retained;
+the manifest records explicit source, symbol, backend and artifact-path aliases.
+The summary script resolves these labels without altering its input evidence.
+Names do not imply an additional optimization or a newly measured speedup.
+
+| Case | SIMT four-row, full/repeat | Tiled, full/repeat | cuBLAS, full/repeat |
 |---|---:|---:|---:|
 | M16, K=N=4096, KN | 2227.64 / 2556.47 | 1732.49 / 1316.79 | 292.57 / 273.16 |
 | M16, K=4096, N=11008, KN | 5724.77 / 5702.50 | 4142.89 / 3942.21 | 1200.02 / 1694.79 |
 
 Tiling helps these custom M16 comparisons but still loses to cuBLAS and at M1.
-Clean NK M1 regresses about 7.7/7.4% against the earlier four-row path. No
+SIMT NK M1 regresses about 7.7/7.4% against the earlier four-row path. No
 universal speedup or default-dispatch promotion is claimed.
 
 KN four-row profiling reports 48 registers/thread and 81.16% occupancy versus
@@ -91,3 +103,9 @@ clock, thermal and power variability remain. The profile runner previews jobs;
 demangling ambiguity; one intended launch is selected after warmup. CSVs require
 one kernel and explicit unit normalization. Missing counters are unknown, not
 zero. See [CUDA evidence](../results/cuda/README.md) for samples and projections.
+
+The current interfaces separately pass 150 GPU checks locally and 150 from the
+publication checkout. A bounded current-name capture covers nine Torch studies,
+Nsight Systems and three selected Nsight Compute launches: warp, KN rows and NK
+rows. These captures verify profiler selection and are not replacement timing
+collections. Historical performance conclusions above remain unchanged.

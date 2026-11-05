@@ -20,6 +20,8 @@ COUNTS = {
     "results/checks/cuda-rmsnorm-memcheck.json": 47,
     "results/checks/cuda-release-gemv.json": 150,
     "results/checks/cuda-release-rmsnorm.json": 86,
+    "results/checks/cuda-simt.json": 150,
+    "results/checks/cuda-simt-release.json": 150,
 }
 
 
@@ -41,7 +43,7 @@ def check_rows(data, count):
 
 
 def profile_summary(root):
-    from summarize_gemv_clean import profiles as projection_profiles
+    from summarize_gemv_simt import profiles as projection_profiles
     from summarize_rmsnorm_bf16 import profiles as normalization_profiles
 
     def launches(directory):
@@ -58,7 +60,9 @@ def profile_summary(root):
     summary = {
         "gemv": {"ncu": projection_profiles(root / "results/cuda/gemv/profiles/full"),
                  "counters": projection_profiles(root / "results/cuda/gemv/profiles/counters"),
-                 "torch_launches": launches(root / "results/cuda/gemv/profiles/full")},
+                 "torch_launches": launches(root / "results/cuda/gemv/profiles/full"),
+                 "simt": {"ncu": projection_profiles(root / "results/cuda/gemv/profiles/simt"),
+                          "torch_launches": launches(root / "results/cuda/gemv/profiles/simt")}},
         "rmsnorm": normalization_profiles(root / "results/cuda/rmsnorm/profiles"),
     }
 
@@ -104,6 +108,20 @@ def validate(root, loaded):
     for name, count in COUNTS.items():
         check_rows(loaded[name], count)
         counts[name] = count
+    manifest = json.loads((root / "results/manifest.json").read_text())
+    aliases = manifest["interface_aliases"]
+    for old, new in aliases["paths"].items():
+        if (root / old).exists() or not (root / new).is_file():
+            raise ValueError("projection source/interface path disagrees with aliases")
+    for old, new in aliases["artifact_paths"].items():
+        artifact = manifest["artifacts"][new]
+        if artifact["previous_export_path"] != old or artifact["previous_export_sha256"] != artifact["export_sha256"]:
+            raise ValueError("historical artifact bytes changed during relocation")
+    current = manifest["production_source_sha256"]
+    for name in ("results/checks/cuda-simt.json", "results/checks/cuda-simt-release.json"):
+        recorded = loaded[name]["source_sha256"]
+        if any(recorded.get(source) != digest for source, digest in current.items()):
+            raise ValueError("current projection validation has incomplete or stale source provenance")
     for name in ("results/cuda/rmsnorm/paired.json", "results/cuda/rmsnorm/paired-repeat.json"):
         data = loaded[name]
         if len(data["fp32_checks"]) != 64 or any(row["status"] != "PASS" for row in data["fp32_checks"]):

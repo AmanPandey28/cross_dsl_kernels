@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "(anonymous namespace)::gemv_rows_kn_kernel(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026952389.137,
+      "dur": 2342.686
+    },
+    {
+      "cat": "kernel",
+      "name": "(anonymous namespace)::gemv_rows_kn_kernel(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026954733.007,
+      "dur": 2105.761
+    },
+    {
+      "cat": "kernel",
+      "name": "(anonymous namespace)::gemv_rows_kn_kernel(float const*, float const*, float const*, float*, long, long, long)",
+      "ts": 3054026956839.824,
+      "dur": 2099.01
+    }
+  ]
+}

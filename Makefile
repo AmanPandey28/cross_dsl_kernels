@@ -42,13 +42,13 @@ gemv-list:
 	$(PYTHON) benchmarks/gemv_cuda_benchmark.py --experiment $(EXP) --output $(OUT)/gemv --list
 
 gemv-check:
-	$(PYTHON) scripts/verify_gemv_clean.py --experiment $(EXP) --output $(OUT)/gemv-checks.json
+	$(PYTHON) scripts/verify_gemv_simt.py --experiment $(EXP) --output $(OUT)/gemv-checks.json
 
 gemv-benchmark:
 	$(PYTHON) benchmarks/gemv_cuda_benchmark.py --experiment $(EXP) --output $(OUT)/gemv --warmup 5 --repeat 30 --graph-calls 30
 
 gemv-profile-preview:
-	$(PYTHON) scripts/profile_gemv_clean.py --experiment $(EXP) --output results/collected/$(EXP)/gemv
+	$(PYTHON) scripts/profile_gemv_simt.py --experiment $(EXP) --output results/collected/$(EXP)/gemv
 
 rmsnorm-compare:
 	$(PYTHON) benchmarks/rmsnorm_cuda_compare.py --experiment $(EXP) --output $(OUT)/rmsnorm-paired --before results/snapshots/rmsnorm_before --rounds 20 --warmup 10 --graph-calls 20

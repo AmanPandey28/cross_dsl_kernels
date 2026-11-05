@@ -1,5 +1,15 @@
 # CUDA Source And Measurement Evidence
 
+Current projection sources and tools use `gemv_simt`, with `simt_warp` and
+`simt_rows` backend identifiers. Historical collection labels and captured
+symbols remain unchanged inside raw evidence. The [manifest](../manifest.json)
+records interface and artifact-path aliases; relocated capture files retain
+identical bytes. Trace index basenames and the derived profile summary follow
+those paths. `results/checks/cuda-simt.json` and `cuda-simt-release.json` are
+fresh 150-check validation collections. `gemv/profiles/simt/` contains current
+counter and kernel-event exports. `gemv/interfaces.json` records the
+identifier-only source comparison, not binary identity or improved performance.
+
 These are additive portable exports of the November CUDA collections. Earlier
 FP32/BF16/W4A16/profile exports remain byte-identical. The
 [manifest](../manifest.json) separates current production hashes from historical
@@ -9,7 +19,7 @@ paths and unrelated worktree metadata are omitted.
 
 | Collection | Evidence |
 |---|---|
-| [GEMV full](gemv/full.json), [repeat](gemv/repeat.json) | 72 rows each; original/clean/tiled/cuBLAS paths |
+| [GEMV full](gemv/full.json), [repeat](gemv/repeat.json) | 72 rows each; original/SIMT/tiled/cuBLAS paths |
 | [GEMV checks](../checks/cuda-gemv.json) | 150 numerical/contract checks |
 | GEMV memcheck/racecheck JSON/logs in `results/checks/` | 126 checks each; zero errors/warnings |
 | [RMSNorm full](rmsnorm/full.json) | 28 rows; unchanged seven-shape BF16 harness |
@@ -21,10 +31,10 @@ paths and unrelated worktree metadata are omitted.
 | [Profiles](profiles.json) | Recomputed from included NCU CSVs and kernel events |
 | `results/checks/cuda-release-{gemv,rmsnorm}.json` | Fresh staged-checkout correctness, not performance claims |
 
-The GEMV benchmark changed filename after collection with byte-identical
-contents. `support_source_aliases` records its hash and relationship without
-pretending that the current path was used at collection time. Public loaders
-and runners are portable adaptations; historical supporting hashes stay historical.
+The manifest's `historical_support_source_aliases` retains the collection-time
+benchmark identity. Its current SIMT identifiers differ; `interface_aliases`
+maps the interfaces without claiming that current names were used at collection
+time. Historical supporting hashes stay historical.
 
 `gemv/profiles/full/` has seven selected NCU CSVs, Systems summaries and 18 Torch
 kernel-event studies; `gemv/profiles/counters/` adds seven byte/bank CSVs.
