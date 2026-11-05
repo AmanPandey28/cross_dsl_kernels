@@ -1,0 +1,68 @@
+{
+  "rows": [
+    {
+      "case": "bf16_256x4096",
+      "backend": "pytorch",
+      "torch_profile": {
+        "trace": "bf16_256x4096--pytorch.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_256x4096",
+      "backend": "torch_compile",
+      "torch_profile": {
+        "trace": "bf16_256x4096--torch_compile.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_256x4096",
+      "backend": "cuda_fast",
+      "torch_profile": {
+        "trace": "bf16_256x4096--cuda_fast.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_256x4096",
+      "backend": "triton_fast",
+      "torch_profile": {
+        "trace": "bf16_256x4096--triton_fast.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_4096x4096",
+      "backend": "pytorch",
+      "torch_profile": {
+        "trace": "bf16_4096x4096--pytorch.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_4096x4096",
+      "backend": "torch_compile",
+      "torch_profile": {
+        "trace": "bf16_4096x4096--torch_compile.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_4096x4096",
+      "backend": "cuda_fast",
+      "torch_profile": {
+        "trace": "bf16_4096x4096--cuda_fast.trace.json",
+        "iterations": 3
+      }
+    },
+    {
+      "case": "bf16_4096x4096",
+      "backend": "triton_fast",
+      "torch_profile": {
+        "trace": "bf16_4096x4096--triton_fast.trace.json",
+        "iterations": 3
+      }
+    }
+  ]
+}

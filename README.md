@@ -54,6 +54,23 @@ CUDA graph medians are 14.94/14.70 us versus eager PyTorch's 78.69/78.61 us;
 compiled PyTorch is faster at 8.75/8.53 us. Triton records 8.26/7.67 us.
 These are two local runs, not a universal speedup or a model-level result.
 
+## CUDA Implementation Notes
+
+The additional CUDA study retains a warp baseline, separate KN/NK four-row
+mappings and an 8x32x32 shared-operand SIMT GEMM. Two collections pass 72 rows
+each. Tiling helps selected custom M16 comparisons but still loses to cuBLAS;
+M1 and NK losses remain visible. These are optional comparison paths.
+
+BF16-first RMSNorm source preserves recomputation, retained values, FP32 paths,
+rounding and launch policy. Fifteen compiled device functions have matching
+instruction/control words and resource reports before/after. Fresh paired runs
+show no >5% graph-median regression, but retention itself loses to recomputation
+at the large-row case. No default dispatcher or universal speedup is claimed.
+
+Read [CUDA projection](docs/cuda_projection.md), [CUDA RMSNorm](docs/cuda_rmsnorm.md)
+and the [additive evidence index](results/cuda/README.md) for source navigation,
+measured tradeoffs, profiler interpretation and reproduction commands.
+
 ## Quick Start
 
 Use Python 3.11 and a CUDA-capable PyTorch environment. The recorded environment

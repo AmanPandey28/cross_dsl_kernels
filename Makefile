@@ -4,6 +4,7 @@ OUT ?= results/runs/$(EXP)
 BACKENDS = pytorch,torch_compile,cuda,triton,cute,cublas,cublaslt,cuda_fast,triton_fast,cute_fast
 
 .PHONY: test evidence-check list smoke benchmark w4a16-smoke w4a16-benchmark profile-preview bf16-check bf16-smoke bf16-benchmark bf16-profile-preview
+.PHONY: gemv-list gemv-check gemv-benchmark gemv-profile-preview rmsnorm-compare
 test:
 	PYTHONPATH=src:scripts:benchmarks $(PYTHON) -m unittest discover -s tests/unit -v
 
@@ -36,6 +37,21 @@ bf16-benchmark:
 
 bf16-profile-preview:
 	$(PYTHON) scripts/profile_rmsnorm_bf16.py --experiment $(EXP) --output results/collected/$(EXP)/bf16
+
+gemv-list:
+	$(PYTHON) benchmarks/gemv_cuda_benchmark.py --experiment $(EXP) --output $(OUT)/gemv --list
+
+gemv-check:
+	$(PYTHON) scripts/verify_gemv_clean.py --experiment $(EXP) --output $(OUT)/gemv-checks.json
+
+gemv-benchmark:
+	$(PYTHON) benchmarks/gemv_cuda_benchmark.py --experiment $(EXP) --output $(OUT)/gemv --warmup 5 --repeat 30 --graph-calls 30
+
+gemv-profile-preview:
+	$(PYTHON) scripts/profile_gemv_clean.py --experiment $(EXP) --output results/collected/$(EXP)/gemv
+
+rmsnorm-compare:
+	$(PYTHON) benchmarks/rmsnorm_cuda_compare.py --experiment $(EXP) --output $(OUT)/rmsnorm-paired --before results/snapshots/rmsnorm_before --rounds 20 --warmup 10 --graph-calls 20
 
 profile-preview:
 	$(PYTHON) scripts/profile_comparison.py --experiment $(EXP) --output results/collected/$(EXP)/fp32 --optimized

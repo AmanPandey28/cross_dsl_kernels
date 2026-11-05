@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "_fused_residual_rmsnorm_kernel",
+      "ts": 3049451772656.413,
+      "dur": 418.82
+    },
+    {
+      "cat": "kernel",
+      "name": "_fused_residual_rmsnorm_kernel",
+      "ts": 3049451773075.521,
+      "dur": 404.357
+    },
+    {
+      "cat": "kernel",
+      "name": "_fused_residual_rmsnorm_kernel",
+      "ts": 3049451773480.166,
+      "dur": 396.964
+    }
+  ]
+}

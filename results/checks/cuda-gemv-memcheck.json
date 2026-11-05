@@ -1,0 +1,3594 @@
+{
+  "experiment_id": "EXP-20261105-006",
+  "timestamp": "2026-11-05T13:19:49-05:00",
+  "source_sha256": {
+    "src/crossdsl_kernels/__init__.py": "1fefef8c0940a5904f3617c3a61a95b27154c79043f524a9040a35115262d7c4",
+    "src/crossdsl_kernels/api.py": "25c8c101de4b7f51d40cf12ff5269a446283c198b2d3195b65973b17aa4ccc56",
+    "src/crossdsl_kernels/contracts.py": "61f0f899a66d1aaf1bc3d88bf3591857cd7db71ea94a6f6200f32dce7cf9ecd8",
+    "src/crossdsl_kernels/cute/__init__.py": "32a41648ea4258b21139a1d8fb6a57ca3802521ed3d50155a9b6d278ee7dfecd",
+    "src/crossdsl_kernels/cute/gemv.py": "2bee0ba52bd5e20cc4ced5ff0dd1cbee79f1a63291e2d676a49b81cd0afbb575",
+    "src/crossdsl_kernels/cute/gemv_rows.py": "b3087837cdc3eacebde7521a5b82a3ce2b6c551952dae5db8e5317beb23b70be",
+    "src/crossdsl_kernels/cute/launch.py": "743bf843cf52c336e9a0cc2089b692a1bc3438812432c2ad7b823b485db4005b",
+    "src/crossdsl_kernels/cute/rmsnorm.py": "dfc6f3dab4c10fa549055fdcb12ca04238edd4e190b96174f41b421c11a418f9",
+    "src/crossdsl_kernels/cute/rope_kv.py": "dfd04d56fbff44af769cb373d52f83568480e5dfe9d336560a7872ce1803876b",
+    "src/crossdsl_kernels/cute/rope_kv_fused.py": "586320bbddeb3a1bedb4fd1fe7cbbba87cf08355bb3a73f344314242f53a17f6",
+    "src/crossdsl_kernels/cute/w4a16.py": "dbe85bb71711316e4141380e56a25845fc8215fbdd725f6b18f17ad1a1c16f09",
+    "src/crossdsl_kernels/dispatch.py": "b030f65d496e1e48882988843afd2cb16de82dca3196fa5daf635800393f30a6",
+    "src/crossdsl_kernels/generators.py": "ff003a3988e6c034453563780a1f7ca9290a4e10cf096cd14d1142b1b6bd8094",
+    "src/crossdsl_kernels/quantization.py": "8248281ac555cdb7302e2a207c426dd060e82da3d71156bc0d9ad33f7e993b9b",
+    "src/crossdsl_kernels/references/__init__.py": "141f0290b8606904fe1c222fc5e8859be44bd679ec4b203acaff2e1d50c63870",
+    "src/crossdsl_kernels/references/gemv.py": "4b2e2b9c61640bd1edd1af18ff31b1fa081da8ec4d0b83ae16cc10a1aa365169",
+    "src/crossdsl_kernels/references/paged_address.py": "0dc4010be343d11994c8d83d41320fbab7f26ce6f4c25a03a250ecad423837ca",
+    "src/crossdsl_kernels/references/rmsnorm.py": "25ab76874db6a985e8dd7a8298feddb54d5ff9fa6ff7ee6df424430572685522",
+    "src/crossdsl_kernels/references/rope_kv.py": "0fc2ed5d3b31f209e8ffefbb702764d00ae6cc546180a1e6e154b896ac56a53d",
+    "src/crossdsl_kernels/tolerances.py": "fa6e3486972d800f1c142ffd6c6358e08e52f703de5d99a99fefcca4aafd3b18",
+    "src/crossdsl_kernels/triton/__init__.py": "61bf2bbb4aef758f10da465f0d949aa432c834f796f29b04d4eb2ac5f0677262",
+    "src/crossdsl_kernels/triton/gemv.py": "2583ee625c101a0a081653f74ff7072d9bc8759bb55f57cbed9491564fad24df",
+    "src/crossdsl_kernels/triton/gemv_rows.py": "ec6408b86c52b05a2e2df97413a74c1aa5fe1fe8e6e0359e176b8af69ed7a0b8",
+    "src/crossdsl_kernels/triton/rmsnorm.py": "f589cd64b08227a22da7a6eb390c70d80823b67a1b5c542172f8b5ad96d035f3",
+    "src/crossdsl_kernels/triton/rope_kv.py": "3b37ef0b716e7d79936938aaac5620374ee73bc57c84afe0668c9e76da538375",
+    "src/crossdsl_kernels/triton/rope_kv_fused.py": "24db6c49bc615e8aebfb7dcc16f964161262f978eef2ff87079289817520b1ed",
+    "src/crossdsl_kernels/triton/w4a16.py": "dab36f62b5f98900871f65ef31d23270f1553c4e6108918ae942e06344ecbcf7",
+    "src/crossdsl_kernels/w4a16.py": "c2391adad185bdc76f30325a90260d26b9c68f81f5b617dd8e559bb0b71ad73d",
+    "csrc/common/cuda_runtime_smoke.cu": "66c70a3a381b0ee5f82814561d596cd13f09a362ffd367d088ff30093c1a191a",
+    "csrc/gemv/gemm_tiled.cu": "c0018da83b070f26ae9f0ee260df70f867524366ae56326249508c5572787769",
+    "csrc/gemv/gemv_clean.cu": "a9e45d3ea1674a2899b7e205390d7588896a2eeee815326dcc7638ed09147f1a",
+    "csrc/gemv/gemv_clean_ext.cpp": "3c4cbe652ad6e232835456a542d9ed0a4bf1ebe4750ed1f4b84f23ea4ebec126",
+    "csrc/gemv/gemv_ext.cpp": "ca1c4aa8b7d522b505d70b5a6cf94408dedacab4dd35c7f6ad929454e38085e5",
+    "csrc/gemv/gemv_kernel.cu": "6676a2690c4449da61e7f8129d1d3170560d201f582e6665a6c3defd51e8d137",
+    "csrc/rmsnorm/rmsnorm_ext.cpp": "23ecf6e9b13f5b18e589c880c187aaef53b05a0f548499873e01cc113ee5bab4",
+    "csrc/rmsnorm/rmsnorm_kernel.cu": "f31fc0d69bc85e64efdc22319d5698012c7c68a687637ca9367311381c38c4e9",
+    "csrc/rope_kv/rope_kv_ext.cpp": "9c8411e9dd9b56d62abcb0482c9513bf1be0da229202200275a21f3d2d2d7833",
+    "csrc/rope_kv/rope_kv_kernel.cu": "3b4bf610936b914befb7f8f595c14ca8f59d24af74faaa25f0259951980339d6",
+    "csrc/w4a16/w4a16_ext.cpp": "b412e1754565e1b4d970391f05fcf79c80a18758550fd57b61e967f48a44d7c8",
+    "csrc/w4a16/w4a16_kernel.cu": "6cf1a1a900ae45196011f809814f3019f624f067f18c26558627a60cf77c4662",
+    "benchmarks/common.py": "6666c33c22bb85988789f4e1466d8f172a2d89d3b5adfc8407f5d0611f5bddfc",
+    "benchmarks/compare.py": "0181cab5a892b5ce64bb1299edf86466267f28b994e5b35eab71697d9b17aefc",
+    "benchmarks/comparison_cases.py": "e1e414807a0e5c59582b51afe6691b71852c7327616daea097ac822f5a687d55",
+    "benchmarks/rmsnorm_bf16.py": "a30b202dad8b19d27d9d122a1c9e0d562bcd117575078660bbdf0849a3a1b04b",
+    "benchmarks/shapes/comparison.json": "5c103c7c3d324f96a3d332ff5e140e53516c4ac9e995ffb81d6765068a9c71ba",
+    "benchmarks/shapes/w4a16.json": "94cdac8279e9d3c6686e033359fb3dfd025b0baad7f51e906a76c0959d272052",
+    "benchmarks/w4a16_benchmark.py": "900713321f9eec07b6f2cbe1a2ed6aa957c44b661f6caa7ee4d9771aef6b05b3"
+  },
+  "python_version": "3.11.14",
+  "packages": {
+    "torch": "2.10.0+cu130",
+    "triton": "3.6.0",
+    "nvidia-cutlass-dsl": "4.5.2",
+    "cuda-python": "13.0.3",
+    "cuda-bindings": "13.0.3"
+  },
+  "cuda_runtime": "13.0",
+  "cuda_toolkit": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Tue_Dec_16_07:23:41_PM_PST_2025\nCuda compilation tools, release 13.1, V13.1.115\nBuild cuda_13.1.r13.1/compiler.37061995_0",
+  "nsys": "NVIDIA Nsight Systems version 2025.5.2.266-255236693005v0",
+  "ncu": "NVIDIA (R) Nsight Compute Command Line Profiler\nCopyright (c) 2018-2025 NVIDIA Corporation\nVersion 2025.4.1.0 (build 37053803) (public-release)",
+  "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "build_flags": {
+    "cxx": [
+      "-O3"
+    ],
+    "cuda": [
+      "-O3"
+    ],
+    "arch": "12.0"
+  },
+  "cuda_available": true,
+  "gpu_before": "name, driver_version, memory.total [MiB], power.limit [W], power.draw [W], temperature.gpu, pstate, clocks.current.graphics [MHz], clocks.current.memory [MHz]\nNVIDIA GeForce RTX 5050 Laptop GPU, 595.99.02, 8151 MiB, [N/A], 6.88 W, 50, P8, 397 MHz, 405 MHz",
+  "power_policy": "Observed only; clocks and power limits are not controlled.",
+  "checks": [
+    {
+      "name": "direct_stream::gemv_2x33x17_tail::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 7.772863056159357e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 7.772863056159357e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_2x33x17_tail::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 8.380540138204513e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 8.380540138204513e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_2x33x17_tail::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 1.0185177071458286e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 1.0185177071458286e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_3x129x65_nk_tail::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.5033950805664062e-06,
+            "rel_l2_err": 8.271381543708438e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.5033950805664062e-06,
+            "rel_l2_err": 8.271381543708438e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_3x129x65_nk_tail::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.5033950805664062e-06,
+            "rel_l2_err": 8.271381543708438e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.5033950805664062e-06,
+            "rel_l2_err": 8.271381543708438e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_3x129x65_nk_tail::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3381197347843506e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3381197347843506e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 129,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_kn_tail::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.291534423828125e-06,
+            "rel_l2_err": 8.159431763791043e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.291534423828125e-06,
+            "rel_l2_err": 8.159431763791043e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_kn_tail::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.1711388488038191e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.1711388488038191e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_kn_tail::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.2653995814619503e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.2653995814619503e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_nk_tail::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 9.186742518256123e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 9.186742518256123e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_nk_tail::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 9.186742518256123e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 9.186742518256123e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::gemv_5x257x67_nk_tail::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.2379749056512263e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.2379749056512263e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_KN_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x1x1_NK_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 0.0,
+            "rel_l2_err": 0.0,
+            "finite": true,
+            "exact": true
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 1,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 6.040655678367443e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 6.040655678367443e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 6.175734930104973e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 6.175734930104973e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.288596567192792e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.288596567192792e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.488650648381344e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.488650648381344e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.603415001347205e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.603415001347205e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_KN_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.638921702799361e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.638921702799361e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.686822637142485e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.686822637142485e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.686822637142485e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.686822637142485e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.8790493281200027e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.8790493281200027e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.906971631666673e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.906971631666673e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.906971631666673e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.906971631666673e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_2x7x31_NK_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.8517438485585434e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.8517438485585434e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 7,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 4.182715064706416e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 4.182715064706416e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 4.182715064706416e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 4.182715064706416e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 3.163314603089236e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 3.163314603089236e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.2053349679470704e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.2053349679470704e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.2053349679470704e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.2053349679470704e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_KN_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.0940715743640504e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 5.0940715743640504e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 6.07111086450273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 6.07111086450273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 6.07111086450273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 6.07111086450273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 5.7502909826302136e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 2.384185791015625e-07,
+            "rel_l2_err": 5.7502909826302136e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.899091367865192e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.899091367865192e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.899091367865192e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.899091367865192e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_3x2x33_NK_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.844503754455443e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.844503754455443e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 2,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.284794637167395e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-07,
+            "rel_l2_err": 4.284794637167395e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.963791212345633e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.963791212345633e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 1.1210505799918257e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 1.1210505799918257e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 7.279523186170651e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 7.279523186170651e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.911923189524208e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.911923189524208e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_KN_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 1.0574377870056983e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 1.0574377870056983e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_False::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.936831321993273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.936831321993273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_False::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.936831321993273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 9.5367431640625e-07,
+            "rel_l2_err": 6.936831321993273e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_False::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 9.715819210889786e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.430511474609375e-06,
+            "rel_l2_err": 9.715819210889786e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_True::clean_warp",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.152557373046875e-07,
+            "rel_l2_err": 3.1360715758118467e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.152557373046875e-07,
+            "rel_l2_err": 3.1360715758118467e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_True::clean_rows",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.152557373046875e-07,
+            "rel_l2_err": 3.1360715758118467e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.152557373046875e-07,
+            "rel_l2_err": 3.1360715758118467e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "direct_stream::tiny_1x33x17_NK_True::tiled",
+      "status": "PASS",
+      "direct": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.5487347544996504e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "side_stream": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.5487347544996504e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 33,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasFalse::clean_warp",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.291534423828125e-06,
+            "rel_l2_err": 8.813485679141206e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 8.638088874462501e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasFalse::clean_rows",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.2094305020626274e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.1739495578317804e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasFalse::tiled",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 6.67572021484375e-06,
+            "rel_l2_err": 1.2097029503409603e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3084082026238278e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasTrue::clean_warp",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-06,
+            "rel_l2_err": 9.257162578650876e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 9.067766258918074e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasTrue::clean_rows",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 5.7220458984375e-06,
+            "rel_l2_err": 1.2001815416717327e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.337860107421875e-06,
+            "rel_l2_err": 1.1591650985791737e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::KN::biasTrue::tiled",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.3061982352387549e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3642826819805716e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasFalse::clean_warp",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.291534423828125e-06,
+            "rel_l2_err": 8.813485679141206e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 8.638088874462501e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasFalse::clean_rows",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.291534423828125e-06,
+            "rel_l2_err": 8.813485679141206e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 8.638088874462501e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasFalse::tiled",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 6.67572021484375e-06,
+            "rel_l2_err": 1.2097029503409603e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3084082026238278e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasTrue::clean_warp",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-06,
+            "rel_l2_err": 9.257162578650876e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 9.067766258918074e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasTrue::clean_rows",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 4.76837158203125e-06,
+            "rel_l2_err": 9.257162578650876e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 1.9073486328125e-06,
+            "rel_l2_err": 9.067766258918074e-08,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "graph::NK::biasTrue::tiled",
+      "status": "PASS",
+      "poisoned": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 7.62939453125e-06,
+            "rel_l2_err": 1.3061982352387549e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "changed_input": {
+        "status": "PASS",
+        "errors": [
+          {
+            "output": 0,
+            "max_abs_err": 3.814697265625e-06,
+            "rel_l2_err": 1.3642826819805716e-07,
+            "finite": true,
+            "exact": false
+          }
+        ],
+        "tolerance": {
+          "dtype": "float32",
+          "max_abs_err": 0.0002,
+          "rel_l2_err": 1e-05,
+          "k": 257,
+          "policy": "max_abs_err <= 2e-4 * max(1, sqrt(K / 1024)) and rel_l2_err <= 1e-5",
+          "max_rel_err_role": "diagnostic-only; near-zero reference values can dominate elementwise relative error"
+        }
+      },
+      "input_address_unchanged": true
+    },
+    {
+      "name": "reject::x_dtype::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::weight_dtype::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::bias_dtype::clean_warp",
+      "status": "PASS",
+      "rejected": "bias must be float32"
+    },
+    {
+      "name": "reject::x_rank::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::weight_rank::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::k_mismatch::clean_warp",
+      "status": "PASS",
+      "rejected": "weight K dimension must match x"
+    },
+    {
+      "name": "reject::layout::clean_warp",
+      "status": "PASS",
+      "rejected": "layout must be KN or NK"
+    },
+    {
+      "name": "reject::x_strided::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::weight_strided::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::bias_strided::clean_warp",
+      "status": "PASS",
+      "rejected": "bias must be contiguous"
+    },
+    {
+      "name": "reject::bias_shape::clean_warp",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::empty_bias::clean_warp",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::zero_m::clean_warp",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_k::clean_warp",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_n::clean_warp",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::x_cpu::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::weight_cpu::clean_warp",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::bias_cpu::clean_warp",
+      "status": "PASS",
+      "rejected": "bias must be on the same CUDA device"
+    },
+    {
+      "name": "reject::x_dtype::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::weight_dtype::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::bias_dtype::clean_rows",
+      "status": "PASS",
+      "rejected": "bias must be float32"
+    },
+    {
+      "name": "reject::x_rank::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::weight_rank::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::k_mismatch::clean_rows",
+      "status": "PASS",
+      "rejected": "weight K dimension must match x"
+    },
+    {
+      "name": "reject::layout::clean_rows",
+      "status": "PASS",
+      "rejected": "layout must be KN or NK"
+    },
+    {
+      "name": "reject::x_strided::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::weight_strided::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::bias_strided::clean_rows",
+      "status": "PASS",
+      "rejected": "bias must be contiguous"
+    },
+    {
+      "name": "reject::bias_shape::clean_rows",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::empty_bias::clean_rows",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::zero_m::clean_rows",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_k::clean_rows",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_n::clean_rows",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::x_cpu::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::weight_cpu::clean_rows",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::bias_cpu::clean_rows",
+      "status": "PASS",
+      "rejected": "bias must be on the same CUDA device"
+    },
+    {
+      "name": "reject::x_dtype::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::weight_dtype::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be float32"
+    },
+    {
+      "name": "reject::bias_dtype::tiled",
+      "status": "PASS",
+      "rejected": "bias must be float32"
+    },
+    {
+      "name": "reject::x_rank::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::weight_rank::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be 2D"
+    },
+    {
+      "name": "reject::k_mismatch::tiled",
+      "status": "PASS",
+      "rejected": "weight K dimension must match x"
+    },
+    {
+      "name": "reject::layout::tiled",
+      "status": "PASS",
+      "rejected": "layout must be KN or NK"
+    },
+    {
+      "name": "reject::x_strided::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::weight_strided::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be contiguous"
+    },
+    {
+      "name": "reject::bias_strided::tiled",
+      "status": "PASS",
+      "rejected": "bias must be contiguous"
+    },
+    {
+      "name": "reject::bias_shape::tiled",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::empty_bias::tiled",
+      "status": "PASS",
+      "rejected": "bias must be shaped [N]; use None for no bias"
+    },
+    {
+      "name": "reject::zero_m::tiled",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_k::tiled",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::zero_n::tiled",
+      "status": "PASS",
+      "rejected": "M, K and N must be positive"
+    },
+    {
+      "name": "reject::x_cpu::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::weight_cpu::tiled",
+      "status": "PASS",
+      "rejected": "x and weight must be CUDA tensors"
+    },
+    {
+      "name": "reject::bias_cpu::tiled",
+      "status": "PASS",
+      "rejected": "bias must be on the same CUDA device"
+    }
+  ],
+  "status": "PASS",
+  "small_only": true,
+  "extension": "<checkout>/results/build/torch_extensions/gemv_clean/sm120/crossdsl_gemv_clean_2_10_0_cu130_12_0_1c49577e9440/crossdsl_gemv_clean_2_10_0_cu130_12_0_1c49577e9440.so",
+  "multi_gpu": "NOT RUN: only one local GPU; CUDA/CPU device mismatch rejected, two-CUDA-device mismatch not exercised"
+}

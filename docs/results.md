@@ -105,6 +105,14 @@ but choosing the largest observed ratio would overstate the evidence.
 
 ## Limits
 
+The additive November collections are described in [CUDA projection](cuda_projection.md),
+[CUDA RMSNorm](cuda_rmsnorm.md) and the [evidence index](../results/cuda/README.md).
+Tiled SIMT projection improves selected custom M16 comparisons but loses to
+cuBLAS and at M1. Paired RMSNorm versions have matching device instructions,
+while retaining values loses to recomputation at the large-row shape. Source
+clarity is not a new algorithmic speedup; profile rates do not replace graph
+latency. The earlier numerical exports and historical source hashes are preserved.
+
 Unlocked laptop clocks, a shared display GPU, an observed 35 W limit and 8 GB
 memory constrain reproducibility and shape size. Sequential backend order is
 randomized but thermal drift remains. No end-to-end serving throughput, batching

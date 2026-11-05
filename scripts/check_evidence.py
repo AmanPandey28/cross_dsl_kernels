@@ -106,6 +106,9 @@ def validate(root: Path = ROOT) -> dict:
         raise ValueError("BF16 profiler extract disagrees with raw evidence")
     if "ERROR SUMMARY: 0 errors" not in (root / "results/checks/bf16-memcheck.log").read_text():
         raise ValueError("missing successful BF16 memcheck summary")
+    from check_cuda_evidence import validate as validate_cuda
+
+    counts.update(validate_cuda(root, loaded))
     return {"sources": len(manifest["production_source_sha256"]), "rows": counts}
 
 

@@ -1,0 +1,1208 @@
+{
+  "gemv": {
+    "ncu": [
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_m16--clean_rows-csv.log",
+        "kernel": "<unnamed>::gemv_rows_kn_clean_kernel(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 2294.112,
+            "unit": "us",
+            "raw_value": 2.294112,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": {
+            "value": 117.941387,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 40.985092,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 3.276226,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 16.213384,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 48.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 81.15911,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 5.12,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.280321,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 10.106396,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 89.69121,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 38.956373,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_m16--clean_warp-csv.log",
+        "kernel": "void <unnamed>::gemv_warp_clean_kernel<0>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 6123.52,
+            "unit": "us",
+            "raw_value": 6.12352,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": {
+            "value": 178.622617,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 46.555232,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 61.211241,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 10.035009,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 98.997193,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 68.27,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.167585,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 4.16865,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 127.726598,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 47.518653,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_m16--cuda-csv.log",
+        "kernel": "decode_gemv_f32_warp_kernel(const float *, const float *, const float *, float *, long, long, long, bool, bool)",
+        "metrics": {
+          "duration_us": {
+            "value": 5141.856,
+            "unit": "us",
+            "raw_value": 5.141856,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": {
+            "value": 209.188775,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 54.521825,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 21.417433,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 11.904089,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 96.532413,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 68.27,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.102969,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 4.254129,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 256.043807,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 46.335558,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_m16--cuda_fast-csv.log",
+        "kernel": "void decode_gemv_rows_kernel<0>(const float *, const float *, const float *, float *, long, long, long, bool)",
+        "metrics": {
+          "duration_us": {
+            "value": 2897.728,
+            "unit": "us",
+            "raw_value": 2.897728,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": {
+            "value": 91.702542,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 23.901106,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 4.180019,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 12.833936,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 97.712317,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 4.27,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.303995,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 8.104723,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 136.070585,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 46.901912,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_m16--tiled-csv.log",
+        "kernel": "void <unnamed>::gemm_tiled_kernel<0>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 910.688,
+            "unit": "us",
+            "raw_value": 910.688,
+            "raw_unit": "us"
+          },
+          "dram_gbps": {
+            "value": 156.98092,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 54.550499,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 17.497332,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 51.275235,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 36.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 85.216999,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 2.13,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.63118,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 23.795815,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 28.178667,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 40.904159,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_nk_m16--clean_rows-csv.log",
+        "kernel": "<unnamed>::gemv_rows_nk_clean_kernel(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 778.592,
+            "unit": "us",
+            "raw_value": 778.592,
+            "raw_unit": "us"
+          },
+          "dram_gbps": {
+            "value": 347.095311,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 90.467486,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 12.355307,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 54.212212,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 39.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 95.932204,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 17.07,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.48122,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 25.350219,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 41.019813,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 46.047458,
+            "unit": "warp"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/full/hidden_nk_m16--tiled-csv.log",
+        "kernel": "void <unnamed>::gemm_tiled_kernel<1>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 1124.32,
+            "unit": "us",
+            "raw_value": 1.12432,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": {
+            "value": 120.408709,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 41.842322,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 19.554145,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 42.425533,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 38.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 86.205893,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 2.13,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.503579,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 16.947533,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 30.426501,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          },
+          "dram_bytes": null,
+          "dram_read_bytes": null,
+          "dram_write_bytes": null,
+          "shared_load_bank_conflicts": null,
+          "shared_store_bank_conflicts": null,
+          "active_warps": {
+            "value": 41.378829,
+            "unit": "warp"
+          }
+        }
+      }
+    ],
+    "counters": [
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_m16--clean_rows-csv.log",
+        "kernel": "<unnamed>::gemv_rows_kn_clean_kernel(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 2100.288,
+            "unit": "us",
+            "raw_value": 2.100288,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 48.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 5.12,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 269978112.0,
+            "unit": "byte",
+            "raw_value": 269.978112,
+            "raw_unit": "Mbyte"
+          },
+          "dram_read_bytes": {
+            "value": 269064192.0,
+            "unit": "byte",
+            "raw_value": 269.064192,
+            "raw_unit": "Mbyte"
+          },
+          "dram_write_bytes": {
+            "value": 913920.0,
+            "unit": "byte",
+            "raw_value": 913.92,
+            "raw_unit": "Kbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 13.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_m16--clean_warp-csv.log",
+        "kernel": "void <unnamed>::gemv_warp_clean_kernel<0>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 8649.248,
+            "unit": "us",
+            "raw_value": 8.649248,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 68.27,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 1089671000.0,
+            "unit": "byte",
+            "raw_value": 1.089671,
+            "raw_unit": "Gbyte"
+          },
+          "dram_read_bytes": {
+            "value": 1088289000.0,
+            "unit": "byte",
+            "raw_value": 1.088289,
+            "raw_unit": "Gbyte"
+          },
+          "dram_write_bytes": {
+            "value": 1382912.0,
+            "unit": "byte",
+            "raw_value": 1.382912,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_m16--cuda-csv.log",
+        "kernel": "decode_gemv_f32_warp_kernel(const float *, const float *, const float *, float *, long, long, long, bool, bool)",
+        "metrics": {
+          "duration_us": {
+            "value": 6286.400000000001,
+            "unit": "us",
+            "raw_value": 6.2864,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 68.27,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 1084162000.0,
+            "unit": "byte",
+            "raw_value": 1.084162,
+            "raw_unit": "Gbyte"
+          },
+          "dram_read_bytes": {
+            "value": 1082618000.0,
+            "unit": "byte",
+            "raw_value": 1.082618,
+            "raw_unit": "Gbyte"
+          },
+          "dram_write_bytes": {
+            "value": 1543936.0,
+            "unit": "byte",
+            "raw_value": 1.543936,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_m16--cuda_fast-csv.log",
+        "kernel": "void decode_gemv_rows_kernel<0>(const float *, const float *, const float *, float *, long, long, long, bool)",
+        "metrics": {
+          "duration_us": {
+            "value": 3324.288,
+            "unit": "us",
+            "raw_value": 3.324288,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 40.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 4.27,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 273492992.0,
+            "unit": "byte",
+            "raw_value": 273.492992,
+            "raw_unit": "Mbyte"
+          },
+          "dram_read_bytes": {
+            "value": 264287232.00000003,
+            "unit": "byte",
+            "raw_value": 264.287232,
+            "raw_unit": "Mbyte"
+          },
+          "dram_write_bytes": {
+            "value": 9205760.0,
+            "unit": "byte",
+            "raw_value": 9.20576,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 50.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_m16--tiled-csv.log",
+        "kernel": "void <unnamed>::gemm_tiled_kernel<0>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 853.632,
+            "unit": "us",
+            "raw_value": 853.632,
+            "raw_unit": "us"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 36.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 2.13,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 134637568.0,
+            "unit": "byte",
+            "raw_value": 134.637568,
+            "raw_unit": "Mbyte"
+          },
+          "dram_read_bytes": {
+            "value": 133622784.0,
+            "unit": "byte",
+            "raw_value": 133.622784,
+            "raw_unit": "Mbyte"
+          },
+          "dram_write_bytes": {
+            "value": 1014783.9999999999,
+            "unit": "byte",
+            "raw_value": 1.014784,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 188.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 29752.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_nk_m16--clean_rows-csv.log",
+        "kernel": "<unnamed>::gemv_rows_nk_clean_kernel(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 1000.7680000000001,
+            "unit": "us",
+            "raw_value": 1.000768,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 39.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 17.07,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 269809152.0,
+            "unit": "byte",
+            "raw_value": 269.809152,
+            "raw_unit": "Mbyte"
+          },
+          "dram_read_bytes": {
+            "value": 268774400.0,
+            "unit": "byte",
+            "raw_value": 268.7744,
+            "raw_unit": "Mbyte"
+          },
+          "dram_write_bytes": {
+            "value": 1034751.9999999999,
+            "unit": "byte",
+            "raw_value": 1.034752,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 0.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      },
+      {
+        "file": "results/cuda/gemv/profiles/counters/hidden_nk_m16--tiled-csv.log",
+        "kernel": "void <unnamed>::gemm_tiled_kernel<1>(const float *, const float *, const float *, float *, long, long, long)",
+        "metrics": {
+          "duration_us": {
+            "value": 1118.88,
+            "unit": "us",
+            "raw_value": 1.11888,
+            "raw_unit": "ms"
+          },
+          "dram_gbps": null,
+          "dram_sol_pct": null,
+          "l2_hit_pct": null,
+          "sm_sol_pct": null,
+          "registers": {
+            "value": 38.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": null,
+          "waves": {
+            "value": 2.13,
+            "unit": ""
+          },
+          "eligible_warps": null,
+          "issue_pct": null,
+          "long_scoreboard_per_issue": null,
+          "tensor_elapsed_pct": null,
+          "dram_bytes": {
+            "value": 135886848.0,
+            "unit": "byte",
+            "raw_value": 135.886848,
+            "raw_unit": "Mbyte"
+          },
+          "dram_read_bytes": {
+            "value": 134709248.0,
+            "unit": "byte",
+            "raw_value": 134.709248,
+            "raw_unit": "Mbyte"
+          },
+          "dram_write_bytes": {
+            "value": 1177600.0,
+            "unit": "byte",
+            "raw_value": 1.1776,
+            "raw_unit": "Mbyte"
+          },
+          "shared_load_bank_conflicts": {
+            "value": 254.0,
+            "unit": ""
+          },
+          "shared_store_bank_conflicts": {
+            "value": 32632387.0,
+            "unit": ""
+          },
+          "active_warps": null
+        }
+      }
+    ],
+    "torch_launches": [
+      {
+        "case": "hidden_m1",
+        "backend": "clean_warp",
+        "kernel_names": {
+          "void (anonymous namespace)::gemv_warp_clean_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m1",
+        "backend": "clean_rows",
+        "kernel_names": {
+          "(anonymous namespace)::gemv_rows_kn_clean_kernel(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m1",
+        "backend": "tiled",
+        "kernel_names": {
+          "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m1",
+        "backend": "cuda",
+        "kernel_names": {
+          "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m1",
+        "backend": "cublas",
+        "kernel_names": {
+          "void gemvNSP_kernel<float, float, float, float, 1, 8, 4, 1024, false, cublasGemvParamsEx<int, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float> >(cublasGemvParamsEx<int, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float>, float>)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m1",
+        "backend": "cuda_fast",
+        "kernel_names": {
+          "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "cuda_fast",
+        "kernel_names": {
+          "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "clean_warp",
+        "kernel_names": {
+          "void (anonymous namespace)::gemv_warp_clean_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "clean_rows",
+        "kernel_names": {
+          "(anonymous namespace)::gemv_rows_kn_clean_kernel(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "tiled",
+        "kernel_names": {
+          "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "cuda",
+        "kernel_names": {
+          "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "hidden_m16",
+        "backend": "cublas",
+        "kernel_names": {
+          "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(cutlass_80_simt_sgemm_128x32_8x5_nn_align1::Params)": 3,
+          "void cublasLt::splitKreduce_kernel<32, 16, int, float, float, float, float, false, float, float, float, true, false, false, false>(cublasLt::cublasSplitKParams<float>, float const*, float const*, float*, float*, float const*, float const*, float const*, float const*, float*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)": 3,
+          "add_bias_rows_f32_kernel(float*, float const*, long, long)": 3
+        },
+        "kernels_per_call": 3.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "cuda_fast",
+        "kernel_names": {
+          "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "clean_warp",
+        "kernel_names": {
+          "void (anonymous namespace)::gemv_warp_clean_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "cuda",
+        "kernel_names": {
+          "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "cublas",
+        "kernel_names": {
+          "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(cutlass_80_simt_sgemm_128x32_8x5_nn_align1::Params)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "clean_rows",
+        "kernel_names": {
+          "(anonymous namespace)::gemv_rows_kn_clean_kernel(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "mlp_up_m16",
+        "backend": "tiled",
+        "kernel_names": {
+          "void (anonymous namespace)::gemm_tiled_kernel<false>(float const*, float const*, float const*, float*, long, long, long)": 3
+        },
+        "kernels_per_call": 1.0
+      }
+    ]
+  },
+  "rmsnorm": {
+    "ncu": [
+      {
+        "file": "results/cuda/rmsnorm/profiles/bf16_4096x4096--cuda_fast-csv.log",
+        "kernel": "void <unnamed>::rmsnorm_bf16_register_kernel<4096>(const __nv_bfloat16 *, const __nv_bfloat16 *, const __nv_bfloat16 *, __nv_bfloat16 *, __nv_bfloat16 *, long, float)",
+        "metrics": {
+          "duration_us": {
+            "value": 560.224,
+            "unit": "us",
+            "raw_value": 560.224,
+            "raw_unit": "us"
+          },
+          "dram_gbps": {
+            "value": 219.673959,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 76.346909,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 25.466741,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 20.186053,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 44.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 82.659014,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 40.96,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.167437,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 12.114532,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 78.428055,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          }
+        }
+      },
+      {
+        "file": "results/cuda/rmsnorm/profiles/bf16_4096x4096--triton_fast-csv.log",
+        "kernel": "_fused_residual_rmsnorm_kernel",
+        "metrics": {
+          "duration_us": {
+            "value": 330.72,
+            "unit": "us",
+            "raw_value": 330.72,
+            "raw_unit": "us"
+          },
+          "dram_gbps": {
+            "value": 341.403774,
+            "unit": "Gbyte/s"
+          },
+          "dram_sol_pct": {
+            "value": 88.990468,
+            "unit": "%"
+          },
+          "l2_hit_pct": {
+            "value": 0.709752,
+            "unit": "%"
+          },
+          "sm_sol_pct": {
+            "value": 8.752553,
+            "unit": "%"
+          },
+          "registers": {
+            "value": 66.0,
+            "unit": "register/thread"
+          },
+          "occupancy_pct": {
+            "value": 55.712982,
+            "unit": "%"
+          },
+          "waves": {
+            "value": 29.26,
+            "unit": ""
+          },
+          "eligible_warps": {
+            "value": 0.120382,
+            "unit": "warp"
+          },
+          "issue_pct": {
+            "value": 9.288596,
+            "unit": "%"
+          },
+          "long_scoreboard_per_issue": {
+            "value": 34.490025,
+            "unit": "inst"
+          },
+          "tensor_elapsed_pct": {
+            "value": 0.0,
+            "unit": "%"
+          }
+        }
+      }
+    ],
+    "torch_launches": [
+      {
+        "case": "bf16_256x4096",
+        "backend": "pytorch",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_256x4096--pytorch.trace.json",
+        "kernel_names": {
+          "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)": 9,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)": 3,
+          "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>)": 3,
+          "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})": 6,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)": 6
+        },
+        "kernels_per_call": 12.0
+      },
+      {
+        "case": "bf16_256x4096",
+        "backend": "torch_compile",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_256x4096--torch_compile.trace.json",
+        "kernel_names": {
+          "triton_red_fused__to_copy_add_mean_mul_rsqrt_0": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "bf16_256x4096",
+        "backend": "cuda_fast",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_256x4096--cuda_fast.trace.json",
+        "kernel_names": {
+          "void (anonymous namespace)::rmsnorm_bf16_register_kernel<4096>(__nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, long, float)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "bf16_256x4096",
+        "backend": "triton_fast",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_256x4096--triton_fast.trace.json",
+        "kernel_names": {
+          "_fused_residual_rmsnorm_kernel": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "bf16_4096x4096",
+        "backend": "pytorch",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_4096x4096--pytorch.trace.json",
+        "kernel_names": {
+          "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)": 9,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul> >(int, at::native::CUDAFunctor_add<float>, std::array<char*, 3ul>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul> >(int, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> >, std::array<char*, 3ul>)": 3,
+          "void at::native::reduce_kernel<512, 1, at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4> >(at::native::ReduceOp<float, at::native::MeanOps<float, float, float, float>, unsigned int, float, 4, 4>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul> >(int, at::native::CUDAFunctorOnSelf_add<float>, std::array<char*, 2ul>)": 3,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::rsqrt_kernel_cuda(at::TensorIteratorBase&)::{lambda()#2}::operator()() const::{lambda()#2}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>)": 3,
+          "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > >(at::TensorIteratorBase&, at::native::BinaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float> > const&)::{lambda(int)#1})": 6,
+          "void at::native::vectorized_elementwise_kernel<4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)": 6
+        },
+        "kernels_per_call": 12.0
+      },
+      {
+        "case": "bf16_4096x4096",
+        "backend": "torch_compile",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_4096x4096--torch_compile.trace.json",
+        "kernel_names": {
+          "triton_red_fused__to_copy_add_mean_mul_rsqrt_0": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "bf16_4096x4096",
+        "backend": "cuda_fast",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_4096x4096--cuda_fast.trace.json",
+        "kernel_names": {
+          "void (anonymous namespace)::rmsnorm_bf16_register_kernel<4096>(__nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, long, float)": 3
+        },
+        "kernels_per_call": 1.0
+      },
+      {
+        "case": "bf16_4096x4096",
+        "backend": "triton_fast",
+        "trace": "results/cuda/rmsnorm/profiles/torch/bf16_4096x4096--triton_fast.trace.json",
+        "kernel_names": {
+          "_fused_residual_rmsnorm_kernel": 3
+        },
+        "kernels_per_call": 1.0
+      }
+    ],
+    "note": "NCU replay/cache policy and clocks differ from warm unprofiled loops; SOL uses a theoretical denominator, not copy bandwidth"
+  }
+}

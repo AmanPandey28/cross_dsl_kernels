@@ -1,5 +1,9 @@
 # Saved Evidence
 
+See [additive CUDA evidence](cuda/README.md) for the November projection/RMSNorm
+collections, current-source validation and codegen comparison. Earlier evidence
+files below remain unchanged.
+
 These files contain portable exports of accepted numerical results. Every row,
 error, timing sample and profiler metric is preserved. Private shell commands,
 absolute machine paths and unrelated dirty-worktree metadata are omitted or made

@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)",
+      "ts": 3046067500829.55,
+      "dur": 3316.772
+    },
+    {
+      "cat": "kernel",
+      "name": "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)",
+      "ts": 3046067504146.546,
+      "dur": 3641.742
+    },
+    {
+      "cat": "kernel",
+      "name": "void decode_gemv_rows_kernel<false>(float const*, float const*, float const*, float*, long, long, long, bool)",
+      "ts": 3046067507789.632,
+      "dur": 3329.701
+    }
+  ]
+}

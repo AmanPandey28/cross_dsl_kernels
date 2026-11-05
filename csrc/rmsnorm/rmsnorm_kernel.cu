@@ -6,23 +6,32 @@
 #include <cuda_runtime.h>
 #include <torch/extension.h>
 
+constexpr int kWarpSize = 32;
+constexpr int kThreadsPerBlock = 256;
+constexpr int kWarpsPerBlock = kThreadsPerBlock / kWarpSize;
+
+// Row reduction. BF16 and retained FP32 use shuffles; staged FP32 also keeps
+// its original shared-memory tree when Fast=false.
 template <bool Fast>
 __device__ float block_sum(float value, float* partial_sums) {
   if constexpr (Fast) {
-    const int lane = threadIdx.x & 31;
-    const int warp = threadIdx.x >> 5;
+    const int lane = threadIdx.x & (kWarpSize - 1);
+    const int warp = threadIdx.x / kWarpSize;
     for (int delta = 16; delta > 0; delta >>= 1) {
       value += __shfl_down_sync(0xffffffff, value, delta);
     }
+    // Only lane zero holds the full warp sum. The first barrier publishes
+    // all eight warp partials before warp zero reads them.
     if (lane == 0) partial_sums[warp] = value;
     __syncthreads();
     if (warp == 0) {
-      value = lane < blockDim.x / 32 ? partial_sums[lane] : 0.0f;
+      value = lane < blockDim.x / kWarpSize ? partial_sums[lane] : 0.0f;
       for (int delta = 16; delta > 0; delta >>= 1) {
         value += __shfl_down_sync(0xffffffff, value, delta);
       }
       if (lane == 0) partial_sums[0] = value;
     }
+    // Publish the row sum before any warp starts normalization.
     __syncthreads();
   } else {
     partial_sums[threadIdx.x] = value;
@@ -37,6 +46,127 @@ __device__ float block_sum(float value, float* partial_sums) {
   return partial_sums[0];
 }
 
+namespace {
+
+// BF16 baseline: one 256-thread CTA (eight warps) owns a row. Neighboring
+// lanes visit neighboring columns in each pass. The row reduction separates
+// independent accumulation from independent output; recomputation avoids
+// retaining a row's FP32 values across that dependency boundary.
+__global__ void rmsnorm_bf16_recompute_kernel(
+    const __nv_bfloat16* x, const __nv_bfloat16* residual,
+    const __nv_bfloat16* weight, __nv_bfloat16* y,
+    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
+  __shared__ float warp_sums[kWarpsPerBlock];
+  const int64_t row_offset = static_cast<int64_t>(blockIdx.x) * hidden;
+  float sum_squares = 0.0f;
+  for (int64_t column = threadIdx.x; column < hidden; column += blockDim.x) {
+    // Promote before addition. Only the returned residual is rounded here.
+    const float residual_fp32 = __bfloat162float(x[row_offset + column]) +
+                                __bfloat162float(residual[row_offset + column]);
+    residual_out[row_offset + column] = __float2bfloat16_rn(residual_fp32);
+    sum_squares += residual_fp32 * residual_fp32;
+  }
+  // Threads with no valid columns contribute zero, but still join both barriers.
+  const float inv_rms = rsqrtf(block_sum<true>(sum_squares, warp_sums) / hidden + eps);
+  for (int64_t column = threadIdx.x; column < hidden; column += blockDim.x) {
+    // Reading rounded residual_out would change the operator. Recompute the
+    // unrounded FP32 sum from the original inputs instead.
+    const float residual_fp32 = __bfloat162float(x[row_offset + column]) +
+                                __bfloat162float(residual[row_offset + column]);
+    y[row_offset + column] = __float2bfloat16_rn(
+        residual_fp32 * inv_rms * __bfloat162float(weight[column]));
+  }
+}
+
+// BF16 optimized: same CTA/row and coalescing, Capacity/256 values per thread.
+// Retain unrounded FP32 sums across the row reduction to avoid the baseline's
+// second input pass. Compile-time unrolling helps scheduling but grows live
+// state/code; the compiler, not this local array declaration, decides spilling.
+template <int Capacity>
+__global__ void rmsnorm_bf16_register_kernel(
+    const __nv_bfloat16* x, const __nv_bfloat16* residual,
+    const __nv_bfloat16* weight, __nv_bfloat16* y,
+    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
+  constexpr int values_per_thread = Capacity / kThreadsPerBlock;
+  __shared__ float warp_sums[kWarpsPerBlock];
+  float values[values_per_thread];
+  float sum_squares = 0.0f;
+  const int64_t row_offset = static_cast<int64_t>(blockIdx.x) * hidden;
+
+  // Load/add/save: adjacent lanes read adjacent BF16 columns; each thread's
+  // successive values are 256 columns apart. No thread exits before reduction.
+  #pragma unroll
+  for (int i = 0; i < values_per_thread; ++i) {
+    const int64_t column = threadIdx.x + i * kThreadsPerBlock;
+    float residual_fp32 = 0.0f;
+    if (column < hidden) {
+      residual_fp32 = __bfloat162float(x[row_offset + column]) +
+                      __bfloat162float(residual[row_offset + column]);
+      residual_out[row_offset + column] = __float2bfloat16_rn(residual_fp32);
+    }
+    // Invalid tail lanes retain zero and join every shuffle/barrier.
+    values[i] = residual_fp32;
+    sum_squares += residual_fp32 * residual_fp32;
+  }
+
+  // Each thread evaluates inv_rms from the shared row sum, not once per CTA.
+  const float inv_rms = rsqrtf(block_sum<true>(sum_squares, warp_sums) / hidden + eps);
+
+  // Normalize/store: use saved FP32 values, never the rounded residual output.
+  #pragma unroll
+  for (int i = 0; i < values_per_thread; ++i) {
+    const int64_t column = threadIdx.x + i * kThreadsPerBlock;
+    if (column < hidden) {
+      const float w = __bfloat162float(weight[column]);
+      y[row_offset + column] = __float2bfloat16_rn(values[i] * inv_rms * w);
+    }
+  }
+}
+
+// BF16 launch/dispatch: keep the baseline and wide-row fallback explicit.
+std::vector<torch::Tensor> launch_bf16_rmsnorm(
+    torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
+  const c10::cuda::CUDAGuard guard(x.device());
+  auto y = torch::empty_like(x);
+  auto residual_out = torch::empty_like(residual);
+  const int64_t rows = x.size(0), hidden = x.size(1);
+  const auto* xp = reinterpret_cast<const __nv_bfloat16*>(x.data_ptr<at::BFloat16>());
+  const auto* rp = reinterpret_cast<const __nv_bfloat16*>(residual.data_ptr<at::BFloat16>());
+  const auto* wp = reinterpret_cast<const __nv_bfloat16*>(weight.data_ptr<at::BFloat16>());
+  auto* yp = reinterpret_cast<__nv_bfloat16*>(y.data_ptr<at::BFloat16>());
+  auto* op = reinterpret_cast<__nv_bfloat16*>(residual_out.data_ptr<at::BFloat16>());
+  const auto stream = at::cuda::getCurrentCUDAStream();
+  const float epsilon = static_cast<float>(eps);
+  if (!fast || hidden > 8192) {
+    rmsnorm_bf16_recompute_kernel<<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 256) {
+    rmsnorm_bf16_register_kernel<256><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 512) {
+    rmsnorm_bf16_register_kernel<512><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 1024) {
+    rmsnorm_bf16_register_kernel<1024><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 2048) {
+    rmsnorm_bf16_register_kernel<2048><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else if (hidden <= 4096) {
+    rmsnorm_bf16_register_kernel<4096><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  } else {
+    rmsnorm_bf16_register_kernel<8192><<<rows, kThreadsPerBlock, 0, stream>>>(
+        xp, rp, wp, yp, op, hidden, epsilon);
+  }
+  C10_CUDA_KERNEL_LAUNCH_CHECK();
+  return {y, residual_out};
+}
+
+}  // namespace
+
+// FP32 paths: scalar staging, aligned float4 staging, and retained float4.
+// These keep their original arithmetic, alignment checks and fast routing.
 template <bool Fast>
 __global__ void fused_residual_rmsnorm_f32_staged_kernel(
     const float* __restrict__ x,
@@ -159,91 +289,6 @@ bool is_aligned_16(const void* ptr) {
   return (reinterpret_cast<std::uintptr_t>(ptr) & 0xF) == 0;
 }
 
-// Capacity is a bounded row bucket; invalid columns still join every reduction.
-template <int Capacity>
-__global__ void rmsnorm_bf16_register_kernel(
-    const __nv_bfloat16* x, const __nv_bfloat16* residual,
-    const __nv_bfloat16* weight, __nv_bfloat16* y,
-    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
-  constexpr int Values = Capacity / 256;
-  __shared__ float sums[8];
-  float values[Values];
-  float total = 0.0f;
-  const int64_t base = static_cast<int64_t>(blockIdx.x) * hidden;
-  #pragma unroll
-  for (int i = 0; i < Values; ++i) {
-    const int64_t col = threadIdx.x + i * 256;
-    float r = 0.0f;
-    if (col < hidden) {
-      r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
-      residual_out[base + col] = __float2bfloat16_rn(r);
-    }
-    values[i] = r;
-    total += r * r;
-  }
-  const float inv = rsqrtf(block_sum<true>(total, sums) / hidden + eps);
-  #pragma unroll
-  for (int i = 0; i < Values; ++i) {
-    const int64_t col = threadIdx.x + i * 256;
-    if (col < hidden) {
-      const float w = __bfloat162float(weight[col]);
-      y[base + col] = __float2bfloat16_rn(values[i] * inv * w);
-    }
-  }
-}
-
-__global__ void rmsnorm_bf16_recompute_kernel(
-    const __nv_bfloat16* x, const __nv_bfloat16* residual,
-    const __nv_bfloat16* weight, __nv_bfloat16* y,
-    __nv_bfloat16* residual_out, int64_t hidden, float eps) {
-  __shared__ float sums[8];
-  const int64_t base = static_cast<int64_t>(blockIdx.x) * hidden;
-  float total = 0.0f;
-  for (int64_t col = threadIdx.x; col < hidden; col += blockDim.x) {
-    const float r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
-    residual_out[base + col] = __float2bfloat16_rn(r);
-    total += r * r;
-  }
-  const float inv = rsqrtf(block_sum<true>(total, sums) / hidden + eps);
-  for (int64_t col = threadIdx.x; col < hidden; col += blockDim.x) {
-    // Do not read rounded residual_out: that would change the normalization contract.
-    const float r = __bfloat162float(x[base + col]) + __bfloat162float(residual[base + col]);
-    y[base + col] = __float2bfloat16_rn(r * inv * __bfloat162float(weight[col]));
-  }
-}
-
-std::vector<torch::Tensor> launch_bf16_rmsnorm(
-    torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
-  const c10::cuda::CUDAGuard guard(x.device());
-  auto y = torch::empty_like(x);
-  auto residual_out = torch::empty_like(residual);
-  const int64_t rows = x.size(0), hidden = x.size(1);
-  const auto* xp = reinterpret_cast<const __nv_bfloat16*>(x.data_ptr<at::BFloat16>());
-  const auto* rp = reinterpret_cast<const __nv_bfloat16*>(residual.data_ptr<at::BFloat16>());
-  const auto* wp = reinterpret_cast<const __nv_bfloat16*>(weight.data_ptr<at::BFloat16>());
-  auto* yp = reinterpret_cast<__nv_bfloat16*>(y.data_ptr<at::BFloat16>());
-  auto* op = reinterpret_cast<__nv_bfloat16*>(residual_out.data_ptr<at::BFloat16>());
-  const auto stream = at::cuda::getCurrentCUDAStream();
-  const float epsilon = static_cast<float>(eps);
-  if (!fast || hidden > 8192) {
-    rmsnorm_bf16_recompute_kernel<<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else if (hidden <= 256) {
-    rmsnorm_bf16_register_kernel<256><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else if (hidden <= 512) {
-    rmsnorm_bf16_register_kernel<512><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else if (hidden <= 1024) {
-    rmsnorm_bf16_register_kernel<1024><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else if (hidden <= 2048) {
-    rmsnorm_bf16_register_kernel<2048><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else if (hidden <= 4096) {
-    rmsnorm_bf16_register_kernel<4096><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  } else {
-    rmsnorm_bf16_register_kernel<8192><<<rows, 256, 0, stream>>>(xp, rp, wp, yp, op, hidden, epsilon);
-  }
-  C10_CUDA_KERNEL_LAUNCH_CHECK();
-  return {y, residual_out};
-}
-
 }  // namespace
 
 template <bool Fast>
@@ -315,6 +360,7 @@ std::vector<torch::Tensor> launch_rmsnorm(
   return {y, residual_out};
 }
 
+// Public dtype dispatch; the Python binding and returned tuple are unchanged.
 std::vector<torch::Tensor> crossdsl_fused_residual_rmsnorm_cuda(
     torch::Tensor x, torch::Tensor residual, torch::Tensor weight, double eps, bool fast) {
   if (x.scalar_type() == torch::kBFloat16) {

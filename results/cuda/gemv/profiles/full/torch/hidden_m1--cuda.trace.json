@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)",
+      "ts": 3046067191133.926,
+      "dur": 334.024
+    },
+    {
+      "cat": "kernel",
+      "name": "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)",
+      "ts": 3046067191468.174,
+      "dur": 329.449
+    },
+    {
+      "cat": "kernel",
+      "name": "decode_gemv_f32_warp_kernel(float const*, float const*, float const*, float*, long, long, long, bool, bool)",
+      "ts": 3046067191797.847,
+      "dur": 329.576
+    }
+  ]
+}

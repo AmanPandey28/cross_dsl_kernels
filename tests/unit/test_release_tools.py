@@ -14,7 +14,35 @@ import profile_runner
 
 class ReleaseToolTests(unittest.TestCase):
     def test_saved_sources_and_numerical_evidence(self):
-        self.assertEqual(check_evidence.validate()["sources"], 37)
+        self.assertEqual(check_evidence.validate()["sources"], 40)
+
+    def test_historical_sources_remain_separate_from_current_code(self):
+        root = Path(__file__).resolve().parents[2]
+        manifest = json.loads((root / "results/manifest.json").read_text())
+        source = "csrc/rmsnorm/rmsnorm_kernel.cu"
+        historical = manifest["source_snapshots"]["bf16_20261009"]["production_source_sha256"][source]
+        self.assertNotEqual(manifest["production_source_sha256"][source], historical)
+        data = json.loads((root / "results/bf16/full.json").read_text())
+        self.assertEqual(data["source_sha256"][source], historical)
+
+    def test_projection_profiler_uses_public_runner(self):
+        import profile_gemv_clean
+
+        self.assertIs(profile_gemv_clean.run_commands, profile_runner.run_commands)
+
+    def test_cuda_rows_reject_missing_samples_or_failed_graphs(self):
+        from check_cuda_evidence import check_rows
+
+        data = {"status": "PASS", "repeat": 2, "inputs_unchanged": True,
+                "rows": [{"status": "PASS", "correctness": {"status": "PASS"},
+                          "graph_correctness": {"status": "FAIL"},
+                          "timing": {"event": {"samples_ms": [1, 2]}}}]}
+        with self.assertRaisesRegex(ValueError, "graph"):
+            check_rows(data, 1)
+        data["rows"][0]["graph_correctness"]["status"] = "PASS"
+        data["rows"][0]["timing"]["event"]["samples_ms"] = [1]
+        with self.assertRaisesRegex(ValueError, "sample"):
+            check_rows(data, 1)
 
     def test_collection_hashes_use_historical_snapshot(self):
         old = {"production_source_sha256": {"csrc/example.cu": "old"}}

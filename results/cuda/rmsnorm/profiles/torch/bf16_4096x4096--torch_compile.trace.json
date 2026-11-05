@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "triton_red_fused__to_copy_add_mean_mul_rsqrt_0",
+      "ts": 3049451738618.277,
+      "dur": 544.003
+    },
+    {
+      "cat": "kernel",
+      "name": "triton_red_fused__to_copy_add_mean_mul_rsqrt_0",
+      "ts": 3049451739162.504,
+      "dur": 517.987
+    },
+    {
+      "cat": "kernel",
+      "name": "triton_red_fused__to_copy_add_mean_mul_rsqrt_0",
+      "ts": 3049451739680.715,
+      "dur": 768.932
+    }
+  ]
+}

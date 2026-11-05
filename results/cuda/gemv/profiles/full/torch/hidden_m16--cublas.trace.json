@@ -1,0 +1,58 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(cutlass_80_simt_sgemm_128x32_8x5_nn_align1::Params)",
+      "ts": 3046067718246.273,
+      "dur": 320.488
+    },
+    {
+      "cat": "kernel",
+      "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, float, float, float, false, float, float, float, true, false, false, false>(cublasLt::cublasSplitKParams<float>, float const*, float const*, float*, float*, float const*, float const*, float const*, float const*, float*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+      "ts": 3046067718567.113,
+      "dur": 5.888
+    },
+    {
+      "cat": "kernel",
+      "name": "add_bias_rows_f32_kernel(float*, float const*, long, long)",
+      "ts": 3046067718573.353,
+      "dur": 3.296
+    },
+    {
+      "cat": "kernel",
+      "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(cutlass_80_simt_sgemm_128x32_8x5_nn_align1::Params)",
+      "ts": 3046067718577.001,
+      "dur": 301.064
+    },
+    {
+      "cat": "kernel",
+      "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, float, float, float, false, float, float, float, true, false, false, false>(cublasLt::cublasSplitKParams<float>, float const*, float const*, float*, float*, float const*, float const*, float const*, float const*, float*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+      "ts": 3046067718878.384,
+      "dur": 5.953
+    },
+    {
+      "cat": "kernel",
+      "name": "add_bias_rows_f32_kernel(float*, float const*, long, long)",
+      "ts": 3046067718884.688,
+      "dur": 3.105
+    },
+    {
+      "cat": "kernel",
+      "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(cutlass_80_simt_sgemm_128x32_8x5_nn_align1::Params)",
+      "ts": 3046067718888.113,
+      "dur": 301.191
+    },
+    {
+      "cat": "kernel",
+      "name": "void cublasLt::splitKreduce_kernel<32, 16, int, float, float, float, float, false, float, float, float, true, false, false, false>(cublasLt::cublasSplitKParams<float>, float const*, float const*, float*, float*, float const*, float const*, float const*, float const*, float*, void*, long, float*, int*, float*, float*, float const*, float const*, float const*, float const*, float const*)",
+      "ts": 3046067719189.624,
+      "dur": 5.92
+    },
+    {
+      "cat": "kernel",
+      "name": "add_bias_rows_f32_kernel(float*, float const*, long, long)",
+      "ts": 3046067719195.864,
+      "dur": 3.072
+    }
+  ]
+}

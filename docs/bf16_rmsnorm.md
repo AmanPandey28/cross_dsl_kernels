@@ -1,5 +1,8 @@
 # BF16 Fused Residual RMSNorm
 
+See [CUDA RMSNorm](cuda_rmsnorm.md) for current source navigation and independent
+November validation. Historical tables below retain their collection scope.
+
 CUDA C++ and Triton accept contiguous, matching BF16 `x`, `residual` and
 `weight` tensors on one device. `x` and `residual` are `[rows, hidden]`;
 `weight` is `[hidden]`. Rows and hidden must be positive, and epsilon must be

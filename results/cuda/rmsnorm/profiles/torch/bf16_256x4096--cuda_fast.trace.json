@@ -1,0 +1,22 @@
+{
+  "traceEvents": [
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::rmsnorm_bf16_register_kernel<4096>(__nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, long, float)",
+      "ts": 3049451327144.384,
+      "dur": 19.36
+    },
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::rmsnorm_bf16_register_kernel<4096>(__nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, long, float)",
+      "ts": 3049451327164.032,
+      "dur": 15.776
+    },
+    {
+      "cat": "kernel",
+      "name": "void (anonymous namespace)::rmsnorm_bf16_register_kernel<4096>(__nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16 const*, __nv_bfloat16*, __nv_bfloat16*, long, float)",
+      "ts": 3049451327180.032,
+      "dur": 15.008
+    }
+  ]
+}
